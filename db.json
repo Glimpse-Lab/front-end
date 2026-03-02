@@ -1,0 +1,10 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "email": "exemplo@email.com",
+      "senha": "Senha@123",
+      "cpf": "123.456.789-00"
+    }
+  ]
+}
