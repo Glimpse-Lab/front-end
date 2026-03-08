@@ -159,8 +159,8 @@
         <h2>Sistema de Cadastro e Login</h2>
         
         <div class="tabs">
-            <button class="tab active" onclick="showTab('cadastro')">Cadastro</button>
-            <button class="tab" onclick="showTab('login')">Login</button>
+            <button class="tab active" onclick="showTab(event, 'cadastro')">Cadastro</button>
+            <button class="tab" onclick="showTab(event, 'login')">Login</button>
         </div>
         
         <!-- Formulário de Cadastro -->
@@ -214,43 +214,82 @@
         <div id="message" class="message"></div>
     </div>
     
-    <script type="module">
-        import { cadastrar, logar } from '../script/script.js';
-        
-        function showTab(tabName) {
+    <!-- Load module (served over http) which provides cadastrar/logar and utilities -->
+    <script type="module" id="moduleScript" src="../script/script.js"></script>
+
+    <!-- Controller: UI handlers (non-module) — uses window.cadastrar / window.logar exposed by module -->
+    <script>
+        // Track module load state and enable/disable form actions accordingly
+        window._moduleLoaded = false;
+        const moduleScript = document.getElementById('moduleScript');
+        moduleScript.addEventListener('load', () => {
+            window._moduleLoaded = true;
+            // enable buttons
+            document.querySelectorAll('button[type="submit"]').forEach(b => b.disabled = false);
+            // hide any prior error message about scripts
+            hideMessage();
+            console.log('Module script loaded');
+        });
+        moduleScript.addEventListener('error', () => {
+            window._moduleLoaded = false;
+            showMessage('Não foi possível carregar scripts via http. Verifique o servidor (http) e o caminho.', false);
+            console.error('Failed to load module script:', moduleScript.src);
+        });
+
+        // initially disable submit buttons until module loads
+        document.querySelectorAll('button[type="submit"]').forEach(b => b.disabled = true);
+
+        // small helper to ensure message element exists when called from load/error
+        function ensureMessageEl() {
+            if (!document.getElementById('message')) {
+                const m = document.createElement('div');
+                m.id = 'message';
+                m.className = 'message';
+                document.querySelector('.container').appendChild(m);
+            }
+        }
+
+        ensureMessageEl();
+
+        function showTab(e, tabName) {
             const tabs = document.querySelectorAll('.tab');
             const sections = document.querySelectorAll('.form-section');
-            
+
             tabs.forEach(tab => tab.classList.remove('active'));
             sections.forEach(section => section.classList.remove('active'));
-            
-            event.target.classList.add('active');
+
+            if (e && e.currentTarget) e.currentTarget.classList.add('active');
             document.getElementById(tabName).classList.add('active');
-            
+
             hideMessage();
         }
-        
+
         function showMessage(text, isSuccess) {
             const messageEl = document.getElementById('message');
             messageEl.textContent = text;
             messageEl.className = 'message ' + (isSuccess ? 'success' : 'error');
             messageEl.style.display = 'block';
         }
-        
+
         function hideMessage() {
             const messageEl = document.getElementById('message');
             messageEl.style.display = 'none';
         }
-        
+
         async function handleCadastro(event) {
             event.preventDefault();
-            
+
             const email = document.getElementById('cadastroEmail').value;
             const senha = document.getElementById('cadastroSenha').value;
             const cpf = document.getElementById('cadastroCPF').value;
-            
-            const resultado = await cadastrar(email, senha, cpf);
-            
+
+            if (!window._moduleLoaded || !window.cadastrar) {
+                showMessage('Script não carregado. Sirva os arquivos via http e aguarde o carregamento.', false);
+                return;
+            }
+
+            const resultado = await window.cadastrar(email, senha, cpf);
+
             if (resultado.success) {
                 showMessage('Cadastro realizado com sucesso!', true);
                 document.getElementById('formCadastro').reset();
@@ -258,15 +297,20 @@
                 showMessage('Erro: ' + resultado.message, false);
             }
         }
-        
+
         async function handleLogin(event) {
             event.preventDefault();
-            
+
             const email = document.getElementById('loginEmail').value;
             const senha = document.getElementById('loginSenha').value;
-            
-            const resultado = await logar(email, senha);
-            
+
+            if (!window._moduleLoaded || !window.logar) {
+                showMessage('Script não carregado. Sirva os arquivos via http e aguarde o carregamento.', false);
+                return;
+            }
+
+            const resultado = await window.logar(email, senha);
+
             if (resultado.success) {
                 showMessage('Login realizado com sucesso! Bem-vindo, ' + resultado.data.email, true);
                 document.getElementById('formLogin').reset();
@@ -274,8 +318,7 @@
                 showMessage('Erro: ' + resultado.message, false);
             }
         }
-        
-        // Expor funções globalmente
+
         window.showTab = showTab;
         window.handleCadastro = handleCadastro;
         window.handleLogin = handleLogin;

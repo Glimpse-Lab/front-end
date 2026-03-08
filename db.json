@@ -5,6 +5,12 @@
       "email": "exemplo@email.com",
       "senha": "Senha@123",
       "cpf": "123.456.789-00"
+    },
+    {
+      "email": "pedro@gmail.com",
+      "senha": "Senha!23",
+      "cpf": "123.321.123-32",
+      "id": 2
     }
   ]
 }

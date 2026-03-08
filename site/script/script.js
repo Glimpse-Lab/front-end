@@ -1,4 +1,4 @@
-import { validarCPF, validarEmail, validarSenha } from "./defaultFunctions";
+import { validarCPF, validarEmail, validarSenha } from "./defaultFunctions.js";
 
 async function cadastrar(email, senha, cpf) {
   if (!validarCPF(cpf)) {
@@ -80,3 +80,8 @@ async function logar(email, senha) {
 
 
 export { cadastrar, logar };
+
+if (typeof window !== "undefined") {
+  window.cadastrar = cadastrar;
+  window.logar = logar;
+}
