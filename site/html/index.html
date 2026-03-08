@@ -1,535 +1,502 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
     <title>Página Única</title>
-    <link rel="stylesheet" href="../assets/style.css">
-</head>
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
 
-<body>
-
-<!-------------------------------------- HEADER / NAVBAR -------------->
+  <body>
+    <!-------------------------------------- HEADER / NAVBAR -------------->
     <header class="site-header" id="header">
-        <nav class="navbar container">
+      <nav class="navbar container">
+        <div class="logo" id="logo">
+          <img src="../assets/logo com fundo.png" alt="GLIMPSE-LOGO" />
+        </div>
 
-            <div class="logo" id="logo">
-                <img src="/assets/logo.svg" alt="GLIMPSE-LOGO">
-            </div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#hero">HOME</a></li>
+          <li><a href="#diferenciais">DIFERENCIAIS</a></li>
+          <li><a href="#catalogo">CATÁLOGO</a></li>
+          <li><a href="#projetos">PROJETOS</a></li>
+          <li><a href="#contato">CONTATO</a></li>
+        </ul>
 
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#hero">HOME</a></li>
-                <li><a href="#diferenciais">DIFERENCIAIS</a></li>
-                <li><a href="#catalogo">CATÁLOGO</a></li>
-                <li><a href="#projetos">PROJETOS</a></li>
-                <li><a href="#contato">CONTATO</a></li>
-            </ul>
-
-            <div class="nav-cta">
-            <a href="#" class="btn btn-primary" id="nav-cta-button">
-                Call to Action
-            </a>
-            </div>
-
-        </nav>
+        <div class="nav-cta">
+          <a href="#" class="btn btn-primary" id="nav-cta-button">
+            Call to Action
+          </a>
+        </div>
+      </nav>
     </header>
 
-
-<!---------------------------- HERO ------------------------->
+    <!---------------------------- HERO ------------------------->
     <main>
+      <section class="hero" id="hero">
+        <div class="hero-image" id="hero-image">
+          <img
+            src="../assets/01c50a_b8fb5e9d74fc4397b963dbc146c5088d~mv2.png"
+            alt="Imagem principal"
+          />
+        </div>
 
-        <section class="hero" id="hero">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <h1 id="hero-title">
+              Melhores esquadrias e portas de alumínio para sua residência ou
+              comércio!
+            </h1>
 
-            <div class="container hero-grid">
+            <p id="hero-subtitle">
+              A empresa líder em soluções de esquadrias e portas de alumínio,
+              oferecendo qualidade, inovação e atendimento personalizado para
+              transformar seus projetos em realidade.
+            </p>
 
-                <div class="hero-content">
+            <div class="hero-btn">
+              <a href="#" class="btn btn-primary" id="hero-primary-cta">
+                Solicitar orçamento
+              </a>
 
-                    <h1 id="hero-title">
-                        Grande título impactante
-                    </h1>
-
-                    <p id="hero-subtitle">
-                        Texto introdutório explicando brevemente o valor da empresa.
-                    </p>
-
-                    <div class="hero-btn">
-
-                        <a href="#" class="btn btn-primary" id="hero-primary-cta">
-                        Botão CTA
-                        </a>
-
-                        <a href="#" class="btn btn-secondary" id="hero-secondary-cta">
-                        Botão Secundário
-                        </a>
-
-                    </div>
-
-                </div>
-
-                <div class="hero-image" id="hero-image">
-                <img src="/assets/hero-image.jpg" alt="Imagem principal">
-                </div>
-
+              <a
+                href="#catalogo"
+                class="btn btn-secondary"
+                id="hero-secondary-cta"
+              >
+                Ver catálogo
+              </a>
             </div>
+          </div>
+        </div>
+      </section>
 
-        </section>
-
-
-<!-- ESTATÍSTICAS -->
-    <section class="stats" id="estatisticas">
-
+      <!-- ESTATÍSTICAS -->
+      <section class="stats" id="estatisticas">
         <div class="container stats-grid">
-
-            <article class="stat-item" id="stat-projetos">
+          <article class="stat-item" id="stat-projetos">
             <h3 class="stat-number">500+</h3>
             <p class="stat-label">Projetos</p>
-            </article>
+          </article>
 
-            <article class="stat-item" id="stat-experiencia">
+          <article class="stat-item" id="stat-experiencia">
             <h3 class="stat-number">15+</h3>
             <p class="stat-label">Anos de Experiência</p>
-            </article>
+          </article>
 
-            <article class="stat-item" id="stat-satisfacao">
+          <article class="stat-item" id="stat-satisfacao">
             <h3 class="stat-number">98%</h3>
             <p class="stat-label">Satisfação</p>
-            </article>
+          </article>
 
-            <article class="stat-item" id="stat-cidades">
+          <article class="stat-item" id="stat-cidades">
             <h3 class="stat-number">50+</h3>
             <p class="stat-label">Cidades</p>
-            </article>
-
+          </article>
         </div>
+      </section>
+    </main>
 
+    <section class="diferenciais" id="diferenciais">
+      <div class="container">
+        <header class="section-header">
+          <h2>Por que escolher nossa empresa?</h2>
+        </header>
+
+        <div class="diferenciais-grid">
+          <article class="diferencial-item">
+            <div class="diferencial-icon">
+              <img
+                src="../assets/shield_90dp_1C1C4E_FILL0_wght400_GRAD0_opsz48.png"
+                alt="Ícone diferencial 1"
+              />
+            </div>
+
+            <div class="diferencial-content">
+              <h3>Segurança</h3>
+              <p>
+                Oferecemos soluções de esquadrias e portas de alumínio com
+                altíssima qualidade e segurança, garantindo a proteção de sua
+                residência ou comércio.
+              </p>
+            </div>
+          </article>
+
+          <article class="diferencial-item">
+            <div class="diferencial-icon">
+              <img
+                src="../assets/calendar_clock_65dp_1C1C4E_FILL0_wght400_GRAD0_opsz48.png"
+                alt="Ícone diferencial 2"
+              />
+            </div>
+
+            <div class="diferencial-content">
+              <h3>Prazo de Entrega</h3>
+              <p>
+                Comprometemo-nos com prazos de entrega rigorosos, garantindo que
+                seus projetos sejam concluídos dentro do tempo estipulado.
+              </p>
+            </div>
+          </article>
+
+          <article class="diferencial-item">
+            <div class="diferencial-icon">
+              <img
+                src="../assets/award_star_65dp_1C1C4E_FILL0_wght400_GRAD0_opsz48.png"
+                alt="Ícone diferencial 3"
+              />
+            </div>
+
+            <div class="diferencial-content">
+              <h3>Material de Qualidade</h3>
+              <p>
+                Utilizamos materiais de alta qualidade em todos os nossos
+                produtos, garantindo durabilidade e resistência ao longo do
+                tempo.
+              </p>
+            </div>
+          </article>
+
+          <article class="diferencial-item">
+            <div class="diferencial-icon">
+              <img
+                src="../assets/business_messages_65dp_1C1C4E_FILL0_wght400_GRAD0_opsz48.png"
+                alt="Ícone diferencial 4"
+              />
+            </div>
+
+            <div class="diferencial-content">
+              <h3>Atendimento Personalizado</h3>
+              <p>
+                Oferecemos um atendimento excepcional, adaptando nossas soluções
+                às necessidades específicas de cada cliente.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
 
-</main>
+    <section class="catalogo" id="catalogo">
+      <div class="container">
+        <header class="section-header">
+          <h2>Nosso catálogo de produtos</h2>
+        </header>
 
-<section class="diferenciais" id="diferenciais">
+        <nav class="catalogo-filtros">
+          <button class="filtro">Filtro 1</button>
+          <button class="filtro">Filtro 2</button>
+          <button class="filtro">Filtro 3</button>
+          <button class="filtro">Filtro 4</button>
+        </nav>
 
-  <div class="container">
+        <div class="catalogo-grid">
+          <article class="produto">
+            <div class="produto-img">
+              <img src="../assets/janelaMaximAr.jpg" alt="Produto 1" />
+            </div>
 
-    <header class="section-header">
-      <h2>Por que escolher nossa empresa?</h2>
-    </header>
+            <h3>Janela Maxim Ar</h3>
 
-    <div class="diferenciais-grid">
+            <p>
+              Janela de alumínio com alta qualidade e durabilidade. Perfeita
+              para sua residência ou comércio.
+            </p>
 
-      <article class="diferencial-item">
+            <a href="#" class="btn">Ver produto</a>
+          </article>
 
-        <div class="diferencial-icon">
-          <img src="../assets/icon1.svg" alt="Ícone diferencial 1">
+          <article class="produto">
+            <div class="produto-img">
+              <img
+                src="../assets/porta_pivotante_de_aluminio_branco.jpg"
+                alt="Produto 2"
+              />
+            </div>
+
+            <h3>Porta Pivotante</h3>
+
+            <p>
+              Porta de alumínio com alta qualidade e durabilidade. Perfeita para
+              ambientes residenciais e comerciais.
+            </p>
+
+            <a href="#" class="btn">Ver produto</a>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img src="../assets/portaocomMotor.png" alt="Produto 3" />
+            </div>
+
+            <h3>Portão com Motor(PPA)</h3>
+
+            <p>
+              Portão de alumínio com motor elétrico PPA, oferecendo comodidade e
+              segurança para sua residência ou comércio.
+            </p>
+
+            <a href="#" class="btn">Ver produto</a>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img
+                src="../assets/motor_de_portao_ppa_dz_stark.png"
+                alt="Produto 4"
+              />
+            </div>
+
+            <h3>Motor de Portão PPA</h3>
+
+            <p>
+              Motor elétrico PPA para portões de alumínio, oferecendo segurança
+              e qualidade para sua residência ou comércio.
+            </p>
+
+            <a href="#" class="btn">Ver produto</a>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img
+                src="../assets/janela_veneziana_aluminio_branco_3_folhas.jpg"
+                alt="Produto 5"
+              />
+            </div>
+
+            <h3>Janela Veneziana 3 folhas</h3>
+
+            <p>
+              Janela de alumínio com acabamento branco. Fornece privacidade e
+              beleza para sua casa ou comércio.
+            </p>
+
+            <a href="#" class="btn">Ver produto</a>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img
+                src="../assets/guarda-corpo-de-aluminio-branco-.jpg"
+                alt="Produto 6"
+              />
+            </div>
+
+            <h3>Guarda-Corpo em Alumínio</h3>
+
+            <p>
+              Guarda-corpo de alumínio com acabamento branco, ideal para
+              segurança e estética em sua casa ou comércio.
+            </p>
+
+            <a href="#" class="btn">Ver produto</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!---------- PROJETOS -------------->
+
+    <section class="projetos" id="projetos">
+      <div class="container">
+        <header class="section-header">
+          <h2>Conheça alguns projetos realizados</h2>
+        </header>
+
+        <div class="projeto-destaque">
+          <div class="projeto-img">
+            <video class="video" width="640" height="360" controls>
+              <source src="../assets/WhatsApp Video 2026-03-08 at 13.22.57.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeos.
+            </video>
+          </div>
+
+          <div class="projeto-info">
+            <h3>Instalação de motores PPA Jetflex</h3>
+
+            <p>
+              Instalação de motores PPA Jetflex o mais rápido da categoria.
+              Serviço completo com travas anti-arrombamento e sistema
+              anti-esmagamento. Com esse conjunto você tem mais praticidade,
+              conforto e segurança. Não dê mole para o azar!
+            </p>
+
+            <a href="#" class="btn">Ver projeto</a>
+          </div>
         </div>
 
-        <div class="diferencial-content">
-          <h3>Dif #1</h3>
-          <p>Sobre</p>
+        <div class="projetos-galeria">
+          <img src="../assets/motorJET.jpg" alt="Imagem" />
+          <img src="../assets/trava (1).jpg" alt="Imagem" />
+          <img src="../assets/fotocelula.jpg" alt="Imagem" />
         </div>
+      </div>
+    </section>
 
-      </article>
+    <!-------- DEPOIMENTOS ----------->
 
+    <section class="depoimentos">
+      <h2>O que nossos clientes falam</h2>
 
-      <article class="diferencial-item">
+      <div class="depoimentos-viewport">
+        <div class="depoimentos-track">
+          <div class="pagina">
+            <div class="depoimento-card">
+              <div class="estrelas">★★★★★</div>
+              <p>Excelente atendimento e qualidade impecável no produto.</p>
+              <strong>Carlos Silva</strong>
+            </div>
 
-        <div class="diferencial-icon">
-          <img src="../assets/icon2.svg" alt="Ícone diferencial 2">
+            <div class="depoimento-card">
+              <div class="estrelas">★★★★★</div>
+              <p>Produto muito bem feito e entrega rápida.</p>
+              <strong>Mariana Souza</strong>
+            </div>
+          </div>
+
+          <div class="pagina">
+            <div class="depoimento-card">
+              <div class="estrelas">★★★★★</div>
+              <p>Equipe muito profissional e entrega rápida.</p>
+              <strong>Fernanda Costa</strong>
+            </div>
+
+            <div class="depoimento-card">
+              <div class="estrelas">★★★★★</div>
+              <p>Qualidade excelente e ótimo atendimento.</p>
+              <strong>João Pereira</strong>
+            </div>
+          </div>
         </div>
-
-        <div class="diferencial-content">
-          <h3>Dif #2</h3>
-          <p>Sobre</p>
-        </div>
-
-      </article>
-
-
-      <article class="diferencial-item">
-
-        <div class="diferencial-icon">
-          <img src="../assets/icon3.svg" alt="Ícone diferencial 3">
-        </div>
-
-        <div class="diferencial-content">
-          <h3>Dif #3</h3>
-          <p>Sobre</p>
-        </div>
-
-      </article>
-
-
-      <article class="diferencial-item">
-
-        <div class="diferencial-icon">
-          <img src="../assets/icon4.svg" alt="Ícone diferencial 4">
-        </div>
-
-        <div class="diferencial-content">
-          <h3>Dif #4</h3>
-          <p>Sobre</p>
-        </div>
-
-      </article>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="catalogo" id="catalogo">
-
-  <div class="container">
-
-    <header class="section-header">
-      <h2>Nosso catálogo de produtos</h2>
-    </header>
-
-    <nav class="catalogo-filtros">
-      <button class="filtro">Filtro 1</button>
-      <button class="filtro">Filtro 2</button>
-      <button class="filtro">Filtro 3</button>
-      <button class="filtro">Filtro 4</button>
-    </nav>
-
-    <div class="catalogo-grid">
-
-      <article class="produto">
-
-        <div class="produto-img">
-          <img src="../assets/produto1.jpg" alt="Produto 1">
-        </div>
-
-        <h3>Produto 1</h3>
-
-        <p>Descrição</p>
-
-        <a href="#" class="btn">Ver produto</a>
-
-      </article>
-
-
-      <article class="produto">
-
-        <div class="produto-img">
-          <img src="../assets/produto2.jpg" alt="Produto 2">
-        </div>
-
-        <h3>Produto 2</h3>
-
-        <p>Descrição</p>
-
-        <a href="#" class="btn">Ver produto</a>
-
-      </article>
-
-
-      <article class="produto">
-
-        <div class="produto-img">
-          <img src="../assets/produto3.jpg" alt="Produto 3">
-        </div>
-
-        <h3>Produto 3</h3>
-
-        <p>Descrição</p>
-
-        <a href="#" class="btn">Ver produto</a>
-
-      </article>
-
-
-      <article class="produto">
-
-        <div class="produto-img">
-          <img src="../assets/produto4.jpg" alt="Produto 4">
-        </div>
-
-        <h3>Produto 4</h3>
-
-        <p>Descrição</p>
-
-        <a href="#" class="btn">Ver produto</a>
-
-      </article>
-
-
-      <article class="produto">
-
-        <div class="produto-img">
-          <img src="../assets/produto5.jpg" alt="Produto 5">
-        </div>
-
-        <h3>Produto 5</h3>
-
-        <p>Descrição</p>
-
-        <a href="#" class="btn">Ver produto</a>
-
-      </article>
-
-
-      <article class="produto">
-
-        <div class="produto-img">
-          <img src="../assets/produto6.jpg" alt="Produto 6">
-        </div>
-
-        <h3>Produto 6</h3>
-
-        <p>Descrição</p>
-
-        <a href="#" class="btn">Ver produto</a>
-
-      </article>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!---------- PROJETOS -------------->
-
-<section class="projetos" id="projetos">
-
-  <div class="container">
-
-    <header class="section-header">
-      <h2>Conheça alguns projetos realizados</h2>
-    </header>
-
-    <div class="projeto-destaque">
-
-      <div class="projeto-img">
-        <img src="../assets/projeto1.jpg" alt="Imagem">
       </div>
 
-      <div class="projeto-info">
+      <div class="controles">
+        <button class="nav-btn anterior">Anterior</button>
 
-        <h3>Título do projeto</h3>
+        <div class="indicadores">
+          <span class="dot ativo"></span>
+          <span class="dot"></span>
+        </div>
 
-        <p>
-          Descrição detalhada do projeto
-          e seus diferenciais
+        <button class="nav-btn proxima">Próxima</button>
+      </div>
+    </section>
+
+    <!---------------- SOBRE --------------->
+
+    <section class="about">
+      <div class="container">
+        <p class="about-intro">
+          Atuamos no mercado há mais de 10 anos entregando soluções de alta
+          qualidade para clientes em todo o país. Nosso compromisso é unir
+          tecnologia, inovação e atendimento personalizado.
         </p>
 
-        <a href="#" class="btn">Ver projeto</a>
+        <p class="about-cta">
+          Quer saber como podemos ajudar no seu próximo projeto?
+        </p>
 
+        <a href="/contato" class="btn-primary"> Solicitar orçamento </a>
       </div>
+    </section>
 
-    </div>
-
-
-    <div class="projetos-galeria">
-
-      <img src="../assets/projeto2.jpg" alt="Imagem">
-      <img src="../assets/projeto3.jpg" alt="Imagem">
-      <img src="../assets/projeto4.jpg" alt="Imagem">
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-------- DEPOIMENTOS ----------->
-
-<section class="depoimentos">
-
-  <h2>O que nossos clientes falam</h2>
-
-  <div class="depoimentos-viewport">
-    
-    <div class="depoimentos-track">
-
-      <div class="pagina">
-        <div class="depoimento-card">
-          <div class="estrelas">★★★★★</div>
-          <p>Excelente atendimento e qualidade impecável no produto.</p>
-          <strong>Carlos Silva</strong>
-        </div>
-
-        <div class="depoimento-card">
-          <div class="estrelas">★★★★★</div>
-          <p>Produto muito bem feito e entrega rápida.</p>
-          <strong>Mariana Souza</strong>
-        </div>
-      </div>
-
-      <div class="pagina">
-        <div class="depoimento-card">
-          <div class="estrelas">★★★★★</div>
-          <p>Equipe muito profissional e entrega rápida.</p>
-          <strong>Fernanda Costa</strong>
-        </div>
-
-        <div class="depoimento-card">
-          <div class="estrelas">★★★★★</div>
-          <p>Qualidade excelente e ótimo atendimento.</p>
-          <strong>João Pereira</strong>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="controles">
-
-    <button class="nav-btn anterior">Anterior</button>
-
-    <div class="indicadores">
-      <span class="dot ativo"></span>
-      <span class="dot"></span>
-    </div>
-
-    <button class="nav-btn proxima">Próxima</button>
-
-  </div>
-
-</section>
-
-
-<!---------------- SOBRE --------------->
-
-<section class="about">
-
-  <div class="container">
-
-    <p class="about-intro">
-      Atuamos no mercado há mais de 10 anos entregando soluções
-      de alta qualidade para clientes em todo o país.
-      Nosso compromisso é unir tecnologia, inovação e
-      atendimento personalizado.
-    </p>
-
-    <p class="about-cta">
-      Quer saber como podemos ajudar no seu próximo projeto?
-    </p>
-
-    <a href="/contato" class="btn-primary">
-      Solicitar orçamento
-    </a>
-
-  </div>
-
-</section>
-
-<!-------------- PRINCIPAL ------------>
-<section class="main-cta">
-
-    <div class="container">
-
-        <h2>
-        GRANDE TÍTULO CHAMANDO PARA AÇÃO 
-        </h2>
+    <!-------------- PRINCIPAL ------------>
+    <section class="main-cta">
+      <div class="container">
+        <h2>NÃO FIQUE DE FORA!</h2>
 
         <p class="cta-subtitle">
-        Subtítulo destacado em cor 
+          Venha ja solicitar seu orçamento! Modernizar sua residencia ou empresa
+          com as melhores soluções em esquadrias do mercado.
         </p>
 
-        <a href="/contato" class="btn-main">
-        Falar com especialista
-        </a>
+        <a href="/contato" class="btn-main"> Falar com especialista </a>
+      </div>
+    </section>
 
-    </div>
+    <!------------------- FOOTER ------------->
 
-</section>
+    <footer class="footer">
+      <div class="footer-container">
+        <a  class="footer-logo" href="https://www.instagram.com/gpm.esquadrias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+           <video class="video" width="90" height="90" volume="0" autoplay loop muted>
+              <source src="../assets/logoMovel.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeos.
+            </video>
+          <p class="instagram">Instagram</p>
+          </a>
 
-<!------------------- FOOTER ------------->
+        <div class="footer-links">
+          <h3>Institucional</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Projetos</a></li>
+          </ul>
+        </div>
 
-<footer class="footer">
+        <div class="footer-links">
+          <h3>Produtos</h3>
+          <ul>
+            <li><a href="#">Categoria 1</a></li>
+            <li><a href="#">Categoria 2</a></li>
+            <li><a href="#">Categoria 3</a></li>
+          </ul>
+        </div>
 
-  <div class="footer-container">
+        <div class="footer-contato">
+          <h3>Contato</h3>
+          <ul>
+            <li>Email: gpm.esquadrias25@gmail.com</li>
+            <li>Telefone: (11) 94117-0990</li>
+            <li>WhatsApp: (11) 94117-0990</li>
+          </ul>
+        </div>
+      </div>
 
-    <div class="footer-logo">
-      <img src="logo.png" alt="GLIMPSE-LOGO">
-      <p class="instagram">Instagram</p>
-    </div>
-
-    <div class="footer-links">
-      <h3>Institucional</h3>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Sobre</a></li>
-        <li><a href="#">Projetos</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-links">
-      <h3>Produtos</h3>
-      <ul>
-        <li><a href="#">Categoria 1</a></li>
-        <li><a href="#">Categoria 2</a></li>
-        <li><a href="#">Categoria 3</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-contato">
-      <h3>Contato</h3>
-      <ul>
-        <li>Email: contato@empresa.com</li>
-        <li>Telefone: (11) 99999-9999</li>
-        <li>WhatsApp: (11) 98888-8888</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="footer-copy">
-    © 2026 Empresa. Todos os direitos reservados.
-  </div>
-
-</footer>
-
-
-</body>
+      <div class="footer-copy">
+        © 2026 Glimpse/GPM Esquadrias. Todos os direitos reservados.
+      </div>
+    </footer>
+  </body>
 </html>
 
 <script>
-  const track = document.querySelector(".depoimentos-track")
-  const pages = document.querySelectorAll(".pagina")
+  const track = document.querySelector(".depoimentos-track");
+  const pages = document.querySelectorAll(".pagina");
 
-  const prevBtn = document.querySelector(".anterior")
-  const nextBtn = document.querySelector(".proxima")
-  const dots = document.querySelectorAll(".dot")
+  const prevBtn = document.querySelector(".anterior");
+  const nextBtn = document.querySelector(".proxima");
+  const dots = document.querySelectorAll(".dot");
 
-  let index = 0
+  let index = 0;
 
-  function updateCarousel(){
+  function updateCarousel() {
+    track.style.transform = `translateX(-${index * 100}%)`;
 
-    track.style.transform = `translateX(-${index * 100}%)`
-
-    dots.forEach(dot => dot.classList.remove("ativo"))
-    dots[index].classList.add("ativo")
-
+    dots.forEach((dot) => dot.classList.remove("ativo"));
+    dots[index].classList.add("ativo");
   }
 
   nextBtn.addEventListener("click", () => {
+    index++;
 
-    index++
-
-    if(index >= pages.length){
-      index = 0
+    if (index >= pages.length) {
+      index = 0;
     }
 
-    updateCarousel()
-
-  })
+    updateCarousel();
+  });
 
   prevBtn.addEventListener("click", () => {
+    index--;
 
-    index--
-
-    if(index < 0){
-      index = pages.length - 1
+    if (index < 0) {
+      index = pages.length - 1;
     }
 
-    updateCarousel()
-
-  })
-
-
-
+    updateCarousel();
+  });
 </script>
