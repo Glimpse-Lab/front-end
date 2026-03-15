@@ -17,7 +17,7 @@ async function cadastrar(email, senha, cpf) {
   }
 
   try {
-    const response = await fetch("http://localhost:3000/usuarios", {
+    const response = await fetch("http://localhost:3300/usuarios", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ async function logar(email, senha) {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/usuarios?email=${encodeURIComponent(email)}`);
+    const response = await fetch(`http://localhost:3300/usuarios?email=${encodeURIComponent(email)}`);
     
     if (!response.ok) {
       throw new Error("Erro ao buscar usuário");

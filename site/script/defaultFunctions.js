@@ -11,8 +11,17 @@ function validarEmail(email) {
 }
 
 function validarCPF(cpf) {
-    const regex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-    return regex.test(cpf);
+    const cpfLimpo = cpf.replace(/\D/g, '');
+    
+    if (cpfLimpo.length !== 11) {
+        return false;
+    }
+    
+    if (/^(\d)\1{10}$/.test(cpfLimpo)) {
+        return false;
+    }
+    
+    return true;
 }
 
 function validarTelefone(telefone) {

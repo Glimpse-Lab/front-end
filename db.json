@@ -11,6 +11,18 @@
       "senha": "Senha!23",
       "cpf": "123.321.123-32",
       "id": 2
+    },
+    {
+      "email": "pedro@gmail.com",
+      "senha": "Senha!23",
+      "cpf": "12233221234",
+      "id": 3
+    },
+    {
+      "email": "pedro@gmail.com",
+      "senha": "Teste!23",
+      "cpf": "32212321234",
+      "id": 4
     }
   ]
 }
