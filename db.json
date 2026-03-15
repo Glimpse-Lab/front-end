@@ -23,6 +23,18 @@
       "senha": "Teste!23",
       "cpf": "32212321234",
       "id": 4
+    },
+    {
+      "email": "pedro@gmail.com",
+      "senha": "Senha!23",
+      "cpf": "31231231231",
+      "id": 5
+    },
+    {
+      "email": "pedro@gmail.com",
+      "senha": "Senha@34",
+      "cpf": "45343463634",
+      "id": 6
     }
   ]
 }

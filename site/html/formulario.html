@@ -178,7 +178,7 @@
                 
                 <div class="form-group">
                     <label for="cadastroCPF">CPF:</label>
-                    <input type="text" id="cadastroCPF" placeholder="123.456.789-00" required>
+                    <input maxlength="11" type="text" id="cadastroCPF" placeholder="123.456.789-00" required>
                 </div>
                 
                 <button type="submit">Cadastrar</button>
@@ -212,6 +212,7 @@
         </div>
         
         <div id="message" class="message"></div>
+        
     </div>
     
     <!-- Load module (served over http) which provides cadastrar/logar and utilities -->
