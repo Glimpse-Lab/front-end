@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glimpse - Desenvolvimento de Software</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../public/assets/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="#" class="navbar-logo">
+                <img class="logo" src="../public/assets/logo-2-blink-Nobkg.png" alt="Glimpse">
+                <span class="logo-text">Glimpse</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="nav-menu desktop-only">
+                <a href="#services" class="nav-link">Serviços</a>
+                <a href="#technologies" class="nav-link">Tecnologias</a>
+                <a href="#about" class="nav-link">Sobre</a>
+                <a href="#contact" class="nav-link">Contato</a>
+            </div>
+
+            <!-- CTA Button -->
+            <button class="cta-button desktop-only">Começar Projeto</button>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+                <svg class="close-icon hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-menu hidden" id="mobileMenu">
+            <a href="#services" class="mobile-nav-link">Serviços</a>
+            <a href="#technologies" class="mobile-nav-link">Tecnologias</a>
+            <a href="#about" class="mobile-nav-link">Sobre</a>
+            <a href="#contact" class="mobile-nav-link">Contato</a>
+            <button class="cta-button mobile-cta">Começar Projeto</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background" style="background-image: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663372485445/FCgbQncXm6wWG2KRnqby63/hero-banner-NWXMYA9AfypQ4DBTpwwdnF.webp')"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="container hero-content">
+            <h1 class="hero-title">Soluções Tecnológicas que Transformam Negócios</h1>
+            <p class="hero-subtitle">Desenvolvemos sites e aplicações modernas utilizando as melhores tecnologias: JavaScript, Java, HTML e CSS. Transformamos ideias em produtos digitais de alta qualidade.</p>
+            
+            <div class="hero-buttons">
+                <button class="btn btn-primary">
+                    Iniciar Projeto
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+                <button class="btn btn-secondary">Conhecer Mais</button>
+            </div>
+        </div>
+
+        <div class="hero-divider"></div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nossos Serviços</h2>
+                <div class="accent-line"></div>
+                <p class="section-subtitle">Oferecemos soluções tecnológicas completas para transformar sua visão em realidade digital.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Desenvolvimento Web</h3>
+                    <p>Criamos sites modernos e responsivos utilizando as melhores práticas de desenvolvimento com JavaScript, HTML e CSS.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <h3>Aplicações Personalizadas</h3>
+                    <p>Desenvolvemos aplicações Java robustas e escaláveis para resolver problemas complexos do seu negócio.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Performance Otimizada</h3>
+                    <p>Garantimos velocidade, eficiência e excelente experiência do usuário em todos os nossos projetos.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3>Segurança em Primeiro Lugar</h3>
+                    <p>Implementamos as melhores práticas de segurança para proteger seus dados e os de seus usuários.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technologies Section -->
+    <section id="technologies" class="technologies">
+        <div class="container">
+            <div class="tech-grid">
+                <div class="tech-image">
+                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663372485445/FCgbQncXm6wWG2KRnqby63/technology-stack-dV6q4Ui2LEypHPj2cQE3zw.webp" alt="Technology Stack">
+                </div>
+
+                <div class="tech-content">
+                    <h2 class="section-title">Stack Tecnológico</h2>
+                    <div class="accent-line"></div>
+                    <p class="section-subtitle">Utilizamos as tecnologias mais modernas e confiáveis do mercado para garantir soluções de alta qualidade, performance e escalabilidade.</p>
+
+                    <div class="tech-categories">
+                        <div class="tech-category">
+                            <h3>Frontend</h3>
+                            <div class="tech-tags">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">TypeScript</span>
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-category">
+                            <h3>Backend</h3>
+                            <div class="tech-tags">
+                                <span class="tech-tag">Java</span>
+                                <span class="tech-tag">Spring Boot</span>
+                                <span class="tech-tag">Node.js</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-category">
+                            <h3>Database</h3>
+                            <div class="tech-tags">
+                                <span class="tech-tag">MySQL</span>
+                                <span class="tech-tag">SQL Server</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-category">
+                            <h3>DevOps</h3>
+                            <div class="tech-tags">
+                                <span class="tech-tag">Docker</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title">Sobre a Glimpse</h2>
+                    <div class="accent-line"></div>
+                    <p class="about-text">Somos uma empresa especializada em desenvolvimento de soluções tecnológicas inovadoras. Com uma equipe dedicada de desenvolvedores, criamos sites e aplicações que não apenas funcionam perfeitamente, mas também proporcionam excelente experiência ao usuário.</p>
+                    <p class="about-text">Nossa missão é transformar ideias em produtos digitais de alta qualidade, utilizando as melhores práticas de desenvolvimento e as tecnologias mais modernas do mercado.</p>
+
+                    <div class="highlights">
+                        <div class="highlight-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            <span>Equipe de especialistas em desenvolvimento web</span>
+                        </div>
+                        <div class="highlight-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            <span>Mais de 50 projetos entregues com sucesso</span>
+                        </div>
+                        <div class="highlight-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            <span>Comprometidos com qualidade e inovação</span>
+                        </div>
+                        <div class="highlight-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            <span>Suporte contínuo e manutenção de projetos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-image">
+                    <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663372485445/FCgbQncXm6wWG2KRnqby63/code-visualization-LVx49eQMd63FQq6mmBcHq3.webp" alt="Code Visualization">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title section-title-center">Entre em Contato</h2>
+            <div class="accent-line accent-line-center"></div>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p class="contact-intro">Tem uma ideia para um projeto? Gostaria de saber mais sobre nossos serviços? Entre em contato conosco!</p>
+
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="1"></circle>
+                                    <path d="M4 12c0-1.657.895-3.107 2.228-3.904"></path>
+                                    <path d="M19.772 8.096C21.105 8.893 22 10.343 22 12"></path>
+                                    <path d="M4 12c0 1.657.895 3.107 2.228 3.904"></path>
+                                    <path d="M19.772 15.904C21.105 15.107 22 13.657 22 12"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Email</h3>
+                                <p>contato@glimpse.com</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Telefone</h3>
+                                <p>(11) 98765-4321</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Localização</h3>
+                                <p>São Paulo, SP - Brasil</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" id="name" name="name" required placeholder="Seu nome">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Mensagem</label>
+                            <textarea id="message" name="message" required rows="5" placeholder="Sua mensagem aqui..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">Enviar Mensagem</button>
+                    </form>
+
+                    <div class="form-success hidden" id="formSuccess">
+                        <div class="success-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Mensagem Enviada!</h3>
+                        <p>Obrigado por entrar em contato. Responderemos em breve.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-box">GS</div>
+                        <span>Glimpse</span>
+                    </div>
+                    <p>Transformando ideias em soluções tecnológicas inovadoras.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Navegação</h3>
+                    <ul>
+                        <li><a href="#services">Serviços</a></li>
+                        <li><a href="#technologies">Tecnologias</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Serviços</h3>
+                    <ul>
+                        <li><a href="#">Desenvolvimento Web</a></li>
+                        <li><a href="#">Aplicações Java</a></li>
+                        <li><a href="#">Consultoria Tech</a></li>
+                        <li><a href="#">Manutenção</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul>
+                        <li><a href="mailto:glimpse@techsolutions.com">glimpse@techsolutions.com</a></li>
+                        <li><a href="tel:+5511987654321">(11) 98765-4321</a></li>
+                        <li>São Paulo, SP - Brasil</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Glimpse Solutions. Todos os direitos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Política de Privacidade</a>
+                    <a href="#">Termos de Serviço</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
