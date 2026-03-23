@@ -9,10 +9,11 @@
   </head>
 
   <body>
+    <script src="../script/produtos.js" defer></script>
     <!-------------------------------------- HEADER / NAVBAR -------------->
     <header class="site-header" id="header">
       <nav class="navbar container">
-        <div class="logo" id="logo">
+        <div onclick="window.location.href=`formulario.html`" class="logo" id="logo">
           <img src="../assets/logo com fundo.png" alt="GLIMPSE-LOGO" />
         </div>
 
@@ -21,12 +22,12 @@
           <li><a href="#diferenciais">DIFERENCIAIS</a></li>
           <li><a href="#catalogo">CATÁLOGO</a></li>
           <li><a href="#projetos">PROJETOS</a></li>
-          <li><a href="#contato">CONTATO</a></li>
+          <li><a href="#footer">CONTATO</a></li>
         </ul>
 
         <div class="nav-cta">
-          <a href="formulario.html" class="btn btn-primary" id="nav-cta-button">
-            Cadastro
+          <a onclick="" class="btn btn-primary" id="nav-cta-button">
+            Solicitar orçamento
           </a>
         </div>
       </nav>
@@ -56,16 +57,16 @@
             </p>
 
             <div class="hero-btn">
-              <a href="#" class="btn btn-primary" id="hero-primary-cta">
+              <!-- <a href="#" class="btn btn-primary" id="hero-primary-cta">
                 Solicitar orçamento
-              </a>
+              </a> -->
 
               <a
-                href="#catalogo"
+                href="projetos.html"
                 class="btn btn-secondary"
                 id="hero-secondary-cta"
               >
-                Ver catálogo
+                Ver projetos
               </a>
             </div>
           </div>
@@ -204,7 +205,7 @@
               para sua residência ou comércio.
             </p>
 
-            <a href="#" class="btn">Ver produto</a>
+            <button class="btn" onclick="abrirModalProduto(produtos[0])">Ver produto</button>
           </article>
 
           <article class="produto">
@@ -222,7 +223,7 @@
               ambientes residenciais e comerciais.
             </p>
 
-            <a href="#" class="btn">Ver produto</a>
+            <button class="btn" onclick="abrirModalProduto(produtos[1])">Ver produto</button>
           </article>
 
           <article class="produto">
@@ -237,7 +238,7 @@
               segurança para sua residência ou comércio.
             </p>
 
-            <a href="#" class="btn">Ver produto</a>
+            <button class="btn" onclick="abrirModalProduto(produtos[2])">Ver produto</button>
           </article>
 
           <article class="produto">
@@ -255,7 +256,7 @@
               e qualidade para sua residência ou comércio.
             </p>
 
-            <a href="#" class="btn">Ver produto</a>
+            <button class="btn" onclick="abrirModalProduto(produtos[3])">Ver produto</button>
           </article>
 
           <article class="produto">
@@ -273,7 +274,7 @@
               beleza para sua casa ou comércio.
             </p>
 
-            <a href="#" class="btn">Ver produto</a>
+            <button class="btn" onclick="abrirModalProduto(produtos[4])">Ver produto</button>
           </article>
 
           <article class="produto">
@@ -291,7 +292,7 @@
               segurança e estética em sua casa ou comércio.
             </p>
 
-            <a href="#" class="btn">Ver produto</a>
+            <button class="btn" onclick="abrirModalProduto(produtos[5])">Ver produto</button>
           </article>
         </div>
       </div>
@@ -323,7 +324,7 @@
               conforto e segurança. Não dê mole para o azar!
             </p>
 
-            <a href="#" class="btn">Ver projeto</a>
+            <a href="projetos.html" class="btn">Ver projeto</a>
           </div>
         </div>
 
@@ -418,7 +419,7 @@
 
     <!------------------- FOOTER ------------->
 
-    <footer class="footer">
+    <footer id="footer" class="footer">
       <div class="footer-container">
         <a  class="footer-logo" href="https://www.instagram.com/gpm.esquadrias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
            <video class="video" width="90" height="90" volume="0" autoplay loop muted>
@@ -461,6 +462,10 @@
       </div>
     </footer>
   </body>
+    <!-- Modal de Produto -->
+    <div id="produto-modal-catalogo">
+      <div class="modal-content"></div>
+    </div>
 </html>
 
 <script>
