@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
     <title>Teste - Cadastro e Login</title>
     <style>
         * {
@@ -11,7 +12,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -21,33 +22,33 @@
             align-items: center;
             padding: 20px;
         }
-        
+
         .container {
             background: white;
             border-radius: 10px;
             padding: 40px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             max-width: 400px;
             width: 100%;
         }
-        
+
         h2 {
             color: #333;
             margin-bottom: 30px;
             text-align: center;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         label {
             display: block;
             margin-bottom: 5px;
             color: #555;
             font-weight: bold;
         }
-        
+
         input {
             width: 100%;
             padding: 12px;
@@ -56,12 +57,12 @@
             font-size: 14px;
             transition: border 0.3s;
         }
-        
+
         input:focus {
             outline: none;
             border-color: #667eea;
         }
-        
+
         button {
             width: 100%;
             padding: 12px;
@@ -75,39 +76,39 @@
             transition: transform 0.2s;
             margin-top: 10px;
         }
-        
+
         button:hover {
             transform: translateY(-2px);
         }
-        
+
         button:active {
             transform: translateY(0);
         }
-        
+
         .message {
             margin-top: 20px;
             padding: 12px;
             border-radius: 5px;
             display: none;
         }
-        
+
         .message.success {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        
+
         .message.error {
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        
+
         .tabs {
             display: flex;
             margin-bottom: 30px;
         }
-        
+
         .tab {
             flex: 1;
             padding: 12px;
@@ -118,28 +119,28 @@
             font-weight: bold;
             transition: background 0.3s;
         }
-        
+
         .tab:first-child {
             border-radius: 5px 0 0 0;
         }
-        
+
         .tab:last-child {
             border-radius: 0 5px 0 0;
         }
-        
+
         .tab.active {
             background: white;
             color: #667eea;
         }
-        
+
         .form-section {
             display: none;
         }
-        
+
         .form-section.active {
             display: block;
         }
-        
+
         .info {
             margin-top: 20px;
             padding: 15px;
@@ -148,22 +149,23 @@
             font-size: 12px;
             color: #004085;
         }
-        
+
         .info strong {
             display: block;
             margin-bottom: 5px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Sistema de Cadastro e Login</h2>
-        
+
         <div class="tabs">
             <button class="tab active" onclick="showTab(event, 'cadastro')">Cadastro</button>
             <button class="tab" onclick="showTab(event, 'login')">Login</button>
         </div>
-        
+
         <!-- Formulário de Cadastro -->
         <div id="cadastro" class="form-section active">
             <form id="formCadastro" onsubmit="handleCadastro(event)">
@@ -171,30 +173,38 @@
                     <label for="cadastroEmail">Email:</label>
                     <input type="email" id="cadastroEmail" placeholder="exemplo@email.com" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="cadastroSenha">Senha:</label>
-                    <input type="password" id="cadastroSenha" placeholder="Mínimo 8 caracteres" required>
+                    <input oninput="alterarValidacoes()" type="password" id="cadastroSenha" placeholder="Mínimo 8 caracteres" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="cadastroCPF">CPF:</label>
                     <input maxlength="11" type="text" id="cadastroCPF" placeholder="123.456.789-00" required>
                 </div>
-                
+
                 <button type="submit">Cadastrar</button>
             </form>
-            
+
             <div class="info">
                 <strong>Requisitos da senha:</strong>
                 • Mínimo 8 caracteres<br>
-                • 1 letra maiúscula<br>
-                • 1 letra minúscula<br>
-                • 1 número<br>
-                • 1 caractere especial (@$!%*?&)
+                <p id="maiusculaSenha">
+                    • 1 letra maiúscula
+                </p>
+                <p id="minúsculaSenha">
+                    • 1 letra minúscula<br>
+                </p>
+                <p id="numeralSenha">
+                    • 1 número<br>
+                </p>
+                <p id="especialSenha">
+                    • 1 caractere especial (@$!%*?&)
+                </p>
             </div>
         </div>
-        
+
         <!-- Formulário de Login -->
         <div id="login" class="form-section">
             <form id="formLogin" onsubmit="handleLogin(event)">
@@ -202,20 +212,20 @@
                     <label for="loginEmail">Email:</label>
                     <input type="email" id="loginEmail" placeholder="exemplo@email.com" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="loginSenha">Senha:</label>
                     <input type="password" id="loginSenha" placeholder="Sua senha" required>
                 </div>
-                
+
                 <button type="submit">Entrar</button>
             </form>
         </div>
-        
+
         <div id="message" class="message"></div>
-        
+
     </div>
-    
+
     <!-- Load module (served over http) which provides cadastrar/logar and utilities -->
     <script type="module" id="moduleScript" src="../script/script.js"></script>
 
@@ -249,6 +259,15 @@
                 m.className = 'message';
                 document.querySelector('.container').appendChild(m);
             }
+        }
+
+        function alterarValidacoes() {
+            let senhaValid = document.getElementById('cadastroSenha').value;
+        
+            document.getElementById('maiusculaSenha').style.color = /[A-Z]/.test(senhaValid) ? 'green' : '#red';
+            document.getElementById('minúsculaSenha').style.color = /[a-z]/.test(senhaValid) ? 'green' : '#red';
+            document.getElementById('numeralSenha').style.color = /[0-9]/.test(senhaValid) ? 'green' : '#red';
+            document.getElementById('especialSenha').style.color = /[@$!%*?&]/.test(senhaValid) ? 'green' : '#red';
         }
 
         ensureMessageEl();
@@ -326,4 +345,5 @@
         window.handleLogin = handleLogin;
     </script>
 </body>
+
 </html>

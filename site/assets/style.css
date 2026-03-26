@@ -61,6 +61,17 @@ section:nth-of-type(even) {
   padding: 5px 0;
 }
 
+.redRestrito {
+  position: absolute;
+  top: 70px;
+  right: 110px;
+  color: #000000;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
 
 /* LOGO */
 
