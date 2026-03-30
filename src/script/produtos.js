@@ -5,9 +5,9 @@ const produtos = [
     description: "Janela de alumínio com alta qualidade",
     fullDescription: "Janela de alumínio com alta qualidade e durabilidade. Oferece excelente ventilação e é perfeita para sua residência ou comércio. Construída com alumínio reforçado e vidro temperado de segurança.",
     images: [
-      "../assets/janelaMaximAr.jpg",
-      "../assets/janela_veneziana_aluminio_branco_3_folhas.jpg",
-      "../assets/porta_pivotante_de_aluminio_branco.jpg"
+      "/src/assets/janelaMaximAr.jpg",
+      "/src/assets/janela_veneziana_aluminio_branco_3_folhas.jpg",
+      "/src/assets/porta_pivotante_de_aluminio_branco.jpg"
     ],
     price: "R$ 450,00 a 850,00",
     material: "Alumínio",
@@ -19,9 +19,9 @@ const produtos = [
     description: "Porta de alumínio com alta qualidade",
     fullDescription: "Porta de alumínio com acabamento elegante e vidro temperado de alta segurança. Ideal para ambientes residenciais e comerciais modernos. Oferece isolamento térmico e acústico superior.",
     images: [
-      "../assets/porta_pivotante_de_aluminio_branco.jpg",
-      "../assets/guarda-corpo-de-aluminio-branco-.jpg",
-      "../assets/janelaMaximAr.jpg"
+      "/src/assets/porta_pivotante_de_aluminio_branco.jpg",
+      "/src/assets/guarda-corpo-de-aluminio-branco-.jpg",
+      "/src/assets/janelaMaximAr.jpg"
     ],
     price: "R$ 1.200,00 a 2.500,00",
     material: "Alumínio com vidro temperado",
@@ -33,9 +33,9 @@ const produtos = [
     description: "Portão de alumínio com motor elétrico",
     fullDescription: "Portão de alumínio com motor elétrico PPA, oferecendo comodidade, segurança e automação para sua residência ou comércio. Sistema anti-esmagamento e travas anti-arrombamento inclusos.",
     images: [
-      "../assets/portaocomMotor.png",
-      "../assets/motorJET.jpg",
-      "../assets/motor_de_portao_ppa_dz_stark.png"
+      "/src/assets/portaocomMotor.png",
+      "/src/assets/motorJET.jpg",
+      "/src/assets/motor_de_portao_ppa_dz_stark.png"
     ],
     price: "R$ 2.800,00 a 5.000,00",
     material: "Alumínio com motor PPA",
@@ -47,9 +47,9 @@ const produtos = [
     description: "Motor elétrico para portões automáticos",
     fullDescription: "Motor elétrico PPA para portões de alumínio, oferecendo operação silenciosa, segura e confiável. Compatível com sistemas de controle remoto wireless e sensores de segurança.",
     images: [
-      "../assets/motor_de_portao_ppa_dz_stark.png",
-      "../assets/motorJET.jpg",
-      "../assets/portaocomMotor.png"
+      "/src/assets/motor_de_portao_ppa_dz_stark.png",
+      "/src/assets/motorJET.jpg",
+      "/src/assets/portaocomMotor.png"
     ],
     price: "R$ 800,00 a 1.500,00",
     material: "Motor PPA",
@@ -61,9 +61,9 @@ const produtos = [
     description: "Janela com acabamento branco",
     fullDescription: "Janela veneziana de alumínio branco com 3 folhas de vidro e sistema de ventilação avançado. Fornece privacidade, beleza e controle de luz natural para sua casa ou comércio.",
     images: [
-      "../assets/janela_veneziana_aluminio_branco_3_folhas.jpg",
-      "../assets/janela_veneziana_aluminio_branco_3_folhas.png",
-      "../assets/janelaMaximAr.jpg"
+      "/src/assets/janela_veneziana_aluminio_branco_3_folhas.jpg",
+      "/src/assets/janela_veneziana_aluminio_branco_3_folhas.png",
+      "/src/assets/janelaMaximAr.jpg"
     ],
     price: "R$ 600,00 a 1.200,00",
     material: "Alumínio branco",
@@ -75,9 +75,9 @@ const produtos = [
     description: "Guarda-corpo com acabamento branco",
     fullDescription: "Guarda-corpo de alumínio com acabamento branco de alta qualidade, ideal para segurança e estética em sua casa ou comércio. Segue normas de segurança e resiste a intempéries.",
     images: [
-      "../assets/guarda-corpo-de-aluminio-branco-.jpg",
-      "../assets/porta_pivotante_de_aluminio_branco.jpg",
-      "../assets/janelaMaximAr.jpg"
+      "/src/assets/guarda-corpo-de-aluminio-branco-.jpg",
+      "/src/assets/porta_pivotante_de_aluminio_branco.jpg",
+      "/src/assets/janelaMaximAr.jpg"
     ],
     price: "R$ 300,00 a 700,00",
     material: "Alumínio branco",

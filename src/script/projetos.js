@@ -5,9 +5,9 @@ let projetos = [
     description: "Solução elegante e segura",
     fullDescription: "Guarda-corpo de alumínio branco de alta qualidade, oferecendo segurança e elegância para qualquer ambiente. Ideal para varandas, escadas e áreas externas.",
     images: [
-      "../assets/guarda-corpo-de-aluminio-branco-.jpg",
-      "../assets/porta_pivotante_de_aluminio_branco.jpg",
-      "../assets/janelaMaximAr.jpg"
+      "/src/assets/guarda-corpo-de-aluminio-branco-.jpg",
+      "/src/assets/porta_pivotante_de_aluminio_branco.jpg",
+      "/src/assets/janelaMaximAr.jpg"
     ],
     location: "São Paulo, SP",
     date: "Março 2026"
@@ -18,9 +18,9 @@ let projetos = [
     description: "Segurança premium para portas",
     fullDescription: "Sistema completo de travas e fechaduras de alumínio, garantindo máxima segurança e durabilidade. Instalação profissional incluída.",
     images: [
-      "../assets/trava (1).jpg",
-      "../assets/trava.jpg",
-      "../assets/portaocomMotor.png"
+      "/src/assets/trava (1).jpg",
+      "/src/assets/trava.jpg",
+      "/src/assets/portaocomMotor.png"
     ],
     location: "Rio de Janeiro, RJ",
     date: "Fevereiro 2026"
@@ -31,9 +31,9 @@ let projetos = [
     description: "Automação inteligente",
     fullDescription: "Motor de portão automático de última geração com sistema de segurança avançado. Controle remoto wireless incluído para facilitar o acesso.",
     images: [
-      "../assets/motorJET.jpg",
-      "../assets/motor_de_portao_ppa_dz_stark.png",
-      "../assets/portaocomMotor.png"
+      "/src/assets/motorJET.jpg",
+      "/src/assets/motor_de_portao_ppa_dz_stark.png",
+      "/src/assets/portaocomMotor.png"
     ],
     location: "Belo Horizonte, MG",
     date: "Janeiro 2026"
@@ -44,9 +44,9 @@ let projetos = [
     description: "Ventilação e privacidade",
     fullDescription: "Janelas venezianas de alumínio branco com 3 folhas de vidro, oferecendo perfeita ventilação e controle de luz natural.",
     images: [
-      "../assets/janela_veneziana_aluminio_branco_3_folhas.jpg",
-      "../assets/janelaMaximAr.jpg",
-      "../assets/janela_veneziana_aluminio_branco_3_folhas.png"
+      "/src/assets/janela_veneziana_aluminio_branco_3_folhas.jpg",
+      "/src/assets/janelaMaximAr.jpg",
+      "/src/assets/janela_veneziana_aluminio_branco_3_folhas.png"
     ],
     location: "Brasília, DF",
     date: "Dezembro 2025"
@@ -57,9 +57,9 @@ let projetos = [
     description: "Energia sustentável",
     fullDescription: "Instalação de célula solar de alta eficiência, resultando em economia de energia e sustentabilidade ambiental.",
     images: [
-      "../assets/fotocelula.jpg",
-      "../assets/motorJET.jpg",
-      "../assets/janelaMaximAr.jpg"
+      "/src/assets/fotocelula.jpg",
+      "/src/assets/motorJET.jpg",
+      "/src/assets/janelaMaximAr.jpg"
     ],
     location: "Curitiba, PR",
     date: "Novembro 2025"
@@ -70,9 +70,9 @@ let projetos = [
     description: "Design moderno e minimalista",
     fullDescription: "Porta pivotante de alumínio com vidro temperado, conferindo um toque de modernidade e elegância ao ambiente.",
     images: [
-      "../assets/porta_pivotante_de_aluminio_branco.jpg",
-      "../assets/guarda-corpo-de-aluminio-branco-.jpg",
-      "../assets/janela_veneziana_aluminio_branco_3_folhas.jpg"
+      "/src/assets/porta_pivotante_de_aluminio_branco.jpg",
+      "/src/assets/guarda-corpo-de-aluminio-branco-.jpg",
+      "/src/assets/janela_veneziana_aluminio_branco_3_folhas.jpg"
     ],
     location: "Salvador, BA",
     date: "Outubro 2025"

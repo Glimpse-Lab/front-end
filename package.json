@@ -6,15 +6,21 @@
   "type": "module",
   "scripts": {
     "server": "json-server --watch db.json --port 3300",
-    "serve-site": "npx http-server site -p 5500",
-    "start": "concurrently \"npm:server\" \"npm:serve-site\"",
-    "dev": "npm run start"
+    "client": "vite --host 0.0.0.0 --port 5500",
+    "dev": "concurrently \"npm:server\" \"npm:client\"",
+    "start": "npm run dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
   "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.3",
     "concurrently": "^8.2.0",
-    "json-server": "^0.17.4"
+    "json-server": "^0.17.4",
+    "vite": "^7.1.5"
   }
 }

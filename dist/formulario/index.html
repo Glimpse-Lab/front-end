@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="/assets/favicon-CzCtwQ7M.ico" />
+  <title>Formulario de Login e Cadastro</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .tabs {
+      display: flex;
+      margin-bottom: 30px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px;
+      background: #f0f0f0;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .tab:first-child {
+      border-radius: 5px 0 0 0;
+    }
+
+    .tab:last-child {
+      border-radius: 0 5px 0 0;
+    }
+
+    .tab.active {
+      background: white;
+      color: #667eea;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    .info {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e7f3ff;
+      border-radius: 5px;
+      font-size: 12px;
+      color: #004085;
+    }
+
+    .info strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/formulario-BGhF3BWp.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
+</html>

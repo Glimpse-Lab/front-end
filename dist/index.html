@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/assets/favicon-CzCtwQ7M.ico" />
+    <title>GPM Esquadrias</title>
+    <link rel="stylesheet" crossorigin href="/assets/style-CbDeX3j0.css">
+  </head>
+
+  <body>
+    <script src="./src/script/produtos.js" defer></script>
+    <!-------------------------------------- HEADER / NAVBAR -------------->
+    <header class="site-header" id="header">
+      <nav class="navbar container">
+        <div onclick="window.location.href='/formulario/'" class="logo" id="logo">
+          <img src="/assets/logo%20com%20fundo-BGnran5T.png" alt="GLIMPSE-LOGO" />
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#hero">HOME</a></li>
+          <li><a href="#diferenciais">DIFERENCIAIS</a></li>
+          <li><a href="#catalogo">CATÁLOGO</a></li>
+          <li><a href="#projetos">PROJETOS</a></li>
+          <li><a href="#footer">CONTATO</a></li>
+        </ul>
+
+        <div class="nav-cta">
+          <a onclick="" class="btn btn-primary" id="nav-cta-button">
+            Solicitar orçamento
+          </a>
+        </div>
+        <a class="redRestrito" href="/formulario/">🔒 Acesso Restrito</a>
+      </nav>
+    </header>
+
+    <!---------------------------- HERO ------------------------->
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-image" id="hero-image">
+          <img
+            src="/assets/01c50a_b8fb5e9d74fc4397b963dbc146c5088d~mv2-vn81A9sA.png"
+            alt="Imagem principal"
+          />
+        </div>
+
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <h1 id="hero-title">
+              Melhores esquadrias e portas de alumínio para sua residência ou
+              comércio!
+            </h1>
+
+            <p id="hero-subtitle">
+              A empresa líder em soluções de esquadrias e portas de alumínio,
+              oferecendo qualidade, inovação e atendimento personalizado para
+              transformar seus projetos em realidade.
+            </p>
+
+            <div class="hero-btn">
+              <!-- <a href="#" class="btn btn-primary" id="hero-primary-cta">
+                Solicitar orçamento
+              </a> -->
+
+              <a
+                href="/projetos/"
+                class="btn btn-secondary"
+                id="hero-secondary-cta"
+              >
+                Ver projetos
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ESTATÍSTICAS -->
+      <section class="stats" id="estatisticas">
+        <div class="container stats-grid">
+          <article class="stat-item" id="stat-projetos">
+            <h3 class="stat-number">500+</h3>
+            <p class="stat-label">Projetos</p>
+          </article>
+
+          <article class="stat-item" id="stat-experiencia">
+            <h3 class="stat-number">15+</h3>
+            <p class="stat-label">Anos de Experiência</p>
+          </article>
+
+          <article class="stat-item" id="stat-satisfacao">
+            <h3 class="stat-number">98%</h3>
+            <p class="stat-label">Satisfação</p>
+          </article>
+
+          <article class="stat-item" id="stat-cidades">
+            <h3 class="stat-number">50+</h3>
+            <p class="stat-label">Cidades</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <section class="diferenciais" id="diferenciais">
+      <div class="container">
+        <header class="section-header">
+          <h2>Por que escolher nossa empresa?</h2>
+        </header>
+
+        <div class="diferenciais-grid">
+          <article class="diferencial-item">
+            <div class="diferencial-icon">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAAE4UlEQVR4AexbPXAUNxSWLpux02SSgpmDO2bWXdwlndM5XcjEhlQkJVWSjlShS6gSKihNBx1U2HczQAcddLjDHTfjW+MOhsYUx4nvM7u2VqvznvaXYaTRs/T0834+Pe3KXrkjfBIeBASBB8GDAASQfSS0DUIYri72+2uPTp36qStaTK1EAhz/r99fV5PJlwdCyNWFheAl+bNn16+LFlKnKZ1nzpy/SEdJQsgrwpKUEpfZD5AOON4ypJamWkEIEe693vpzOtbpqDti7iQXOZ7zOL/u7VILCFjJo3CXUnyT4/vrk/o5v+7tUhkIDF+uHEnMCHehpelU/joeDyToa5BUSv6hdVurqqbtUgqE0DHclZK36DBpb2/rrtBSFG3dZHsQvPlCKZGzdWSl26UQCC7hDod2JpPOEh2Eo5c0v63V0ejx2yga/Mbx06laxvyRdWDcWMV2cQKBoU4SDuEOh5b39zdPdETMSHt7wx3MPwRQKfXXjGFHzQDs6O1y1DhHxQmEPHkw4g5XkGSGe97cvP4oGt6g3Hm3S548vb80CHB8xLClgRHCWBdeR53bhXqoj3qhYx9UKpcCgYbAoCWGbSkrCk6mXthwGiQLijicVgqEQwmfwA8PAhbRg+BBAALIPhI8CEAA2UeCBwEIIPtI8CAAAWQfCR4EIIDsI8GDAASQG4kE6PmoswcBy+NBKAtCt/tjCBmt5273Qik7HCNBbeoeB8HnF3W+rXoQvDPsUI9dbHECAX/jv20Iv2zwLbEy9YF3Ou1suBjiBMLu7jAVCULIVu8ViOP01XFVCNc/9zuBoCtK6mF4IWVA0t5UWcUX6wIgpPfbZDJ90JTDNj0LC8G9dHvavnSfnXMGIQg++8UQtWLwTbMp/Rb7cu1xBmE02szcJ8AH2r9zNdUwoNc7/7sp1mafOcbknUGggOzHUfk/25smKdWGrjNrl947u14IhAgfR02R+Fr9j9lWJ2/TZ7NrHhsKgRAL/jcuk8Lkk/a6SlOfyc+ttzAI+Ah61dSC1XlpttXBQ88rU67NHnPMLL4wCLHAc3GZFF3bwyrprKLs9dZ4SjXPJqYdTqqsIMwrAeg/xNjU/QA+rMr+QgOZ1syDmZTSvPC5H9thnTNPYykQqAAGnGapUxBMX+h8VXUczGzbIKPfVV9pEKhQqc53LHXCvlU6X7Zuk6fUJKO3iJ5KQIiizW2lROqdTWNoeBiuLooSKcR8yhFGor4our9tNBdiKwGBmqNo8KcQKvN7PC9x9/s/r3KMK+EhuML5lnnbH/RZego0VQYCdY/Hwx+wQpbrep1HWM0nHDMvYfwzPAQzcyB/ZzweVLINElsqBYFCsUJLKJ+CzLwCxxSv/5odOs9XLMeh7VuQmRkBy2ZjWb5yEGgQVup7lNYTXHJ73QQjcZ6vWMzNZCkF7zFWGgGJklpAoHAAcTW+Z0g2QwkY/f7aAVd+lvOcyGvBu7uD3ButHFuEagOBxsT3DHnHkIcqNllInvT2eAowZdFrwRZl1qZaQUg0wpFz8XVcy0MzGXVc4uE3whz+GwC31XFHTbVGQKDtow+31+PL2vIW20yC8xt0Pn64mt218Y2BoHsQRVuX6CyjA2eLK6yT4DzOGvrIZuqtgJC4xugYj4fXEr6tslUQ2nLa1PvpgGB65sB7EACWB0EI8R4AAP//LOEg/wAAAAZJREFUAwC1G+KS/vT6UQAAAABJRU5ErkJggg=="
+                alt="Ícone diferencial 1"
+              />
+            </div>
+
+            <div class="diferencial-content">
+              <h3>Segurança</h3>
+              <p>
+                Oferecemos soluções de esquadrias e portas de alumínio com
+                altíssima qualidade e segurança, garantindo a proteção de sua
+                residência ou comércio.
+              </p>
+            </div>
+          </article>
+
+          <article class="diferencial-item">
+            <div class="diferencial-icon">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAAEWUlEQVR4AeyaP2wTPxTH/a4RLUL6qR2QoiZI+W1l62/jtzECUkq7sQETYisjEzDBRkc22BgJjQRssDHCVjYiNQeVGKgQoiCOmO/r1cF3vdR2kwMn+OQX2+c/z+/jd3e+cyIRDhEgwAkChAABBBCCJ4wCQq3WPFWvNx/pgn5LC7oeTrP+YZUN7QlSiqoQtJwVUeKR1ZXqH07d0BCGU+9H6wAB8+AEoVY7f+XEiaW7ukRRdBH9ZIJePup0RhEyUUT7xsTjRJF1sIIwP790oV5fkkTyHq7BVV2EkLgfZPXp5aNOZzXt5s7kdfA4eby4aV7arWH4MUI4fvxcNYrEQ0M/XhYT0X0ev2lwRgjT05UNUyc+l09PT70yjc8IAR3MQvqBSKz5LiJzEB7hmRP7MjYQMo02N9ev+S6ZAVtknCFY9Fl6lVErCBBANEAIEEAAIXhCgAACCMETDgMBLyevfBfY5RScPQEvJ4u+ixMBVHaGgDYTFwIETKkzhF5PrvgusMspOEN4967d8l2cCKCyMwS0mbgQIGBKA4TfBQF6vA7BEzA9Ewmh210nrGpXYN82xBgmEgJbvbnZbgHGXKXy6SjnD5KJhaCM7nRefFXpQfFEQLDZYBkEgM+PHYT5+eZCrbb0lrfZlGCD6L1Kc4zyjWp1ucEG2sjYQGg0Ts+wgVFEG0TiQANRvlCp9ACqudNoLGc2j0TBMRYQsLG6miT/7BSM33CKZpKk9xHwbhxU0XsIAHCfiO4eZIRF2U1cIgM3lb2GAACrAGC1vW4CQSQucH9F9byFwNcyGT1A8lqAsB6gIuPy57g/7jd/3lsIfC3nBzuKfJL8eJ/vx0sIwz7380Zm8zSTf3x6CeHIkcrL7MBHm5ua6j3Ve/QSAhnWAboBh0mj/wW9XSEEvcLfkA4QMMveQRjipvgM9liH2dlfy2nvIBw79sXqQ0hqLZ1KYyGwVjiLtDWI7e1WX493EGze/2GsClUsh9+qjCsI1c47CGpgtjHu9I1hQfgK4bUtBK63B6L/p00Lj9jidkq8hJAkEX8kVWO0igFisV5vPleVUxCy8NPat2/Jf6oex84Q+E2sDOHBKNnaanVU2i2m0/h2sLsaxCWyIQTNiILjw4cnzp7Qv4tyf4Q3uzKk0fj1yGI9Nl+JuV6BnIFH7BCJhYIyUalEc/nzRk/ANvz/+UZl5L9/7/Vdmfvnp4SU8hqn3aXYA6QUVzudVmZSuW8jBGzDv0HFm5BSA2ZukT+i6kriuL0mJT3Qzx02DaAP4nj9XlF7IwRuhJvMrdQ95R0hZKssiSJxm/XpEsePL8OAQ3pE2pOEB8Rx+3Ka2/9rBYGbdbCJ0e22r0NWyhTWlRcYsJZOQr7ElJdfuV08wANUa2sIqsGfitNJWCfco05iZvkSHTgULsdj9l9M1lFuN7DiXsHYQNgbr+B7FGb2ZBebrko+f47mulqey10es2MHQcHQY/1lSD9vm54ICLbGDqr3EwAA///xa848AAAABklEQVQDANgbGr+uAuJPAAAAAElFTkSuQmCC"
+                alt="Ícone diferencial 2"
+              />
+            </div>
+
+            <div class="diferencial-content">
+              <h3>Prazo de Entrega</h3>
+              <p>
+                Comprometemo-nos com prazos de entrega rigorosos, garantindo que
+                seus projetos sejam concluídos dentro do tempo estipulado.
+              </p>
+            </div>
+          </article>
+
+          <article class="diferencial-item">
+            <div class="diferencial-icon">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAAFSklEQVR4AeyZvY8UNxjG7dUoQHcUSBtuVtp0/AlHR6ocUfayZdIlHelIRbqDKnRcF6WCMqk49iSgg+6uo6RkJeY+JIo7ISQOsax5nuVmmZsZz9ozaxuJXfldf4xf+31/Y3vsmZZY/MQCAgZBUAjdbn8pjtfUxYu9S7AlWAgGgQBGo/EhPW+15POQIIJAyAIgBEpIEN4hlAEgBApBtNv9LtM+xSuEbre/lE4BnZNRNH7hG4Q3CBUAdvJAfIPwAuHChR/bZSNAKXUvSQaXEf8ZEoRzCARw5ky0n3cSjt/b3d36neWIN5APBsIpBBMAhEAhCMQ3IaeCj6lhBYEbGxuZNQJOeYsMpsYtRKUgbPplXbRjHKwgGLeqqYghP50CmipCB0JXfx7l3iBIKTYw5CdrwCzDfYPwAoEAXr4cFBa+Khg+QTSCAEOlidgCSOGg7VuQQh9lZalOnbgRhDodfok6Cwi4KwsICwgggBB8JNhubGDz3ENQCNxW0yOeMBmHkqAQsK1+Rsffvx9PYqZDiDGE9K7N2cg228Nmau5vk2xezBhBIADctcJxmA7UleXltX+yup3O2p1svmna5vQ5E4IOAO7eRhNDoX8tq6+UuC6a/UpPnyYjohJCFYC6W2H6iSfCKuO8xPFPV/JlpnlspbXH8FkgtBBcAThx6tFJnIukpjxXTZOtC6IUwjwAtNur3U7n5x/iuHeD8x93fxvpt4iVxgcUy7O8DjmEbC8v9+5CruPDTB9yCRVmhjogChCaAoCjT+CAiqJvXuAlymMh5O2T+b+C9Flh9ltCtRUp5W+QO/gecR/ynO1CtnGtMtiCOAWhKQBaliRb3yMuLFIoaxwkXswkeDtt0hDqGa8RUwjzAJAaRwM+fBBX0/yc4qu2izHtQN+FG5J/fE4haPYBO7Ydo9NJ2N8fPB6NWt9NMg3/2A4cwtSybwh6HBGlH3jS1qYQ2FFamIlXMAfXM3mr5MHB5jCKXp+zUspVhhOS7eSKjbOdT5swrEenVd69G32blkwhsCMNiJtNQAyHT4/piBDqOO3ULFYnema1y2oRQNkmjABevXp4kOpMIbDAFQi2DWP+YGwqSrUa7SBNAdCeFv+y4g6EXM/2MzutakOwAUA7ChBY6AIEHm9WJ0XUN9oc0d6s2AKgbikEXnABgu26lDoAaI8WAi/OC0SsPRip4zdvWueFZtHElrmwqtOuMqkLgG1VQmCFKhC8bibF9WA8lr8kyda5o6PNI8bjsfg13xamxI18mS6PhbewhuSfAjrdmRCoWAGClw1EZo/IO0kykHt7D/7PKu7tDf5jOUbF08/lsv85bZcyBcBWjSCwIkEwbiJR1DoPRy9XtZHg7NF0g8X2s/sA5qvEGEJVI1XXeCZRSl5LcPeHw82jqrrptXSDRT3qp+WuYucQeEd2dx/8W8cB6lG/jq6NjnMINsaEqruAAPKlEFD+VYUFBNzuBYSmEPCeQZlJz3jnB5umgVths/bX1FSpRsLTSJC34cy6jX0EoJQobIWFg58nCBPL8Yaq9/ckNeMPB6e7vgDQFJ8Q0J/8K45795HQBgKQ+N6greDgghUEbn1tpPydpexjapR+btMB4GHIpl/WtWFlBcGmYdbloYsOMJ2T1TyIKgCut85OIdBxOqA5FQJE7wnr6ADw1El91nEpziHQeJ4Ky0HIKxgRh2VrAAGYnjrZRxPxAoEG6kEIfnwV2Z9PAOzXGwR2VgGClyfiGwA79QqBHVaBCAGANnmHwE4JIv8YCwWA9gSBwI4pKQjGjRdBNlhTgkKgzQTAOKQEhxDS+bTvjwAAAP//b7H3VAAAAAZJREFUAwAo1iuw5/Hr2AAAAABJRU5ErkJggg=="
+                alt="Ícone diferencial 3"
+              />
+            </div>
+
+            <div class="diferencial-content">
+              <h3>Material de Qualidade</h3>
+              <p>
+                Utilizamos materiais de alta qualidade em todos os nossos
+                produtos, garantindo durabilidade e resistência ao longo do
+                tempo.
+              </p>
+            </div>
+          </article>
+
+          <article class="diferencial-item">
+            <div class="diferencial-icon">
+              <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAADXklEQVR4AeyaMW/aQBiG78CK0qFVRxKI5IzZOrZbuqWtQIztL6iyNVPHMLZT1/6DjkWkatnI1v6EbjA4CVKGVl1SqMF9XxGKgYNi8B02Out7ubONz9/3+MN3PpMRdhEWApLAQrAQQABmM8FCAAGYzQQLAQRgNhMsBBCA2UyYhJDPl5qFQinYPBU/ItaZNpYJFxe1/ZnfTPUOWeYFnhXCGAR+yfNqkuWmSUrh5vNPH6jimoLAL3U6/g7LzZPzUhWTEsL19ed2ryeeqA5gpqxbi54/CIKTcAxSBrnw+rCuhMCdV1e1ehCI96yHVSgUb8Lrm1CfCYHB4UZ5DBDfWR9JbgNEY7Se/tpcCAwPIA6ECH6zPpI8RDd6OlqPr+a6h9v5fPGhMLj8FwJ98byzOywnVInbWRcAfP/ejZTy685O6UgYWhaCQF8c59cUCDrLfXHIdcv3CWDYVjYrvpgCsTCEVuscP4n+46GTcZfdbu9wsk1TIBaGQAc979M5Sx26vDyrqrplgtjdffZcxzmHbUaCMDxIV8luWYjpbMtksh/QI73Wdd5EQWCQzDbfzyieYeQbXT2Sdgi4gg04H+nJ1HH6TQJRqIK2ThXbV9qkHcJK3qkPjh1EGiEQTWVvr/SOlTiUVggCw/lX+KnNnSxZFJB2CJ1O74Xvd/f16M+Ji1GmWHHRDoGP5e12vaVLg0HcahS0Q6B7SZeFgCtkIVgIIADTngl8RM7ljlxdctPQO7Ra1Z/Z7FbDcbaaOtTt3l158kV7JggsmKLbx+CmhWoizQgERp5kEMYgJBmEUQghEBPT+NwjhIdXgFHFGanB0ct/GodAV/HTOMA9YgoE5goCN4a7vYi4rAUCfSQIlN+gMeOMM7vVsY2aV9YGgXEh9R+hVIDo/8jlyi72GbG1QmCEtyDqrIfVbleNdalrh8DAAYJvwP+BwLrR/0gkAkIYhGkAPLcSAnesQwDAjDB+6kRBMB797QktBIBYGQIHOEkV3pqPTcsHgWwj5imLDCFQ/IVnqtWEbuj1Mm9VrkWGgJHesaqhpG/DxcOMt3rsERkCg8VdXLJR1lOiOi6e4iXvwPulIPBQNkoYKdHcrndpCASxKbIQcCUtBAsBBGA2EywEEIDZTNgoCAhmWbOZAHIWghDiLwAAAP//QUk1XgAAAAZJREFUAwAecSmw3LBlwgAAAABJRU5ErkJggg=="
+                alt="Ícone diferencial 4"
+              />
+            </div>
+
+            <div class="diferencial-content">
+              <h3>Atendimento Personalizado</h3>
+              <p>
+                Oferecemos um atendimento excepcional, adaptando nossas soluções
+                às necessidades específicas de cada cliente.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalogo" id="catalogo">
+      <div class="container">
+        <header class="section-header">
+          <h2>Nosso catálogo de produtos</h2>
+        </header>
+
+        <nav class="catalogo-filtros">
+          <button class="filtro">Filtro 1</button>
+          <button class="filtro">Filtro 2</button>
+          <button class="filtro">Filtro 3</button>
+          <button class="filtro">Filtro 4</button>
+        </nav>
+
+        <div class="catalogo-grid">
+          <article class="produto">
+            <div class="produto-img">
+              <img src="/assets/janelaMaximAr-CHOdt5qj.jpg" alt="Produto 1" />
+            </div>
+
+            <h3>Janela Maxim Ar</h3>
+
+            <p>
+              Janela de alumínio com alta qualidade e durabilidade. Perfeita
+              para sua residência ou comércio.
+            </p>
+
+            <button class="btn" onclick="abrirModalProduto(produtos[0])">Ver produto</button>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img
+                src="/assets/porta_pivotante_de_aluminio_branco-BC8iNeYv.jpg"
+                alt="Produto 2"
+              />
+            </div>
+
+            <h3>Porta Pivotante</h3>
+
+            <p>
+              Porta de alumínio com alta qualidade e durabilidade. Perfeita para
+              ambientes residenciais e comerciais.
+            </p>
+
+            <button class="btn" onclick="abrirModalProduto(produtos[1])">Ver produto</button>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img src="/assets/portaocomMotor-Cu9LYFPu.png" alt="Produto 3" />
+            </div>
+
+            <h3>Portão com Motor(PPA)</h3>
+
+            <p>
+              Portão de alumínio com motor elétrico PPA, oferecendo comodidade e
+              segurança para sua residência ou comércio.
+            </p>
+
+            <button class="btn" onclick="abrirModalProduto(produtos[2])">Ver produto</button>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img
+                src="/assets/motor_de_portao_ppa_dz_stark-qbItw3Uv.png"
+                alt="Produto 4"
+              />
+            </div>
+
+            <h3>Motor de Portão PPA</h3>
+
+            <p>
+              Motor elétrico PPA para portões de alumínio, oferecendo segurança
+              e qualidade para sua residência ou comércio.
+            </p>
+
+            <button class="btn" onclick="abrirModalProduto(produtos[3])">Ver produto</button>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img
+                src="/assets/janela_veneziana_aluminio_branco_3_folhas-CYUHAY_C.jpg"
+                alt="Produto 5"
+              />
+            </div>
+
+            <h3>Janela Veneziana 3 folhas</h3>
+
+            <p>
+              Janela de alumínio com acabamento branco. Fornece privacidade e
+              beleza para sua casa ou comércio.
+            </p>
+
+            <button class="btn" onclick="abrirModalProduto(produtos[4])">Ver produto</button>
+          </article>
+
+          <article class="produto">
+            <div class="produto-img">
+              <img
+                src="/assets/guarda-corpo-de-aluminio-branco--BYW9I4vz.jpg"
+                alt="Produto 6"
+              />
+            </div>
+
+            <h3>Guarda-Corpo em Alumínio</h3>
+
+            <p>
+              Guarda-corpo de alumínio com acabamento branco, ideal para
+              segurança e estética em sua casa ou comércio.
+            </p>
+
+            <button class="btn" onclick="abrirModalProduto(produtos[5])">Ver produto</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!---------- PROJETOS -------------->
+
+    <section class="projetos" id="projetos">
+      <div class="container">
+        <header class="section-header">
+          <h2>Conheça alguns projetos realizados</h2>
+        </header>
+
+        <div class="projeto-destaque">
+          <div class="projeto-img">
+            <video class="video" width="640" height="360" controls>
+              <source src="/assets/WhatsApp%20Video%202026-03-08%20at%2013.22.57-BYu9lcjh.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeos.
+            </video>
+          </div>
+
+          <div class="projeto-info">
+            <h3>Instalação de motores PPA Jetflex</h3>
+
+            <p>
+              Instalação de motores PPA Jetflex o mais rápido da categoria.
+              Serviço completo com travas anti-arrombamento e sistema
+              anti-esmagamento. Com esse conjunto você tem mais praticidade,
+              conforto e segurança. Não dê mole para o azar!
+            </p>
+
+            <a href="/projetos/" class="btn">Ver projeto</a>
+          </div>
+        </div>
+
+        <div class="projetos-galeria">
+          <img src="/assets/motorJET-B_fzqxjX.jpg" alt="Imagem" />
+          <img src="/assets/trava%20(1)-BZzOcESB.jpg" alt="Imagem" />
+          <img src="/assets/fotocelula-CCMu0heE.jpg" alt="Imagem" />
+        </div>
+      </div>
+    </section>
+
+    <!-------- DEPOIMENTOS ----------->
+
+    <section class="depoimentos">
+      <h2>O que nossos clientes falam</h2>
+
+      <div class="depoimentos-viewport">
+        <div class="depoimentos-track">
+          <div class="pagina">
+            <div class="depoimento-card">
+              <div class="estrelas">★★★★★</div>
+              <p>Excelente atendimento e qualidade impecável no produto.</p>
+              <strong>Carlos Silva</strong>
+            </div>
+
+            <div class="depoimento-card">
+              <div class="estrelas">★★★★★</div>
+              <p>Produto muito bem feito e entrega rápida.</p>
+              <strong>Mariana Souza</strong>
+            </div>
+          </div>
+
+          <div class="pagina">
+            <div class="depoimento-card">
+              <div class="estrelas">★★★★★</div>
+              <p>Equipe muito profissional e entrega rápida.</p>
+              <strong>Fernanda Costa</strong>
+            </div>
+
+            <div class="depoimento-card">
+              <div class="estrelas">★★★★★</div>
+              <p>Qualidade excelente e ótimo atendimento.</p>
+              <strong>João Pereira</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controles">
+        <button class="nav-btn anterior">Anterior</button>
+
+        <div class="indicadores">
+          <span class="dot ativo"></span>
+          <span class="dot"></span>
+        </div>
+
+        <button class="nav-btn proxima">Próxima</button>
+      </div>
+    </section>
+
+    <!---------------- SOBRE --------------->
+
+    <section class="about">
+      <div class="container">
+        <p class="about-intro">
+          Atuamos no mercado há mais de 10 anos entregando soluções de alta
+          qualidade para clientes em todo o país. Nosso compromisso é unir
+          tecnologia, inovação e atendimento personalizado.
+        </p>
+
+        <p class="about-cta">
+          Quer saber como podemos ajudar no seu próximo projeto?
+        </p>
+
+        <a href="/formulario/" class="btn-primary"> Solicitar orçamento </a>
+      </div>
+    </section>
+
+    <!-------------- PRINCIPAL ------------>
+    <section class="main-cta">
+      <div class="container">
+        <h2>NÃO FIQUE DE FORA!</h2>
+
+        <p class="cta-subtitle">
+          Venha ja solicitar seu orçamento! Modernizar sua residencia ou empresa
+          com as melhores soluções em esquadrias do mercado.
+        </p>
+
+        <a href="/formulario/" class="btn-main"> Falar com especialista </a>
+      </div>
+    </section>
+
+    <!------------------- FOOTER ------------->
+
+    <footer id="footer" class="footer">
+      <div class="footer-container">
+        <a  class="footer-logo" href="https://www.instagram.com/gpm.esquadrias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+           <video class="video" width="90" height="90" volume="0" autoplay loop muted>
+              <source src="/assets/logoMovel-BsBHZmGV.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeos.
+            </video>
+          <p class="instagram">Instagram</p>
+          </a>
+
+        <div class="footer-links">
+          <h3>Institucional</h3>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Projetos</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h3>Produtos</h3>
+          <ul>
+            <li><a href="#">Categoria 1</a></li>
+            <li><a href="#">Categoria 2</a></li>
+            <li><a href="#">Categoria 3</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contato">
+          <h3>Contato</h3>
+          <ul>
+            <li>Email: gpm.esquadrias25@gmail.com</li>
+            <li>Telefone: (11) 94117-0990</li>
+            <li>WhatsApp: (11) 94117-0990</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-copy">
+        © 2026 Glimpse/GPM Esquadrias. Todos os direitos reservados.
+      </div>
+    </footer>
+  </body>
+    <!-- Modal de Produto -->
+    <div id="produto-modal-catalogo">
+      <div class="modal-content"></div>
+    </div>
+</html>
+
+<script>
+  const track = document.querySelector(".depoimentos-track");
+  const pages = document.querySelectorAll(".pagina");
+
+  const prevBtn = document.querySelector(".anterior");
+  const nextBtn = document.querySelector(".proxima");
+  const dots = document.querySelectorAll(".dot");
+
+  let index = 0;
+
+  function updateCarousel() {
+    track.style.transform = `translateX(-${index * 100}%)`;
+
+    dots.forEach((dot) => dot.classList.remove("ativo"));
+    dots[index].classList.add("ativo");
+  }
+
+  nextBtn.addEventListener("click", () => {
+    index++;
+
+    if (index >= pages.length) {
+      index = 0;
+    }
+
+    updateCarousel();
+  });
+
+  prevBtn.addEventListener("click", () => {
+    index--;
+
+    if (index < 0) {
+      index = pages.length - 1;
+    }
+
+    updateCarousel();
+  });
+</script>
