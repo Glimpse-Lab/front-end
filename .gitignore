@@ -1,2 +1,30 @@
+# Dependencies
 node_modules/
 package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Vite
+dist/
+dist-ssr/
+coverage/
+*.local
+
+# Build outputs
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.env.local
+.env.*.local
+
+# ESLint
+.eslintcache
+
+# OS
+Thumbs.db

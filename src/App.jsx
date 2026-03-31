@@ -1,9 +1,9 @@
-import Form from "./components/Formulario"
+import Formulario from "./components/Formulario/Formulario.jsx";
 
 function App() {
   return (
-    <Form />
-  )
+    <Formulario />
+  );
 }
 
-export default App
+export default App;
