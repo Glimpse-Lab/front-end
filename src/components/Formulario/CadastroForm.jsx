@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { isPasswordValid } from "../../utils/helpers.js";
 import usePasswordRules from "../../hooks/usePasswordRules.js";
+import useAuth from "../../hooks/useAuth.js";
 import EmailInput from "./EmailInput.jsx";
 import PasswordInput from "./PasswordInput.jsx";
 import CPFInput from "./CPFInput.jsx";
@@ -16,24 +17,38 @@ function CadastroForm({ onSuccess }) {
   const [cpf, setCpf] = useState("");
   const [showSenhaInfo, setShowSenhaInfo] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
+  const { handleCadastro, loading } = useAuth();
 
   const rules = usePasswordRules(senha);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Validações
+    if (!email || !senha || !cpf) {
+      setMessage({ text: "Preencha todos os campos", type: "error" });
+      return;
+    }
 
     if (!isPasswordValid(rules)) {
       setMessage({ text: "Senha inválida. Revise os requisitos.", type: "error" });
       return;
     }
 
-    setMessage({ text: "Cadastro realizado com sucesso!", type: "success" });
-    setEmail("");
-    setSenha("");
-    setCpf("");
+    // Realiza o cadastro
+    const result = await handleCadastro(email, senha, cpf);
 
-    if (onSuccess) {
-      onSuccess({ email, senha, cpf });
+    if (result.success) {
+      setMessage({ text: "Cadastro realizado com sucesso!", type: "success" });
+      setEmail("");
+      setSenha("");
+      setCpf("");
+
+      if (onSuccess) {
+        onSuccess(result.data);
+      }
+    } else {
+      setMessage({ text: result.message, type: "error" });
     }
   };
 
@@ -118,31 +133,37 @@ function CadastroForm({ onSuccess }) {
       />
 
       <button 
-        type="submit" 
+        type="submit"
+        disabled={loading}
         style={{ 
           width: "100%",
           marginTop: "16px",
           padding: "12px",
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          background: loading ? "#999" : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
           color: "#fff",
           border: "none",
           borderRadius: "5px",
           fontSize: "16px",
           fontWeight: "bold",
-          cursor: "pointer",
+          cursor: loading ? "not-allowed" : "pointer",
           transition: "transform 0.2s, box-shadow 0.2s",
-          boxShadow: "0 4px 12px rgba(102, 126, 234, 0.3)"
+          boxShadow: loading ? "none" : "0 4px 12px rgba(102, 126, 234, 0.3)",
+          opacity: loading ? 0.6 : 1
         }}
         onMouseEnter={(e) => {
-          e.target.style.transform = "translateY(-2px)";
-          e.target.style.boxShadow = "0 6px 16px rgba(102, 126, 234, 0.4)";
+          if (!loading) {
+            e.target.style.transform = "translateY(-2px)";
+            e.target.style.boxShadow = "0 6px 16px rgba(102, 126, 234, 0.4)";
+          }
         }}
         onMouseLeave={(e) => {
-          e.target.style.transform = "translateY(0)";
-          e.target.style.boxShadow = "0 4px 12px rgba(102, 126, 234, 0.3)";
+          if (!loading) {
+            e.target.style.transform = "translateY(0)";
+            e.target.style.boxShadow = "0 4px 12px rgba(102, 126, 234, 0.3)";
+          }
         }}
       >
-        Cadastrar
+        {loading ? "Cadastrando..." : "Cadastrar"}
       </button>
     </form>
   );
