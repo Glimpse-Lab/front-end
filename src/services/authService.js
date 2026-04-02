@@ -1,6 +1,6 @@
 import { validarCPF, validarEmail, validarSenha } from "../utils/validators.js";
 
-const API_URL = "http://localhost:3300";
+const API_URL = "http://localhost:8080";
 
 /**
  * Cadastra um novo usuário

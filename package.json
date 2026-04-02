@@ -5,9 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "server": "json-server --watch db.json --port 3300",
     "client": "vite --host 0.0.0.0 --port 5500",
-    "dev": "concurrently \"npm:server\" \"npm:client\"",
+    "dev": "vite --host 0.0.0.0 --port 5500",
     "start": "npm run dev"
   },
   "keywords": [],
@@ -19,8 +18,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.3",
-    "concurrently": "^8.2.0",
-    "json-server": "^0.17.4",
     "vite": "^7.1.5"
   }
 }

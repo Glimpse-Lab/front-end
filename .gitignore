@@ -1,30 +1,77 @@
+# ===========================
 # Dependencies
+# ===========================
 node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
 package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
-# Vite
+# ===========================
+# Build & Output
+# ===========================
+build/
 dist/
-dist-ssr/
+out/
+.next/
+.nuxt/
+.cache/
+
+# ===========================
+# Environment & Secrets
+# ===========================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# ===========================
+# Logs
+# ===========================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+*.log
+
+# ===========================
+# Testing
+# ===========================
 coverage/
-*.local
+.nyc_output/
 
-# Build outputs
-*.tsbuildinfo
+# ===========================
+# OS
+# ===========================
+.DS_Store
+Thumbs.db
+Desktop.ini
 
-# IDE
+# ===========================
+# Editors & IDEs
+# ===========================
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 *.swp
-*.swo
-*~
-.DS_Store
-.env.local
-.env.*.local
 
-# ESLint
+# ===========================
+# TypeScript
+# ===========================
+*.tsbuildinfo
+
+# ===========================
+# Misc
+# ===========================
 .eslintcache
-
-# OS
-Thumbs.db
+.stylelintcache
+.parcel-cache/
+.turbo/

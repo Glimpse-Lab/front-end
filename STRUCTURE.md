@@ -1,14 +1,5 @@
 # Estrutura Refatorada - Front-end Project
 
-## Visão Geral da Reorganização
-
-Seu projeto foi refatorado seguindo as melhores práticas de React e Vite. A nova estrutura promove:
-- ✅ Separação de responsabilidades
-- ✅ Reutilização de código
-- ✅ Facilita testes e manutenção
-- ✅ Escalabilidade
-
----
 
 ## Estrutura de Diretórios
 
@@ -52,24 +43,6 @@ src/
     └── (para future use)
 ```
 
----
-
-## O Que Mudou
-
-### ❌ Antes
-- `src/script/defaultFunctions.js` → Validadores misturados
-- `src/script/script.js` → Lógica desorganizada
-- `src/script/produtos.js` → Dados soltos
-- `src/script/projetos.js` → Dados soltos
-- `src/components/Formulario.jsx` → Componente monolítico (200+ linhas)
-
-### ✅ Depois
-- **Services**: Separam chamadas API e lógica
-- **Utils**: Contêm funções puras e reutilizáveis
-- **Hooks**: Encapsulam lógica com estado
-- **Components**: Componentes pequenos e focados (10-50 linhas)
-
----
 
 ## Como Usar
 
@@ -147,8 +120,6 @@ resolve: {
 }
 ```
 
----
-
 ## Convenções Adotadas
 
 - 📁 **Pastas com PascalCase**: Componentes (`Formulario/`, `common/`)
@@ -157,7 +128,6 @@ resolve: {
 - 📝 **JSDoc para funções importantes**
 - 🔄 **Hooks customizados**: Encapsulam lógica com estado reutilizável
 
----
 
 ## Dicas de Manutenção
 
@@ -167,14 +137,4 @@ resolve: {
 - ✅ Preferir **composição** a herança
 - ✅ Manter **CSS globalizado** no `assets/style.css`
 
----
 
-## Arquivos Movidos (Backup)
-
-Se quiser manter os arquivos antigos como referência, eles estão em:
-- `src/script/` (você pode deletar após confirmar que está tudo funcionando)
-- `src/components/Formulario.jsx` (substituído pela pasta `Formulario/`)
-
----
-
-Generated: 2026-03-31 | Version: 1.0
