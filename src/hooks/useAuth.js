@@ -8,10 +8,10 @@ function useAuth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleCadastro = async (email, senha, cpf) => {
+  const handleCadastro = async (nome, email, senha, cpf) => {
     setLoading(true);
     setError(null);
-    const result = await cadastrar(email, senha, cpf);
+    const result = await cadastrar(nome, email, senha, cpf);
     setLoading(false);
     if (!result.success) {
       setError(result.message);

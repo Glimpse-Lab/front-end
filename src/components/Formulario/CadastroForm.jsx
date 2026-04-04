@@ -3,6 +3,7 @@ import { isPasswordValid } from "../../utils/helpers.js";
 import usePasswordRules from "../../hooks/usePasswordRules.js";
 import useAuth from "../../hooks/useAuth.js";
 import EmailInput from "./EmailInput.jsx";
+import NomeInput from "./NomeInput.jsx";
 import PasswordInput from "./PasswordInput.jsx";
 import CPFInput from "./CPFInput.jsx";
 import PasswordRules from "./PasswordRules.jsx";
@@ -12,6 +13,7 @@ import FormMessage from "./FormMessage.jsx";
  * Formulário de cadastro
  */
 function CadastroForm({ onSuccess }) {
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [cpf, setCpf] = useState("");
@@ -25,7 +27,7 @@ function CadastroForm({ onSuccess }) {
     event.preventDefault();
 
     // Validações
-    if (!email || !senha || !cpf) {
+    if (!nome || !email || !senha || !cpf) {
       setMessage({ text: "Preencha todos os campos", type: "error" });
       return;
     }
@@ -36,10 +38,11 @@ function CadastroForm({ onSuccess }) {
     }
 
     // Realiza o cadastro
-    const result = await handleCadastro(email, senha, cpf);
+    const result = await handleCadastro(nome, email, senha, cpf);
 
     if (result.success) {
       setMessage({ text: "Cadastro realizado com sucesso!", type: "success" });
+      setNome("");
       setEmail("");
       setSenha("");
       setCpf("");
@@ -55,6 +58,12 @@ function CadastroForm({ onSuccess }) {
   return (
     <form onSubmit={handleSubmit}>
       <FormMessage message={message} />
+
+      <NomeInput
+        id="cadastroNome"
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+      />
 
       <EmailInput
         id="cadastroEmail"
