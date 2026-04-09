@@ -13,7 +13,11 @@
     <!-------------------------------------- HEADER / NAVBAR -------------->
     <header class="site-header" id="header">
       <nav class="navbar container">
-        <div onclick="window.location.href='/formulario/'" class="logo" id="logo">
+        <div
+          onclick="window.location.href = '/formulario/'"
+          class="logo"
+          id="logo"
+        >
           <img src="./src/assets/logo com fundo.png" alt="GLIMPSE-LOGO" />
         </div>
 
@@ -26,7 +30,11 @@
         </ul>
 
         <div class="nav-cta">
-          <a onclick="" class="btn btn-primary" id="nav-cta-button">
+          <a
+            onclick="exibirOrcamento()"
+            class="btn btn-primary"
+            id="nav-cta-button"
+          >
             Solicitar orçamento
           </a>
         </div>
@@ -73,6 +81,54 @@
           </div>
         </div>
       </section>
+
+      <!-- CARD DE ORÇAMENTO -->
+      <div class="modal-overlay" id="modal-overlay"></div>
+      <div class="modal-orcamento" id="orcamento">
+        <button class="modal-close" onclick="fecharOrcamento()">✕</button>
+        <header class="section-header">
+          <h2>Solicite seu orçamento</h2>
+        </header>
+
+        <div class="tipoOrcamento">
+          <select name="tipoOrcamento" id="tipoOrcamento">
+            <option value="">Selecione o tipo de orçamento</option>
+            <option value="manutencao">Manutenção</option>
+            <option value="projeto">Projeto</option>
+          </select>
+          <button onclick="exibirFormOrcamento()" class="btn btn-primary">
+            Próximo passo
+          </button>
+        </div>
+
+        <div class="orcamento-form">
+          <form id="orcamento-form">
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="telefone">Telefone</label>
+              <input type="tel" id="telefone" name="telefone" required />
+            </div>
+
+            <div class="form-group">
+              <label for="mensagem">Mensagem</label>
+              <textarea id="mensagem" name="mensagem" rows="4"></textarea>
+            </div>
+
+            <button type="submit" onclick="enviarOrcamento()" class="btn btn-primary">
+              Enviar solicitação
+            </button>
+          </form>
+        </div>
+      </div>
 
       <!-- ESTATÍSTICAS -->
       <section class="stats" id="estatisticas">
@@ -199,7 +255,9 @@
               para sua residência ou comércio.
             </p>
 
-            <button class="btn" onclick="abrirModalProduto(produtos[0])">Ver produto</button>
+            <button class="btn" onclick="abrirModalProduto(produtos[0])">
+              Ver produto
+            </button>
           </article>
 
           <article class="produto">
@@ -217,7 +275,9 @@
               ambientes residenciais e comerciais.
             </p>
 
-            <button class="btn" onclick="abrirModalProduto(produtos[1])">Ver produto</button>
+            <button class="btn" onclick="abrirModalProduto(produtos[1])">
+              Ver produto
+            </button>
           </article>
 
           <article class="produto">
@@ -232,7 +292,9 @@
               segurança para sua residência ou comércio.
             </p>
 
-            <button class="btn" onclick="abrirModalProduto(produtos[2])">Ver produto</button>
+            <button class="btn" onclick="abrirModalProduto(produtos[2])">
+              Ver produto
+            </button>
           </article>
 
           <article class="produto">
@@ -250,7 +312,9 @@
               e qualidade para sua residência ou comércio.
             </p>
 
-            <button class="btn" onclick="abrirModalProduto(produtos[3])">Ver produto</button>
+            <button class="btn" onclick="abrirModalProduto(produtos[3])">
+              Ver produto
+            </button>
           </article>
 
           <article class="produto">
@@ -268,7 +332,9 @@
               beleza para sua casa ou comércio.
             </p>
 
-            <button class="btn" onclick="abrirModalProduto(produtos[4])">Ver produto</button>
+            <button class="btn" onclick="abrirModalProduto(produtos[4])">
+              Ver produto
+            </button>
           </article>
 
           <article class="produto">
@@ -286,7 +352,9 @@
               segurança e estética em sua casa ou comércio.
             </p>
 
-            <button class="btn" onclick="abrirModalProduto(produtos[5])">Ver produto</button>
+            <button class="btn" onclick="abrirModalProduto(produtos[5])">
+              Ver produto
+            </button>
           </article>
         </div>
       </div>
@@ -303,7 +371,10 @@
         <div class="projeto-destaque">
           <div class="projeto-img">
             <video class="video" width="640" height="360" controls>
-              <source src="./src/assets/WhatsApp Video 2026-03-08 at 13.22.57.mp4" type="video/mp4" />
+              <source
+                src="./src/assets/WhatsApp Video 2026-03-08 at 13.22.57.mp4"
+                type="video/mp4"
+              />
               Seu navegador não suporta vídeos.
             </video>
           </div>
@@ -415,13 +486,25 @@
 
     <footer id="footer" class="footer">
       <div class="footer-container">
-        <a  class="footer-logo" href="https://www.instagram.com/gpm.esquadrias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
-           <video class="video" width="90" height="90" volume="0" autoplay loop muted>
-              <source src="./src/assets/logoMovel.mp4" type="video/mp4" />
-              Seu navegador não suporta vídeos.
-            </video>
+        <a
+          class="footer-logo"
+          href="https://www.instagram.com/gpm.esquadrias?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+          target="_blank"
+        >
+          <video
+            class="video"
+            width="90"
+            height="90"
+            volume="0"
+            autoplay
+            loop
+            muted
+          >
+            <source src="./src/assets/logoMovel.mp4" type="video/mp4" />
+            Seu navegador não suporta vídeos.
+          </video>
           <p class="instagram">Instagram</p>
-          </a>
+        </a>
 
         <div class="footer-links">
           <h3>Institucional</h3>
@@ -456,10 +539,10 @@
       </div>
     </footer>
   </body>
-    <!-- Modal de Produto -->
-    <div id="produto-modal-catalogo">
-      <div class="modal-content"></div>
-    </div>
+  <!-- Modal de Produto -->
+  <div id="produto-modal-catalogo">
+    <div class="modal-content"></div>
+  </div>
 </html>
 
 <script>
@@ -498,4 +581,56 @@
 
     updateCarousel();
   });
+
+  function exibirOrcamento() {
+    const orcamentoModal = document.getElementById("orcamento");
+    const overlay = document.getElementById("modal-overlay");
+    orcamentoModal.classList.add("ativo");
+    overlay.classList.add("ativo");
+    console.log("Modal aberto");
+  }
+
+  function exibirFormOrcamento() {
+    const form = document.querySelector(".orcamento-form");
+    const tipoOrcamento = document.querySelector(".tipoOrcamento");
+    form.style.display = "flex";
+    tipoOrcamento.style.display = "none";
+  }
+
+  function fecharOrcamento() {
+    const orcamentoModal = document.getElementById("orcamento");
+    const form = document.querySelector(".orcamento-form");
+    const tipoOrcamento = document.querySelector(".tipoOrcamento");
+    const overlay = document.getElementById("modal-overlay");
+    orcamentoModal.classList.remove("ativo");
+    overlay.classList.remove("ativo");
+    form.style.display = "none";
+    tipoOrcamento.style.display = "flex";
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById("modal-overlay");
+    const orcamentoModal = document.getElementById("orcamento");
+
+    overlay.addEventListener("click", function () {
+      fecharOrcamento();
+    });
+  });
+
+  function enviarOrcamento() {
+    const nome = document.getElementById("nome").value;
+    const email = document.getElementById("email").value;
+    const telefone = document.getElementById("telefone").value;
+    const mensagem = document.getElementById("mensagem").value;
+
+    console.log("Orçamento enviado:");
+    console.log("Nome:", nome);
+    console.log("Email:", email);
+    console.log("Telefone:", telefone);
+    console.log("Mensagem:", mensagem);
+
+    alert("Orçamento enviado com sucesso!");
+
+    fecharOrcamento();
+  }
 </script>
