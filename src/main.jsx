@@ -7,3 +7,9 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+// createRoot(document.getElementById('root2')).render(
+//   <StrictMode>
+//     <App2 />
+//   </StrictMode>,
+// )
