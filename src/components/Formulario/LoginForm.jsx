@@ -28,7 +28,7 @@ function LoginForm({ onSuccess }) {
       setEmail("");
       setSenha("");
       if (onSuccess) {
-        onSuccess(result.data);
+        onSuccess({ email, ...result.data });
       }
     } else {
       setMessage({ text: result.message, type: "error" });

@@ -7,7 +7,7 @@ import LoginForm from "./LoginForm.jsx";
  * Componente principal do Formulário
  * Gerencia as abas de cadastro e login
  */
-function Formulario() {
+function Formulario({ onNavigateToAdmin }) {
   const [tab, setTab] = useState("cadastro");
 
   const handleCadastroSuccess = (dados) => {
@@ -17,7 +17,14 @@ function Formulario() {
 
   const handleLoginSuccess = (dados) => {
     console.log("Login realizado:", dados);
-    // Integrar com useAuth hook futuramente
+    
+    // Verificar se é email de admin
+    const adminEmails = ["gpm@admin.com", "glimpse@admin.com"];
+    if (dados.email && adminEmails.includes(dados.email)) {
+      if (onNavigateToAdmin) {
+        onNavigateToAdmin();
+      }
+    }
   };
 
   const containerStyle = {
@@ -37,6 +44,7 @@ function Formulario() {
     fontSize: "24px",
     fontWeight: "bold"
   };
+
 
   return (
     <div style={{
