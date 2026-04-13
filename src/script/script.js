@@ -71,6 +71,9 @@ async function logar(email, senha) {
     }
     
     console.log("Login realizado com sucesso:", usuario);
+    if (usuario.email && usuario.email.includes("@admin.com")) {
+      window.location.href = "../administracao/index.html";
+    }
     return { success: true, data: usuario };
   } catch (error) {
     console.error("Erro ao logar:", error);
