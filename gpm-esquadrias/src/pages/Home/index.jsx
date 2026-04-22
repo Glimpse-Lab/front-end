@@ -92,7 +92,7 @@ export default function Home() {
         {/* HERO SECTION */}
         <section className="hero" id="hero">
           <div className="hero-image">
-            <img src="/src/assets/01c50a_b8fz5e9d74fc4397b963dbc146c5088d~mv2.png" alt="Imagem principal" />
+            <img src="/src/assets/01c50a_b8fb5e9d74fc4397b963dbc146c5088d~mv2.png" alt="Imagem principal" />
           </div>
 
           <div className="container hero-grid">
