@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProjetos } from '../../services/projetosService';
+import useAuth from '../../hooks/useAuth.js';
 import '../../assets/style.css';
 
 const Projetos = () => {
   const navigate = useNavigate();
+  const { handleLogout, getUser } = useAuth();
   const [projetos, setProjetos] = useState([]);
   const [projetoSelecionado, setProjetoSelecionado] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const user = getUser();
 
   useEffect(() => {
     setProjetos(getProjetos());
@@ -47,9 +50,41 @@ const Projetos = () => {
               Solicitar orçamento
             </button>
           </div>
-          <a className="redRestrito" onClick={() => navigate('/formulario')} style={{ cursor: 'pointer' }}>
-            🔒 Acesso Restrito
-          </a>
+          {user ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <span style={{ color: '#666', fontSize: '14px' }}>
+                👤 {user.nome}
+              </span>
+              <button
+                onClick={handleLogout}
+                style={{
+                  padding: '8px 16px',
+                  backgroundColor: '#d32f2f',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#b71c1c';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#d32f2f';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+              >
+                🚪 Sair
+              </button>
+            </div>
+          ) : (
+            <a className="redRestrito" onClick={() => navigate('/formulario')} style={{ cursor: 'pointer' }}>
+              🔒 Acesso Restrito
+            </a>
+          )}
         </nav>
       </header>
 

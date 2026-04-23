@@ -1,4 +1,8 @@
+import useAuth from "../../hooks/useAuth.js";
+
 function AdminSidebar({ activeTab, onTabChange, onHome }) {
+  const { handleLogout } = useAuth();
+  
   const sidebarStyle = {
     width: "250px",
     backgroundColor: "#1a3a52",
@@ -72,7 +76,27 @@ function AdminSidebar({ activeTab, onTabChange, onHome }) {
     borderTop: "1px solid rgba(255, 255, 255, 0.1)",
     paddingTop: "15px",
     paddingBottom: "15px",
-    flexShrink: 0
+    flexShrink: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px"
+  };
+
+  const logoutButtonStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "10px",
+    padding: "12px 15px",
+    backgroundColor: "#d32f2f",
+    color: "white",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "14px",
+    transition: "all 0.3s ease",
+    border: "none",
+    fontWeight: "600",
+    width: "100%"
   };
 
   const homeButtonStyle = {
@@ -131,6 +155,20 @@ function AdminSidebar({ activeTab, onTabChange, onHome }) {
       </nav>
 
       <div style={footerStyle}>
+        <button
+          style={logoutButtonStyle}
+          onClick={handleLogout}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "#b71c1c";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "#d32f2f";
+          }}
+          title="Fazer logout e retornar à home"
+        >
+          <span>🚪</span>
+          <span>Sair</span>
+        </button>
       </div>
     </div>
   );
