@@ -1,44 +1,27 @@
-import { getProjetosStorage, saveProjetosStorage } from "../utils/dataSync.js";
+const STORAGE_KEY = "gpm_projetos";
 
-function getProjetos() {
-  return getProjetosStorage();
-}
+const PROJETOS_PADRAO = [
+  {
+    id: 1,
+    title: "Guarda-Corpo de Alumínio",
+    description: "Solução elegante e segura",
+    fullDescription: "Guarda-corpo de alumínio branco de alta qualidade...",
+    images: ["/src/assets/guarda-corpo-de-aluminio-branco-.jpg", "/src/assets/porta_pivotante_de_aluminio_branco.jpg"],
+    location: "São Paulo, SP",
+    date: "Março 2026"
+  },
+  // ... adicione os outros itens do seu HTML aqui
+];
 
-function getProjetoById(id) {
-  const projetos = getProjetos();
-  return projetos.find(p => p.id === parseInt(id));
-}
+export const getProjetos = () => {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (!data) {
+    saveProjetos(PROJETOS_PADRAO);
+    return PROJETOS_PADRAO;
+  }
+  return JSON.parse(data);
+};
 
-function saveProjetos(projetos) {
-  saveProjetosStorage(projetos);
-}
-
-function renderizarProjetos() {
-  const projetosContainer = document.getElementById("projetos-container");
-  if (!projetosContainer) return;
-
-  const projetos = getProjetos();
-  projetos.forEach(projeto => {
-    const projetoCard = document.createElement("div");
-    projetoCard.classList.add("projeto-card");
-    projetoCard.dataset.projectId = projeto.id;
-
-    projetoCard.innerHTML = `
-      <div class="projeto-card-image">
-        <img src="${projeto.images[0]}" alt="${projeto.title}" class="projeto-main-image">
-      </div>
-      <div class="projeto-card-content">
-        <h3 class="projeto-title">${projeto.title}</h3>
-        <p class="projeto-description">${projeto.description}</p>
-        <div class="projeto-meta">
-          <span class="projeto-location">📍 ${projeto.location}</span>
-          <span class="projeto-date">📅 ${projeto.date}</span>
-        </div>
-      </div>
-    `;
-
-    projetosContainer.appendChild(projetoCard);
-  });
-}
-
-export { getProjetos, getProjetoById, renderizarProjetos, saveProjetos };
+export const saveProjetos = (projetos) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(projetos));
+};

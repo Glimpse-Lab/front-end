@@ -1,36 +1,50 @@
 import { useState } from "react";
-import { cadastrar, logar } from "../services/authService.js";
+import authService from "../services/authService.js";
 
-/**
- * Hook customizado para autenticação
- */
-function useAuth() {
+const useAuth = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleCadastro = async (nome, email, senha, cpf) => {
-    setLoading(true);
-    setError(null);
-    const result = await cadastrar(nome, email, senha, cpf);
-    setLoading(false);
-    if (!result.success) {
-      setError(result.message);
-    }
-    return result;
-  };
 
   const handleLogin = async (email, senha) => {
     setLoading(true);
-    setError(null);
-    const result = await logar(email, senha);
-    setLoading(false);
-    if (!result.success) {
-      setError(result.message);
+    try {
+      const result = await authService.login(email, senha);
+      
+      if (result.success) {
+        // Redirecionar para admin se for admin
+        if (email === "admin@gpm.com" || email === "admin@glimpse.com") {
+          window.location.href = "/admin";
+        } else {
+          window.location.href = "/projetos";
+        }
+      }
+      
+      return result;
+    } catch (error) {
+      return {
+        success: false,
+        message: "Erro ao fazer login",
+      };
+    } finally {
+      setLoading(false);
     }
-    return result;
   };
 
-  return { handleCadastro, handleLogin, loading, error };
-}
+  const handleCadastro = async (nome, email, senha, cpf) => {
+    setLoading(true);
+    try {
+      const result = await authService.cadastro(nome, email, senha, cpf);
+      return result;
+    } catch (error) {
+      return {
+        success: false,
+        message: "Erro ao fazer cadastro",
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { handleLogin, handleCadastro, loading };
+};
 
 export default useAuth;

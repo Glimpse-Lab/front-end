@@ -1,15 +1,13 @@
 import { useMemo } from "react";
-import { getPasswordRules } from "../utils/helpers.js";
 
-/**
- * Hook customizado para gerenciar regras de validação de senha
- */
-function usePasswordRules(senha) {
-  const rules = useMemo(() => {
-    return getPasswordRules(senha);
-  }, [senha]);
-
-  return rules;
-}
+const usePasswordRules = (senha) => {
+  return useMemo(() => ({
+    min: senha.length >= 8,
+    upper: /[A-Z]/.test(senha),
+    lower: /[a-z]/.test(senha),
+    number: /[0-9]/.test(senha),
+    special: /[@$!%*?&]/.test(senha)
+  }), [senha]);
+};
 
 export default usePasswordRules;

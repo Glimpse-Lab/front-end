@@ -30,11 +30,11 @@ function Formulario({ onNavigateToAdmin }) {
   const containerStyle = {
     background: "white",
     borderRadius: "10px",
-    padding: "40px",
+    padding: "30px", // Diminua um pouco o padding se estiver muito largo
     boxShadow: "0 10px 40px rgba(0, 0, 0, 0.15)",
-    maxWidth: "450px",
+    maxWidth: "400px", // Estreitar um pouco ajuda a alinhar como na foto
     width: "100%",
-    margin: "20px auto"
+    margin: "auto" // Centraliza verticalmente e horizontalmente
   };
 
   const titleStyle = {

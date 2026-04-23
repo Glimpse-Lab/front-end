@@ -1,26 +1,18 @@
-import { useState } from "react";
-import Formulario from "./components/Formulario/Formulario.jsx";
-import Administracao from "./components/Administracao.jsx";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Projetos from './pages/Projetos';
+import Formulario from './pages/Formulario';
+import Admin from './pages/Admin';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-
-  const handleNavigateToAdmin = () => {
-    setCurrentPage("admin");
-  };
-
-  const handleNavigateHome = () => {
-    setCurrentPage("home");
-  };
-
   return (
-    <div>
-      {currentPage === "home" && (
-        <Formulario onNavigateToAdmin={handleNavigateToAdmin} />
-      )}
-      {currentPage === "admin" && (
-        <Administracao onNavigateHome={handleNavigateHome} />
-      )}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/projetos" element={<Projetos />} />
+        <Route path="/formulario" element={<Formulario />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

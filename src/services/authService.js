@@ -1,73 +1,103 @@
-import { validarCPF, validarEmail, validarSenha } from "../utils/validators.js";
-
-const API_URL = "http://localhost:8080";
+import api from "./api.js";
 
 /**
- * Cadastra um novo usuário
+ * Serviço de autenticação
+ * Centraliza todas as requisições relacionadas a login e cadastro
  */
-async function cadastrar(nome, email, senha, cpf) {
-  if (!validarCPF(cpf)) {
-    return { success: false, message: "CPF inválido" };
-  }
 
-  if (!validarEmail(email)) {
-    return { success: false, message: "Email inválido" };
-  }
+export const authService = {
+  /**
+   * Realiza login do usuário
+   * @param {string} email - Email do usuário
+   * @param {string} senha - Senha do usuário
+   * @returns {Promise<Object>} Dados do usuário e token
+   */
+  login: async (email, senha) => {
+    try {
+      const response = await api.post("/usuarios/login", {
+        email,
+        senha,
+      });
 
-  if (!validarSenha(senha)) {
-    return { success: false, message: "Senha inválida" };
-  }
+      // Se houver token na resposta, armazenar no localStorage
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user || {}));
+      }
 
-  try {
-    const response = await fetch(`${API_URL}/usuarios`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nome, email, senha, cpf }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Erro ao cadastrar usuário");
+      return {
+        success: true,
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Erro ao fazer login",
+        error,
+      };
     }
+  },
 
-    const data = await response.json();
-    return { success: true, data };
-  } catch (error) {
-    return { success: false, message: error.message };
-  }
-}
+  /**
+   * Realiza cadastro de novo usuário
+   * @param {string} nome - Nome completo do usuário
+   * @param {string} email - Email do usuário
+   * @param {string} senha - Senha do usuário
+   * @param {string} cpf - CPF do usuário
+   * @returns {Promise<Object>} Dados do novo usuário
+   */
+  cadastro: async (nome, email, senha, cpf) => {
+    try {
+      const response = await api.post("/usuarios/cadastrar", {
+        nome,
+        email,
+        senha,
+        cpf,
+      });
 
-/**
- * Realiza login do usuário
- */
-async function logar(email, senha) {
-  if (!validarEmail(email)) {
-    return { success: false, message: "Email inválido" };
-  }
+      // Se houver token na resposta, armazenar no localStorage
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user || {}));
+      }
 
-  if (!validarSenha(senha)) {
-    return { success: false, message: "Senha inválida" };
-  }
-
-  try {
-    const response = await fetch(`${API_URL}/usuarios/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, senha }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Erro ao realizar login");
+      return {
+        success: true,
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Erro ao fazer cadastro",
+        error,
+      };
     }
+  },
 
-    const data = await response.json();
-    return { success: true, data };
-  } catch (error) {
-    return { success: false, message: error.message };
-  }
-}
+  /**
+   * Faz logout do usuário
+   */
+  logout: () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  },
 
-export { cadastrar, logar };
+  /**
+   * Obtém dados do usuário armazenado no localStorage
+   * @returns {Object|null} Dados do usuário ou null
+   */
+  getUser: () => {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  },
+
+  /**
+   * Verifica se o usuário está autenticado
+   * @returns {boolean} True se houver token, false caso contrário
+   */
+  isAuthenticated: () => {
+    return !!localStorage.getItem("token");
+  },
+};
+
+export default authService;
