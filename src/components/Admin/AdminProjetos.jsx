@@ -7,7 +7,8 @@ function AdminProjetos() {
     title: "",
     description: "",
     location: "",
-    date: ""
+    date: "",
+    imageUrl: ""
   });
   const [editId, setEditId] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -25,19 +26,44 @@ function AdminProjetos() {
     }));
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData(prev => ({
+          ...prev,
+          imageUrl: event.target.result
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
     if (editId) {
-      setProjetos(projetos.map(p =>
-        p.id === editId ? { ...p, ...formData } : p
-      ));
+      setProjetos(projetos.map(p => {
+        if (p.id === editId) {
+          const updated = { ...p, ...formData };
+          // Se houver URL de imagem, adicionar ao array
+          if (formData.imageUrl && !updated.images.includes(formData.imageUrl)) {
+            updated.images = [formData.imageUrl, ...updated.images.slice(0, 2)];
+          }
+          return updated;
+        }
+        return p;
+      }));
       setEditId(null);
     } else {
       const newProjeto = {
         id: Math.max(...projetos.map(p => p.id), 0) + 1,
-        ...formData,
-        images: [],
+        title: formData.title,
+        description: formData.description,
+        location: formData.location,
+        date: formData.date,
+        images: formData.imageUrl ? [formData.imageUrl] : [],
         fullDescription: formData.description
       };
       setProjetos([...projetos, newProjeto]);
@@ -47,13 +73,17 @@ function AdminProjetos() {
       title: "",
       description: "",
       location: "",
-      date: ""
+      date: "",
+      imageUrl: ""
     });
     setShowForm(false);
   };
 
   const handleEdit = (projeto) => {
-    setFormData(projeto);
+    setFormData({
+      ...projeto,
+      imageUrl: projeto.images && projeto.images.length > 0 ? projeto.images[0] : ""
+    });
     setEditId(projeto.id);
     setShowForm(true);
   };
@@ -71,7 +101,8 @@ function AdminProjetos() {
       title: "",
       description: "",
       location: "",
-      date: ""
+      date: "",
+      imageUrl: ""
     });
   };
 
@@ -213,6 +244,27 @@ function AdminProjetos() {
               style={inputStyle}
               required
             />
+            <div style={{ ...inputStyle, padding: "10px", border: "2px solid #2196f3", borderRadius: "6px", cursor: "pointer" }}>
+              <label style={{ display: "block", cursor: "pointer", fontWeight: "500", color: "#2196f3", marginBottom: "8px" }}>
+                📁 Selecionar Imagem do Projeto
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: "block", width: "100%", cursor: "pointer" }}
+              />
+              {formData.imageUrl && (
+                <div style={{ marginTop: "10px" }}>
+                  <p style={{ margin: "8px 0 4px 0", fontSize: "12px", color: "#666" }}>Preview:</p>
+                  <img
+                    src={formData.imageUrl}
+                    alt="Preview"
+                    style={{ maxWidth: "100%", maxHeight: "200px", borderRadius: "4px" }}
+                  />
+                </div>
+              )}
+            </div>
             <div style={formButtonsStyle}>
               <button type="submit" style={buttonStyle}>
                 {editId ? "Atualizar" : "Adicionar"}

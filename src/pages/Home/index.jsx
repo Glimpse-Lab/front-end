@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getProdutos } from '../../services/produtosService';
-import '../../assets/style.css'; 
+import OrcamentoModal from '../../components/OrcamentoModal/OrcamentoModal.jsx';
+import '../../assets/style.css';
 
 export default function Home() {
   const navigate = useNavigate();
   const [produtos, setProdutos] = useState([]);
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [modalOrcamentoAberto, setModalOrcamentoAberto] = useState(false);
 
   // Busca os produtos do localStorage ao carregar a página
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function Home() {
           </ul>
 
           <div className="nav-cta">
-            <button onClick={() => navigate('/formulario')} className="btn btn-primary">
+            <button onClick={() => setModalOrcamentoAberto(true)} className="btn btn-primary">
               Solicitar orçamento
             </button>
           </div>
@@ -250,7 +252,7 @@ export default function Home() {
               tecnologia, inovação e atendimento personalizado.
             </p>
             <p className="about-cta">Quer saber como podemos ajudar no seu próximo projeto?</p>
-            <button onClick={() => navigate('/formulario')} className="btn-primary" style={{cursor: 'pointer', border: 'none'}}>
+            <button onClick={() => setModalOrcamentoAberto(true)} className="btn-primary" style={{cursor: 'pointer', border: 'none'}}>
               Solicitar orçamento
             </button>
           </div>
@@ -326,7 +328,7 @@ export default function Home() {
                     className="btn btn-main modal-cta"
                     onClick={() => {
                       fecharModalProduto();
-                      navigate('/formulario');
+                      setModalOrcamentoAberto(true);
                     }}
                   >
                     Solicitar orçamento
@@ -378,6 +380,12 @@ export default function Home() {
           © 2026 Glimpse/GPM Esquadrias. Todos os direitos reservados.
         </div>
       </footer>
+
+      {/* MODAL DE ORÇAMENTO */}
+      <OrcamentoModal 
+        isOpen={modalOrcamentoAberto}
+        onClose={() => setModalOrcamentoAberto(false)}
+      />
     </>
   );
 }

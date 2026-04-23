@@ -248,7 +248,7 @@ function AdminOrcamentos() {
                 <div>
                   <h4 style={{ margin: "0 0 4px 0", color: "#1a3a52" }}>#{orcamento.id} - {orcamento.nome}</h4>
                   <p style={{ margin: 0, color: "#666", fontSize: "13px" }}>
-                    {orcamento.assunto}
+                    {orcamento.assunto || orcamento.tipo || "Orçamento Geral"}
                   </p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
@@ -289,7 +289,7 @@ function AdminOrcamentos() {
                       📝 Descrição
                     </div>
                     <div style={descriptionStyle}>
-                      {orcamento.descricao}
+                      {orcamento.descricao || orcamento.mensagem || "Sem descrição"}
                     </div>
                   </div>
 
@@ -298,21 +298,27 @@ function AdminOrcamentos() {
                       📦 Produtos Interessados
                     </div>
                     <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                      {orcamento.produtos.map((produto, idx) => (
-                        <span
-                          key={idx}
-                          style={{
-                            padding: "6px 12px",
-                            backgroundColor: "#e3f2fd",
-                            color: "#1e88e5",
-                            borderRadius: "6px",
-                            fontSize: "13px",
-                            fontWeight: "500"
+                      {orcamento.produtos && orcamento.produtos.length > 0 ? (
+                        orcamento.produtos.map((produto, idx) => (
+                          <span
+                            key={idx}
+                            style={{
+                              padding: "6px 12px",
+                              backgroundColor: "#e3f2fd",
+                              color: "#1e88e5",
+                              borderRadius: "6px",
+                              fontSize: "13px",
+                              fontWeight: "500"
                           }}
                         >
                           {produto}
                         </span>
-                      ))}
+                      ))
+                      ) : (
+                        <span style={{ color: "#999", fontSize: "13px" }}>
+                          Nenhum produto informado
+                        </span>
+                      )}
                     </div>
                   </div>
 
@@ -321,7 +327,7 @@ function AdminOrcamentos() {
                       🔄 Atualizar Status
                     </div>
                     <select
-                      value={orcamento.status}
+                      value={orcamento.status || "pendente"}
                       onChange={(e) => handleChangeStatus(orcamento.id, e.target.value)}
                       style={selectStyle}
                     >

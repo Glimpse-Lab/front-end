@@ -26,9 +26,12 @@ export const authService = {
       console.log("📨 Headers:", response.headers);
 
       // Se houver token na resposta, armazenar no localStorage
-      if (response.data.token) {
-        console.log("✅ Token recebido:", response.data.token.substring(0, 20) + "...");
-        localStorage.setItem("token", response.data.token);
+      // O backend pode retornar em "token" ou "mensagem"
+      const tokenValue = response.data.token || response.data.mensagem;
+      
+      if (tokenValue) {
+        console.log("✅ Token recebido:", tokenValue.substring(0, 20) + "...");
+        localStorage.setItem("token", tokenValue);
         console.log("✅ Token armazenado em localStorage");
         console.log("✅ Verificando localStorage:", localStorage.getItem("token") ? "OK" : "FALHOU");
         
@@ -44,7 +47,7 @@ export const authService = {
         console.log("✅ Verificando localStorage user:", localStorage.getItem("user") ? "OK" : "FALHOU");
         
         // Adiciona o token ao header da API
-        api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+        api.defaults.headers.common["Authorization"] = `Bearer ${tokenValue}`;
         console.log("✅ Header Authorization configurado");
       } else {
         console.error("❌ ERRO: Resposta do servidor SEM token!");

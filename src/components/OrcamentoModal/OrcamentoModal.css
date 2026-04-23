@@ -1,0 +1,238 @@
+/* FORMULARIO DE ORÇAMENTO */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal-orcamento {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 550px !important;
+  background: var(--blue-light);
+  padding: 25px 15px;
+  z-index: 1001;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  background-color: #b3d9ff !important;
+  flex-direction: column;
+}
+
+.modal-orcamento.ativo {
+  display: flex;
+}
+
+.modal-overlay.ativo {
+  display: block;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none !important;
+  border: none;
+  font-size: 28px;
+  color: #0d3c61 !important;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: none !important;
+}
+
+.modal-close:hover {
+  background: none !important;
+  color: #0d3c61 !important;
+  transform: none !important;
+}
+
+/* Removed generic .orcamento selectors that affect global styles */
+
+.modal-orcamento .orcamento-form {
+  max-width: 450px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+}
+
+.modal-orcamento .form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.modal-orcamento .form-group input,
+.modal-orcamento .form-group textarea {
+  min-width: 450px;
+}
+
+.modal-orcamento label {
+  font-weight: 700;
+  color: #0d3c61;
+  font-size: 13px;
+  display: inline-block;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  background: linear-gradient(135deg, rgba(30, 136, 229, 0.1) 0%, rgba(30, 136, 229, 0.05) 100%);
+  border-radius: 4px;
+  border-left: 3px solid #1e88e5;
+}
+
+.modal-orcamento input,
+.modal-orcamento textarea {
+  padding: 10px 8px !important;
+  border: 2px solid #e0e0e0 !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  transition: all 0.3s ease !important;
+  font-family: inherit !important;
+  background-color: #f9fafb !important;
+}
+
+.modal-orcamento input[type="text"],
+.modal-orcamento input[type="email"],
+.modal-orcamento input[type="tel"] {
+  height: 38px !important;
+}
+
+.modal-orcamento input:hover {
+  border-color: #b3d9ff !important;
+  background-color: #ffffff !important;
+}
+
+.modal-orcamento input:focus,
+.modal-orcamento textarea:focus {
+  outline: none !important;
+  border-color: #1e88e5 !important;
+  box-shadow: 0 0 0 4px rgba(30, 136, 229, 0.15) !important;
+  background-color: #ffffff !important;
+}
+
+.modal-orcamento textarea {
+  resize: vertical !important;
+  min-height: 90px !important;
+  height: auto !important;
+}
+
+.orcamento-form button[type="submit"] {
+  margin: 0 !important;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-orcamento .tipoOrcamento {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.modal-orcamento .tipoOrcamento select {
+  flex: 1;
+  min-width: 180px;
+  min-height: 38px;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.modal-orcamento .tipoOrcamento button {
+  padding: 10px 20px;
+  border: 2px solid #1e88e5;
+  border-radius: 6px;
+  color: white;
+  background: #1e88e5;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+  font-weight: 600;
+}
+
+.modal-orcamento .tipoOrcamento button:hover {
+  background-color: #1565c0;
+}
+
+.orcamento-form {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#orcamento-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.button-group button {
+  flex: 1;
+  height: 38px !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
+  text-transform: uppercase !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+.button-group button[type="submit"] {
+  background: #1e88e5 !important;
+  color: white !important;
+}
+
+.button-group button[type="submit"]:hover {
+  background: #1565c0 !important;
+}
+
+.button-group button[type="button"] {
+  background: #999 !important;
+  color: white !important;
+}
+
+.button-group button[type="button"]:hover {
+  background: #777 !important;
+}

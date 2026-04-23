@@ -169,84 +169,7 @@ section:nth-of-type(even) {
   transform: translateY(1px);
 }
 
-/* FORMULARIO DE ORÇAMENTO */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-
-.modal-orcamento {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 600px;
-  background: var(--blue-light);
-  padding: 40px 20px;
-  z-index: 1001;
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  flex-direction: column;
-}
-
-.modal-orcamento.ativo {
-  display: flex;
-}
-
-.modal-overlay.ativo {
-  display: block;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  color: #0d3c61;
-  cursor: pointer;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.modal-close:hover {
-  background: rgba(30, 136, 229, 0.2);
-  color: #1e88e5;
-  transform: rotate(90deg);
-}
-
-.orcamento::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: none;
-  pointer-events: none;
-}
-
-.orcamento.ativo::after {
-  display: block;
-  pointer-events: auto;
-}
+/* FORMULARIO DE ORÇAMENTO - estilos movidos para OrcamentoModal.css */
 
 .orcamento select{
   padding: 12px;
@@ -373,7 +296,6 @@ section:nth-of-type(even) {
 }
 
 .orcamento-form {
-  display: none;
   flex-direction: column;
   gap: 20px;
 }

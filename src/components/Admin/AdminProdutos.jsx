@@ -27,6 +27,20 @@ function AdminProdutos() {
     }));
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFormData(prev => ({
+          ...prev,
+          imageUrl: event.target.result
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     
@@ -239,14 +253,27 @@ function AdminProdutos() {
               style={inputStyle}
               required
             />
-            <input
-              type="text"
-              name="imageUrl"
-              placeholder="URL da Imagem (ex: /src/assets/minha-imagem.jpg)"
-              value={formData.imageUrl}
-              onChange={handleChange}
-              style={inputStyle}
-            />
+            <div style={{ ...inputStyle, padding: "10px", border: "2px solid #1e88e5", borderRadius: "6px", cursor: "pointer" }}>
+              <label style={{ display: "block", cursor: "pointer", fontWeight: "500", color: "#1e88e5", marginBottom: "8px" }}>
+                📁 Selecionar Imagem do Produto
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: "block", width: "100%", cursor: "pointer" }}
+              />
+              {formData.imageUrl && (
+                <div style={{ marginTop: "10px" }}>
+                  <p style={{ margin: "8px 0 4px 0", fontSize: "12px", color: "#666" }}>Preview:</p>
+                  <img
+                    src={formData.imageUrl}
+                    alt="Preview"
+                    style={{ maxWidth: "100%", maxHeight: "200px", borderRadius: "4px" }}
+                  />
+                </div>
+              )}
+            </div>
             <div style={formButtonsStyle}>
               <button type="submit" style={buttonStyle}>
                 {editId ? "Atualizar" : "Adicionar"}
