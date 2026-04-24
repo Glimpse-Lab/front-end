@@ -22,3 +22,24 @@ export const deletarOrcamento = (id) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(filtrados));
   return true;
 };
+
+export async function criarOrcamento(dados) {
+  // Simulamos um pequeno delay de 500ms para o botão dar o feedback visual de "Enviando..."
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  const orcamentos = getOrcamentos();
+  
+  const novoOrcamento = {
+    id: Date.now().toString(), // Cria um ID único
+    dataCriacao: new Date().toISOString(),
+    ...dados
+  };
+
+  console.log(novoOrcamento);
+
+  orcamentos.push(novoOrcamento);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(orcamentos));
+
+  return novoOrcamento;
+
+}

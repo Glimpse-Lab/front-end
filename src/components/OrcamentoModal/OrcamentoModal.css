@@ -1,4 +1,6 @@
-/* FORMULARIO DE ORÇAMENTO */
+/* ===========================================
+   FORMULÁRIO DE ORÇAMENTO - ESTILO COMPACTO
+=========================================== */
 
 .modal-overlay {
   display: none;
@@ -18,14 +20,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 550px !important;
-  background: var(--blue-light);
-  padding: 25px 15px;
+  max-width: 700px !important; /* Modal mais largo para caber bem os campos lado a lado */
+  padding: 25px !important;
   z-index: 1001;
   border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   background-color: #b3d9ff !important;
   flex-direction: column;
+  max-height: 98vh; /* Permite ocupar a tela sem criar scroll interno */
 }
 
 .modal-orcamento.ativo {
@@ -42,7 +44,7 @@
   right: 15px;
   background: none !important;
   border: none;
-  font-size: 28px;
+  font-size: 24px;
   color: #0d3c61 !important;
   cursor: pointer;
   padding: 0;
@@ -51,188 +53,234 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: none !important;
 }
 
-.modal-close:hover {
-  background: none !important;
-  color: #0d3c61 !important;
-  transform: none !important;
+.section-header h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  margin-top: 0;
+  text-align: center;
+  color: #0d3c61;
 }
 
-/* Removed generic .orcamento selectors that affect global styles */
-
+/* -------------------------------------------
+   CONTAINER DO FORMULÁRIO (SEM SCROLL)
+------------------------------------------- */
 .modal-orcamento .orcamento-form {
-  max-width: 450px;
-  margin: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  justify-content: center;
+  justify-content: flex-start; 
+  align-items: stretch; 
+  gap: 10px; 
+  width: 100%;
+  margin: 0 auto;
 }
 
+/* -------------------------------------------
+   GRUPOS DE INPUT E LABELS
+------------------------------------------- */
 .modal-orcamento .form-group {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 5px;
-}
-
-.modal-orcamento .form-group input,
-.modal-orcamento .form-group textarea {
-  min-width: 450px;
+  gap: 4px !important; 
+  margin-bottom: 0px !important;
 }
 
 .modal-orcamento label {
-  font-weight: 700;
-  color: #0d3c61;
-  font-size: 13px;
-  display: inline-block;
-  margin-bottom: 6px;
+  font-weight: 600;
+  color: #334155; 
+  font-size: 11px;
+  margin: 0px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 4px 8px;
-  background: linear-gradient(135deg, rgba(30, 136, 229, 0.1) 0%, rgba(30, 136, 229, 0.05) 100%);
-  border-radius: 4px;
-  border-left: 3px solid #1e88e5;
+  background: none;
+  border-left: none;
+  padding: 0;
 }
 
+/* -------------------------------------------
+   INPUTS E TEXTAREA (SOFT UI)
+------------------------------------------- */
 .modal-orcamento input,
 .modal-orcamento textarea {
-  padding: 10px 8px !important;
-  border: 2px solid #e0e0e0 !important;
-  border-radius: 6px !important;
+  width: 100%;
+  padding: 8px 12px !important; 
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 6px !important; 
   font-size: 13px !important;
+  color: #1e293b !important;
+  background-color: #f8fafc !important; 
+  box-sizing: border-box;
   transition: all 0.3s ease !important;
-  font-family: inherit !important;
-  background-color: #f9fafb !important;
 }
 
 .modal-orcamento input[type="text"],
 .modal-orcamento input[type="email"],
 .modal-orcamento input[type="tel"] {
-  height: 38px !important;
-}
-
-.modal-orcamento input:hover {
-  border-color: #b3d9ff !important;
-  background-color: #ffffff !important;
+  height: 36px !important; /* Altura controlada */
 }
 
 .modal-orcamento input:focus,
 .modal-orcamento textarea:focus {
   outline: none !important;
-  border-color: #1e88e5 !important;
-  box-shadow: 0 0 0 4px rgba(30, 136, 229, 0.15) !important;
+  border-color: #2563eb !important; 
   background-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
 }
 
 .modal-orcamento textarea {
-  resize: vertical !important;
-  min-height: 90px !important;
+  resize: none !important; 
+  min-height: 50px !important; /* Textarea menor para poupar espaço */
   height: auto !important;
 }
 
-.orcamento-form button[type="submit"] {
-  margin: 0 !important;
-  width: 100%;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
+/* -------------------------------------------
+   SELEÇÃO INICIAL (TIPO DE ORÇAMENTO)
+------------------------------------------- */
 .modal-orcamento .tipoOrcamento {
   display: flex;
   flex-direction: column;
   gap: 15px;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+}
+
+.modal-orcamento .tipoOrcamento select,
+.modal-orcamento .tipoOrcamento button {
+  width: 100%;
+  height: 40px;
+  border-radius: 6px;
 }
 
 .modal-orcamento .tipoOrcamento select {
-  flex: 1;
-  min-width: 180px;
-  min-height: 38px;
-  font-size: 13px;
-  text-align: center;
-  cursor: pointer;
+  border: 1.5px solid #cbd5e1;
+  padding: 0 10px;
+  font-size: 14px;
 }
 
 .modal-orcamento .tipoOrcamento button {
-  padding: 10px 20px;
-  border: 2px solid #1e88e5;
-  border-radius: 6px;
+  background: #2563eb;
   color: white;
-  background: #1e88e5;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+  border: none;
   font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 
 .modal-orcamento .tipoOrcamento button:hover {
-  background-color: #1565c0;
+  background: #1d4ed8;
 }
 
-.orcamento-form {
-  display: none;
-  flex-direction: column;
-  gap: 20px;
-}
-
-#orcamento-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
+/* -------------------------------------------
+   BOTÕES DE AÇÃO ALINHADOS PERFEITAMENTE
+------------------------------------------- */
 .button-group {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 10px; 
 }
 
 .button-group button {
+  appearance: none; 
+  -webkit-appearance: none;
+  box-sizing: border-box !important; 
   flex: 1;
-  height: 38px !important;
+  height: 40px !important; 
+  margin: 0 !important;
   padding: 0 !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  border: none !important;
+  font-size: 12px !important; 
+  font-weight: 700 !important;
   border-radius: 6px !important;
   cursor: pointer !important;
-  transition: background-color 0.3s ease !important;
+  transition: all 0.2s ease !important;
   text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  line-height: 1 !important;
 }
 
 .button-group button[type="submit"] {
-  background: #1e88e5 !important;
+  background: #2563eb !important;
   color: white !important;
+  border: 1.5px solid transparent !important; /* Borda fantasma para alinhar com o botão branco */
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2) !important;
 }
 
-.button-group button[type="submit"]:hover {
-  background: #1565c0 !important;
+.button-group button[type="submit"]:hover:not(:disabled) {
+  background: #1d4ed8 !important;
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3) !important;
 }
 
 .button-group button[type="button"] {
-  background: #999 !important;
-  color: white !important;
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1.5px solid #cbd5e1 !important; /* Borda real */
 }
 
 .button-group button[type="button"]:hover {
-  background: #777 !important;
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* -------------------------------------------
+   LAYOUT EM COLUNAS (Lado a Lado)
+------------------------------------------- */
+.form-row {
+  display: flex;
+  gap: 12px; 
+  width: 100%;
+}
+
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* -------------------------------------------
+   CHECKBOX DO COMPLEMENTO E CAMPOS DESATIVADOS
+------------------------------------------- */
+.label-with-check {
+  display: flex;
+  justify-content: space-between; /* Joga o título pra esquerda e o check pra direita */
+  align-items: center;
+  width: 100%;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px !important; /* Menorzinho para não roubar a atenção */
+  color: #64748b !important;
+  text-transform: none !important; /* Tira o maiúsculo para ficar mais suave */
+  cursor: pointer;
+  font-weight: 500 !important;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 14px !important;
+  height: 14px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer;
+  accent-color: #2563eb; /* Deixa o "check" nativo azul combinando com o botão */
+  box-shadow: none !important; /* Tira aquele brilho de foco do text-input */
+  border: 1px solid #cbd5e1 !important;
+}
+
+/* Deixa o campo cinza e com cursor bloqueado quando o cliente marca que não tem */
+.modal-orcamento input:disabled {
+  background-color: #e2e8f0 !important;
+  border-color: #e2e8f0 !important;
+  color: #94a3b8 !important;
+  cursor: not-allowed !important;
 }
