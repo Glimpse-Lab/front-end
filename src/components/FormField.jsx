@@ -12,8 +12,8 @@ export function FormField({ label, children, last = false, compact = false }) {
   );
 }
 
-const inputCls = 'w-full px-4 py-3 rounded-lg border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-main)]';
-const inputClsCompact = 'w-full px-3 py-2 rounded-lg border border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-main)] text-sm';
+const inputCls = 'w-full px-4 py-3 rounded-lg border-2 border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-main)]';
+const inputClsCompact = 'w-full px-3 py-2 rounded-lg border-2 border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-main)] text-sm';
 
 export function Input({ className = '', compact = false, ...props }) {
   return <input className={`${compact ? inputClsCompact : inputCls} ${className}`} {...props} />;
@@ -21,7 +21,7 @@ export function Input({ className = '', compact = false, ...props }) {
 
 export function Select({ children, className = '', ...props }) {
   return (
-    <select className={`${inputCls} ${className}`} {...props}>
+    <select className={`w-full px-4 py-3 rounded-lg border-2 border-[var(--border)] focus:outline-none focus:ring-2 focus:ring-[var(--blue-main)] ${className}`} {...props}>
       {children}
     </select>
   );

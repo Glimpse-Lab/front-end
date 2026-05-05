@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router';
 import { LayoutDashboard, Package, FolderOpen, Mail, Users, LogOut } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import authService from '../services/authService';
+import { ScrollToTop } from '../components/ScrollToTop';
 
 function AdminSidebar() {
   const location = useLocation();
@@ -79,6 +80,7 @@ export function AdminLayout() {
 
   return (
     <div className="flex min-h-screen bg-[var(--blue-light)]">
+      <ScrollToTop />
       <AdminSidebar />
       <main className="flex-1 ml-64 min-h-screen overflow-y-auto">
         <Outlet />

@@ -147,7 +147,7 @@ export function QuotePage() {
               {cepError && <p className="mt-1 text-xs text-red-600">{cepError}</p>}
             </FormField>
             <div className="col-span-2">
-              <FormField label="Rua *" compact>
+              <FormField label="Logradouro *" compact>
                 <Input
                   compact
                   type="text"
