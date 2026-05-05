@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 import { Link, useLocation } from 'react-router';
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Lock } from 'lucide-react';
+import { ScrollToTop } from '../components/ScrollToTop';
 
 function Header() {
   const location = useLocation();
@@ -80,9 +81,7 @@ function Footer() {
                 <span className="text-white/80">São Paulo, SP</span>
               </div>
               <div className="flex items-center gap-4 mt-2">
-                <Facebook className="w-5 h-5 text-white/80 hover:text-[var(--blue-main)] cursor-pointer transition-colors" />
                 <Instagram className="w-5 h-5 text-white/80 hover:text-[var(--blue-main)] cursor-pointer transition-colors" />
-                <Linkedin className="w-5 h-5 text-white/80 hover:text-[var(--blue-main)] cursor-pointer transition-colors" />
               </div>
             </div>
           </div>
@@ -103,6 +102,7 @@ function Footer() {
 export function PublicLayout() {
   return (
     <div className="min-h-screen flex flex-col">
+      <ScrollToTop />
       <Header />
       <main className="flex-1">
         <Outlet />
