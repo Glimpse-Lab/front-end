@@ -1,6 +1,8 @@
 import { X } from 'lucide-react';
 
-export function Modal({ onClose, children, maxWidth = 'max-w-2xl' }) {
+export function Modal({ onClose, children, maxWidth = 'max-w-2xl', isOpen = true }) {
+  if (!isOpen) return null;
+
   return (
     <div
       className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-6"
