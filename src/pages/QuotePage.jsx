@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { CheckCircle, Send, AlertCircle, Loader2 } from 'lucide-react';
 import { Button } from '../components/Button';
 import { FormField, Input, Textarea } from '../components/FormField';
-import { Modal } from '../components/Modal';
 import clienteService from '../services/clienteService';
 import orcamentoService from '../services/orcamentoService';
 
@@ -16,7 +15,7 @@ export function QuotePage() {
 
   // State para validação de cliente
   const [clienteValidacao, setClienteValidacao] = useState(null);
-  const [mostraDialogClienteDuplicado, setMostraDialogClienteDuplicado] = useState(false);
+  const [mensagemRecorrente, setMensagemRecorrente] = useState('');
   const [validacaoLoading, setValidacaoLoading] = useState(false);
 
   const empty = {
@@ -98,18 +97,13 @@ export function QuotePage() {
         telefone: clienteValidacao.cliente.celular.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4})(\d)/, '$1-$2'),
       }));
     }
-    setMostraDialogClienteDuplicado(false);
-    
-    // Aguardar um pouco para o state ser atualizado
+    setMensagemRecorrente('Cliente recorrente encontrado — usando cadastro existente. Enviando orçamento...');
+
+    // Aguardar um pouco para o state ser atualizado e submeter
     setTimeout(async () => {
       await submeterOrcamento();
+      setMensagemRecorrente('');
     }, 100);
-  };
-
-  // Continuar com novo cliente
-  const continuarNovoCliente = () => {
-    setMostraDialogClienteDuplicado(false);
-    submeterOrcamento();
   };
 
   // Submeter orçamento após resolução do cliente duplicado
@@ -138,7 +132,7 @@ export function QuotePage() {
         setFormData(empty);
         setCepFilled(false);
         setClienteValidacao(null);
-        setMostraDialogClienteDuplicado(false);
+        setMensagemRecorrente('');
       }, 4000);
     } catch (error) {
       console.error('Erro ao enviar orçamento:', error);
@@ -162,8 +156,8 @@ export function QuotePage() {
       setClienteValidacao(resultado);
 
       if (resultado.clienteEncontrado) {
-        // Mostrar modal com opções
-        setMostraDialogClienteDuplicado(true);
+        // Cliente já existe: usar automaticamente os dados existentes e submeter o orçamento
+        await usarClienteExistente();
       } else {
         // Cliente não existe, criar orçamento diretamente
         await submeterOrcamento();
@@ -321,6 +315,12 @@ export function QuotePage() {
               <Textarea compact required value={formData.mensagem} onChange={set('mensagem')} rows={3} placeholder="Descreva seu projeto e necessidades..." />
             </FormField>
 
+            {mensagemRecorrente && (
+              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800">
+                {mensagemRecorrente}
+              </div>
+            )}
+
             {submitError && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
@@ -342,48 +342,7 @@ export function QuotePage() {
         </div>
       </div>
 
-      {/* Modal de cliente duplicado */}
-      <Modal
-        isOpen={mostraDialogClienteDuplicado}
-        onClose={continuarNovoCliente}
-        title="Cliente Já Cadastrado"
-      >
-        <div className="p-6">
-          <p className="text-gray-700 mb-4">
-            Já existe um cliente cadastrado com o email <strong>{formData.email}</strong> ou telefone <strong>{formData.telefone}</strong>.
-          </p>
-          {clienteValidacao?.cliente && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <p className="text-sm text-gray-700">
-                <strong>Nome:</strong> {clienteValidacao.cliente.nome}
-              </p>
-              <p className="text-sm text-gray-700">
-                <strong>Email:</strong> {clienteValidacao.cliente.email}
-              </p>
-              <p className="text-sm text-gray-700">
-                <strong>Telefone:</strong> {clienteValidacao.cliente.celular}
-              </p>
-            </div>
-          )}
-          <p className="text-gray-700 mb-6">
-            Deseja continuar com o cadastro existente ou criar um novo?
-          </p>
-          <div className="flex gap-3">
-            <Button
-              onClick={usarClienteExistente}
-              className="flex-1 bg-[var(--blue-main)] text-white hover:bg-[var(--blue-dark)]"
-            >
-              Usar Cadastro Existente
-            </Button>
-            <Button
-              onClick={continuarNovoCliente}
-              className="flex-1 bg-gray-300 text-gray-800 hover:bg-gray-400"
-            >
-              Criar Novo Cadastro
-            </Button>
-          </div>
-        </div>
-      </Modal>
+      
     </>
   );
 }
