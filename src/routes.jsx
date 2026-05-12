@@ -4,6 +4,7 @@ import { ProjectsPage } from './pages/ProjectsPage';
 import { ProductsPage } from './pages/ProductsPage';
 import { QuotePage } from './pages/QuotePage';
 import { LoginPage } from './pages/LoginPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminProjectsPage } from './pages/admin/AdminProjectsPage';
 import { AdminProductsPage } from './pages/admin/AdminProductsPage';
@@ -28,6 +29,16 @@ export const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/esqueci-senha',
+    element: <ForgotPasswordPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/redefinir-senha',
+    element: <ForgotPasswordPage />,
     errorElement: <ErrorPage />,
   },
   {
