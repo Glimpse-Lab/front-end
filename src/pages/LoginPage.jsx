@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { useApp } from '../context/AppContext';
 import { AlertCircle } from 'lucide-react';
 import { Button } from '../components/Button';
@@ -47,7 +47,7 @@ export function LoginPage() {
           </FormField>
           <Button type="submit" className="w-full mb-3">Entrar</Button>
           <div className="text-center">
-            <a href="#" className="text-sm text-[var(--blue-main)] hover:underline">Esqueci minha senha</a>
+            <Link to="/esqueci-senha" className="text-sm text-[var(--blue-main)] hover:underline">Esqueci minha senha</Link>
           </div>
         </form>
       </div>
