@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Plus, AlertCircle, Pencil, Trash2 } from 'lucide-react';
 import { AdminPageHeader } from '../../components/AdminPageHeader';
@@ -6,9 +6,12 @@ import { Button } from '../../components/Button';
 import { Modal, ModalHeader } from '../../components/Modal';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, Select, Textarea } from '../../components/FormField';
+import projetoService from '../../services/projetoService';
 
 export function AdminProjectsPage() {
-  const { projects, addProject, updateProject, removeProject } = useApp();
+  const { updateProject, removeProject } = useApp();
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
@@ -17,6 +20,22 @@ export function AdminProjectsPage() {
   const [formError, setFormError] = useState('');
   const [imagePreview, setImagePreview] = useState('');
   const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
+
+  // Buscar projetos ao montar o componente
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        const data = await projetoService.fetchAll();
+        setProjects(data);
+      } catch (error) {
+        setFormError('Não foi possível carregar os projetos. Tente novamente.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -47,9 +66,11 @@ export function AdminProjectsPage() {
     setFormError('');
     try {
       if (editingProject) {
-        updateProject(editingProject.id, formData);
+        await projetoService.update(editingProject.id, formData);
+        setProjects(projects.map(p => p.id === editingProject.id ? { ...editingProject, ...formData } : p));
       } else {
-        await addProject(formData);
+        const newProject = await projetoService.create(formData);
+        setProjects([...projects, newProject]);
       }
       setShowForm(false);
     } catch {
@@ -57,12 +78,25 @@ export function AdminProjectsPage() {
     }
   };
 
-  const handleDelete = () => {
-    removeProject(confirmDelete.id);
-    setConfirmDelete(null);
+  const handleDelete = async () => {
+    try {
+      await projetoService.delete(confirmDelete.id);
+      setProjects(projects.filter(p => p.id !== confirmDelete.id));
+      setConfirmDelete(null);
+    } catch {
+      setFormError('Não foi possível remover o projeto. Tente novamente.');
+    }
   };
 
   const handleCloseForm = () => { setShowForm(false); setFormError(''); setImagePreview(''); };
+
+  if (loading) {
+    return (
+      <div className="p-8 flex items-center justify-center">
+        <p className="text-[var(--blue-dark)]/60">Carregando projetos...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">
