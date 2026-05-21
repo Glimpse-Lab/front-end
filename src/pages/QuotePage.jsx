@@ -123,7 +123,11 @@ export function QuotePage() {
         formData.mensagem,
         formData.cep,
         parseInt(formData.numero),
-        formData.complemento
+        formData.complemento,
+        formData.rua,
+        formData.bairro,
+        formData.cidade,
+        formData.estado
       );
 
       setSubmitted(true);

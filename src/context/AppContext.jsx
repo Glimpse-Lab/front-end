@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { mockProjects, mockProducts, mockQuotes } from '../data/mockData';
 import { useAuthToken } from '../hooks/useAuthToken';
 import usuarioService from '../services/usuarioService';
+import * as produtoService from '../services/produtoService';
 
 const AppContext = createContext(undefined);
 
@@ -133,4 +134,18 @@ export function useApp() {
     throw new Error('useApp deve ser usado dentro de um AppProvider');
   }
   return context;
+}
+
+// Helper function to create a product
+export async function createProduct(formData) {
+  const { name, description, preco, quantidadeEstoque, specifications, image, categoriaId } = formData;
+  await produtoService.criarProduto({
+    nome: name,
+    descricao: description,
+    preco: preco,
+    quantidadeEstoque: quantidadeEstoque,
+    especificacaoTecnica: specifications,     // map UI name -> backend
+    imagemUrl: image,
+    categoriaId: categoriaId
+  });
 }
