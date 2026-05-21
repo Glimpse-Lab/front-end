@@ -16,6 +16,7 @@ const authService = {
         nome: response.data.nome,
         email: response.data.email,
         cpf: response.data.cpf,
+        role: response.data.role || 'PADRÃO',
       };
       localStorage.setItem("user", JSON.stringify(userData));
 

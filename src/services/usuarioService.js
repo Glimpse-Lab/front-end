@@ -11,7 +11,7 @@ const usuarioService = {
       nome: name,
       email,
       cpf,
-      senha: password,
+      senha: password
     });
     return response.data;
   },
@@ -20,9 +20,10 @@ const usuarioService = {
     await api.delete(`/usuarios/${id}`);
   },
 
-  atualizar: async (id, { name, email, password }) => {
+  atualizar: async (id, { name, email, password, role }) => {
     const body = { nome: name, email };
     if (password) body.senha = password;
+    if (role) body.role = role; // Apenas enviado se fornecido (ADMIN)
     const response = await api.put(`/usuarios/${id}`, body);
     return response.data;
   },

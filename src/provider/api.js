@@ -9,6 +9,12 @@ const api = axios.create({
   },
 });
 
+// Inicializa o token do localStorage na primeira carga
+const token = localStorage.getItem("token");
+if (token) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
+
 // Interceptador de requisição - injeta o token JWT em todas as chamadas
 api.interceptors.request.use(
   (config) => {
