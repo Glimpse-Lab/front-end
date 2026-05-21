@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Plus, AlertCircle, Pencil, Trash2 } from 'lucide-react';
 import { AdminPageHeader } from '../../components/AdminPageHeader';
@@ -6,9 +6,12 @@ import { Button } from '../../components/Button';
 import { Modal, ModalHeader } from '../../components/Modal';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, Select, Textarea } from '../../components/FormField';
+import produtoService from '../../services/produtoService';
 
 export function AdminProductsPage() {
-  const { products, addProduct, updateProduct, removeProduct } = useApp();
+  const { updateProduct, removeProduct } = useApp();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
@@ -17,6 +20,22 @@ export function AdminProductsPage() {
   const [formError, setFormError] = useState('');
   const [imagePreview, setImagePreview] = useState('');
   const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
+
+  // Buscar produtos ao montar o componente
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const data = await produtoService.fetchAll();
+        setProducts(data);
+      } catch (error) {
+        setFormError('Não foi possível carregar os produtos. Tente novamente.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -47,9 +66,11 @@ export function AdminProductsPage() {
     setFormError('');
     try {
       if (editingProduct) {
-        updateProduct(editingProduct.id, formData);
+        await produtoService.update(editingProduct.id, formData);
+        setProducts(products.map(p => p.id === editingProduct.id ? { ...editingProduct, ...formData } : p));
       } else {
-        await addProduct(formData);
+        const newProduct = await produtoService.create(formData);
+        setProducts([...products, newProduct]);
       }
       setShowForm(false);
     } catch {
@@ -57,12 +78,25 @@ export function AdminProductsPage() {
     }
   };
 
-  const handleDelete = () => {
-    removeProduct(confirmDelete.id);
-    setConfirmDelete(null);
+  const handleDelete = async () => {
+    try {
+      await produtoService.delete(confirmDelete.id);
+      setProducts(products.filter(p => p.id !== confirmDelete.id));
+      setConfirmDelete(null);
+    } catch {
+      setFormError('Não foi possível remover o produto. Tente novamente.');
+    }
   };
 
   const handleCloseForm = () => { setShowForm(false); setFormError(''); setImagePreview(''); };
+
+  if (loading) {
+    return (
+      <div className="p-8 flex items-center justify-center">
+        <p className="text-[var(--blue-dark)]/60">Carregando produtos...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8">

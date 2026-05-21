@@ -5,7 +5,23 @@ import { AdminPageHeader } from '../../components/AdminPageHeader';
 import { Button } from '../../components/Button';
 import { Modal, ModalHeader } from '../../components/Modal';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { FormField, Input, PasswordInput } from '../../components/FormField';
+import { FormField, Input, PasswordInput, Select } from '../../components/FormField';
+
+// Badge de Status de Permissão
+function PermissionBadge({ role }) {
+  if (role === 'ADMIN') {
+    return (
+      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">
+        ADMIN
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+      PADRÃO
+    </span>
+  );
+}
 
 export function AdminEmployeesPage() {
   const { employees, addEmployee, removeEmployee, updateEmployee, currentUser } = useApp();
@@ -14,10 +30,10 @@ export function AdminEmployeesPage() {
   const [deleteError, setDeleteError] = useState('');
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const empty = { name: '', email: '', cpf: '', password: '', confirmPassword: '' };
+  const empty = { name: '', email: '', cpf: '', password: '', confirmPassword: '', role: 'PADRÃO' };
   const [formData, setFormData] = useState(empty);
   const [formError, setFormError] = useState('');
-  const [editData, setEditData] = useState({ nome: '', email: '', password: '', confirmPassword: '' });
+  const [editData, setEditData] = useState({ nome: '', email: '', password: '', confirmPassword: '', role: 'PADRÃO' });
   const [editError, setEditError] = useState('');
   const [saving, setSaving] = useState(false);
   const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
@@ -27,7 +43,13 @@ export function AdminEmployeesPage() {
 
   useEffect(() => {
     if (selected) {
-      setEditData({ nome: selected.nome ?? selected.name ?? '', email: selected.email ?? '', password: '', confirmPassword: '' });
+      setEditData({
+        nome: selected.nome ?? selected.name ?? '',
+        email: selected.email ?? '',
+        password: '',
+        confirmPassword: '',
+        role: selected.role ?? 'PADRÃO'
+      });
       setEditError('');
     }
   }, [selected]);
@@ -49,7 +71,13 @@ export function AdminEmployeesPage() {
       return;
     }
     try {
-      await addEmployee({ name: formData.name, email: formData.email, cpf: formData.cpf, password: formData.password });
+      await addEmployee({
+        name: formData.name,
+        email: formData.email,
+        cpf: formData.cpf,
+        password: formData.password,
+        role: formData.role
+      });
       setFormData(empty);
       setShowForm(false);
     } catch {
@@ -59,17 +87,45 @@ export function AdminEmployeesPage() {
 
   const handleSaveEdit = async (e) => {
     e.preventDefault();
+    
+    // Validar campos obrigatórios
+    if (!editData.nome?.trim()) {
+      setEditError('Nome completo é obrigatório.');
+      return;
+    }
+    if (!editData.email?.trim()) {
+      setEditError('E-mail é obrigatório.');
+      return;
+    }
     if (editData.password && editData.password !== editData.confirmPassword) {
       setEditError('As senhas não coincidem. Verifique e tente novamente.');
       return;
     }
+    
     setSaving(true);
     setEditError('');
     try {
-      await updateEmployee(selected.id, { name: editData.nome, email: editData.email, password: editData.password || undefined });
+      const payload = {
+        name: editData.nome,
+        email: editData.email,
+      };
+      
+      if (editData.password) {
+        payload.password = editData.password;
+      }
+      
+      // Apenas ADMIN pode enviar role (não é "Meu Perfil")
+      if (!isOwn) {
+        payload.role = editData.role;
+      }
+      
+      console.log('Enviando payload:', payload);
+      await updateEmployee(selected.id, payload);
       setSelected(null);
-    } catch {
-      setEditError('Não foi possível salvar as alterações. Tente novamente.');
+    } catch (error) {
+      console.error('Erro ao salvar:', error);
+      const errorMsg = error?.response?.data?.message || error?.response?.data || 'Não foi possível salvar as alterações. Tente novamente.';
+      setEditError(typeof errorMsg === 'string' ? errorMsg : 'Não foi possível salvar as alterações. Tente novamente.');
     } finally {
       setSaving(false);
     }
@@ -119,6 +175,12 @@ export function AdminEmployeesPage() {
             <FormField label="CPF *">
               <Input type="text" required value={formData.cpf} onChange={handleCpf} placeholder="000.000.000-00" maxLength={14} />
             </FormField>
+            <FormField label="Permissão *">
+              <Select required value={formData.role} onChange={set('role')}>
+                <option value="PADRÃO">PADRÃO</option>
+                <option value="ADMIN">ADMIN</option>
+              </Select>
+            </FormField>
             <FormField label="Senha *">
               <PasswordInput required value={formData.password} onChange={set('password')} placeholder="••••••••" minLength={6} />
             </FormField>
@@ -147,6 +209,9 @@ export function AdminEmployeesPage() {
                 </span>
               </div>
               <h2 className="text-xl font-bold text-[var(--blue-dark)]">{selected.nome ?? selected.name}</h2>
+              <div className="mt-2">
+                <PermissionBadge role={selected.role ?? 'PADRÃO'} />
+              </div>
             </div>
 
             {isOwn ? (
@@ -171,6 +236,16 @@ export function AdminEmployeesPage() {
                     className="bg-gray-100 text-gray-400 cursor-not-allowed"
                   />
                 </FormField>
+                <FormField label="Permissão">
+                  <Select 
+                    value={editData.role}
+                    disabled
+                    className="bg-gray-100 text-gray-400 cursor-not-allowed"
+                  >
+                    <option value="PADRÃO">PADRÃO</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </Select>
+                </FormField>
                 <FormField label="Nova Senha">
                   <PasswordInput value={editData.password} onChange={setEdit('password')} placeholder="Deixe em branco para não alterar" minLength={6} />
                 </FormField>
@@ -192,44 +267,63 @@ export function AdminEmployeesPage() {
                 </div>
               </form>
             ) : (
-              <>
-                <div className="space-y-4 mb-6">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <User className="w-5 h-5 text-[var(--blue-main)] flex-shrink-0" />
-                    <div>
-                      <p className="text-xs text-[var(--blue-dark)]/50">Nome</p>
-                      <p className="text-sm font-medium text-[var(--blue-dark)]">{selected.nome ?? selected.name}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <Mail className="w-5 h-5 text-[var(--blue-main)] flex-shrink-0" />
-                    <div className="min-w-0">
-                      <p className="text-xs text-[var(--blue-dark)]/50">E-mail</p>
-                      <p className="text-sm font-medium text-[var(--blue-dark)] break-all">{selected.email}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <CreditCard className="w-5 h-5 text-[var(--blue-main)] flex-shrink-0" />
-                    <div>
-                      <p className="text-xs text-[var(--blue-dark)]/50">CPF</p>
-                      <p className="text-sm font-medium text-[var(--blue-dark)]">{selected.cpf ?? '—'}</p>
-                    </div>
-                  </div>
-                </div>
-                {deleteError && (
+              <form onSubmit={handleSaveEdit}>
+                {editError && (
                   <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
                     <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
-                    <p className="text-red-800 text-sm">{deleteError}</p>
+                    <p className="text-red-800 text-sm">{editError}</p>
                   </div>
                 )}
+                <FormField label="Nome Completo">
+                  <Input type="text" value={editData.nome} onChange={setEdit('nome')} placeholder="Ex: João Silva" disabled className="bg-gray-100 text-gray-400 cursor-not-allowed" />
+                </FormField>
+                <FormField label="E-mail">
+                  <Input type="email" value={editData.email} onChange={setEdit('email')} placeholder="joao@gpmesquadrias.com.br" disabled className="bg-gray-100 text-gray-400 cursor-not-allowed" />
+                </FormField>
+                <FormField label="CPF">
+                  <Input
+                    type="text"
+                    value={selected.cpf ?? '—'}
+                    disabled
+                    className="bg-gray-100 text-gray-400 cursor-not-allowed"
+                  />
+                </FormField>
+                <FormField label="Permissão *">
+                  <Select 
+                    required
+                    value={editData.role}
+                    onChange={setEdit('role')}
+                  >
+                    <option value="PADRÃO">PADRÃO</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </Select>
+                </FormField>
+                <div className="flex gap-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => { setSelected(null); setEditError(''); }}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    className="flex-1 flex items-center justify-center gap-2" 
+                    disabled={saving}
+                  >
+                    <Save className="w-4 h-4" /> {saving ? 'Salvando...' : 'Salvar Permissão'}
+                  </Button>
+                </div>
                 <Button
+                  type="button"
                   variant="ghost"
-                  className="w-full flex items-center justify-center gap-2 !bg-red-50 !text-red-600 hover:!bg-red-100"
+                  className="w-full flex items-center justify-center gap-2 !bg-red-50 !text-red-600 hover:!bg-red-100 mt-2"
                   onClick={() => setConfirmDelete(true)}
                 >
                   <Trash2 className="w-4 h-4" /> Remover Funcionário
                 </Button>
-              </>
+              </form>
             )}
           </div>
         </Modal>
@@ -263,6 +357,9 @@ export function AdminEmployeesPage() {
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold text-[var(--blue-dark)]">{nome}</h3>
                   <p className="text-sm text-[var(--blue-dark)]/60 break-all">{employee.email}</p>
+                  <div className="mt-1">
+                    <PermissionBadge role={employee.role ?? 'PADRÃO'} />
+                  </div>
                 </div>
               </div>
             </div>
