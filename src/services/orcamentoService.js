@@ -76,6 +76,15 @@ const orcamentoService = {
     }
   },
 
+  atualizarStatus: async (id, status) => {
+    try {
+      const response = await api.put(`/orcamentos/${id}/status`, { status });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
   // Excluir orçamento (requer autenticação)
   excluir: async (id) => {
     try {

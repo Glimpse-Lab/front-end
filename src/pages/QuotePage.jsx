@@ -4,6 +4,7 @@ import { Button } from '../components/Button';
 import { FormField, Input, Textarea } from '../components/FormField';
 import clienteService from '../services/clienteService';
 import orcamentoService from '../services/orcamentoService';
+import { useApp } from '../context/AppContext';
 
 export function QuotePage() {
   const [submitted, setSubmitted] = useState(false);
@@ -12,6 +13,7 @@ export function QuotePage() {
   const [cepError, setCepError] = useState('');
   const [cepFilled, setCepFilled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { submitQuote } = useApp();
 
   // State para validação de cliente
   const [clienteValidacao, setClienteValidacao] = useState(null);
@@ -116,7 +118,7 @@ export function QuotePage() {
       const telefoneLimpo = formData.telefone.replace(/\D/g, '');
 
       // Criar orçamento com cliente (cria novo ou usa existente)
-      await orcamentoService.criarComCliente(
+      const resp = await orcamentoService.criarComCliente(
         formData.nome,
         formData.email,
         telefoneLimpo,
@@ -129,6 +131,32 @@ export function QuotePage() {
         formData.cidade,
         formData.estado
       );
+
+      // Mapeia status do backend (enum) para string front-end
+      const mapStatus = (s) => {
+        if (!s) return 'pending';
+        switch (s) {
+          case 'PENDENTE': return 'pending';
+          case 'EM_ANDAMENTO': return 'in_progress';
+          case 'PROPOSTA_ENVIADA': return 'proposal_sent';
+          case 'APROVADO': return 'approved';
+          case 'RECUSADO': return 'rejected';
+          case 'CANCELADO': return 'cancelled';
+          default: return 'pending';
+        }
+      };
+
+      // Adiciona ao contexto para aparecer na lista imediata
+      submitQuote({
+        id: resp.id ? String(resp.id) : undefined,
+        clientName: resp.cliente?.nome || formData.nome,
+        email: resp.cliente?.email || formData.email,
+        phone: telefoneLimpo.replace(/(\d{2})(\d)/, '($1) $2').replace(/(\d{4,5})(\d)/, '$1-$2'),
+        projectType: resp.descricaoProjeto || formData.mensagem,
+        message: resp.descricaoProjeto || formData.mensagem,
+        date: resp.dataSolicitacao ? resp.dataSolicitacao.split('T')[0] : new Date().toISOString().split('T')[0],
+        status: mapStatus(resp.status?.name ? resp.status.name : resp.status || null)
+      });
 
       setSubmitted(true);
       setTimeout(() => {
