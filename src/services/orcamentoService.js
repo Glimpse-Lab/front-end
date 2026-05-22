@@ -3,7 +3,7 @@ import api from "../provider/api";
 const orcamentoService = {
   // Criar novo orçamento com dados de cliente inline
   // Cria novo cliente se não existir, ou usa cliente existente
-  criarComCliente: async (nomeCliente, emailCliente, celularCliente, descricaoProjeto, cep, numEndereco, complemento) => {
+  criarComCliente: async (nomeCliente, emailCliente, celularCliente, descricaoProjeto, cep, numEndereco, complemento, rua, bairro, cidade, estado) => {
     try {
       const response = await api.post("/orcamentos/com-cliente", {
         nomeCliente,
@@ -13,6 +13,10 @@ const orcamentoService = {
         cep,
         numEndereco,
         complemento,
+        rua,
+        bairro,
+        cidade,
+        estado,
       });
       return response.data;
     } catch (error) {
@@ -66,6 +70,15 @@ const orcamentoService = {
         numEndereco,
         complemento,
       });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error;
+    }
+  },
+
+  atualizarStatus: async (id, status) => {
+    try {
+      const response = await api.put(`/orcamentos/${id}/status`, { status });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;

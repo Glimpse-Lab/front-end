@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import { mockProjects, mockProducts, mockQuotes } from '../data/mockData';
 import { useAuthToken } from '../hooks/useAuthToken';
 import usuarioService from '../services/usuarioService';
+import produtoService from '../services/produtoService';
 
 const AppContext = createContext(undefined);
 
@@ -17,6 +18,40 @@ export function AppProvider({ children }) {
       usuarioService.listar()
         .then(setEmployees)
         .catch(() => setEmployees([]));
+
+      // Buscar orçamentos reais do backend e substituir apenas o estado de quotes
+      import('../services/orcamentoService').then(({ default: orcamentoService }) => {
+        orcamentoService.listar()
+          .then((backendQuotes) => {
+            // Mapear formato do backend para o formato de UI usado no AppContext
+            const mapped = backendQuotes.map((q) => ({
+              id: String(q.id),
+              clientName: q.cliente?.nome || '',
+              email: q.cliente?.email || '',
+              phone: q.cliente?.celular || '',
+              projectType: q.descricaoProjeto || '',
+              message: q.descricaoProjeto || '',
+              date: q.dataSolicitacao ? q.dataSolicitacao.split('T')[0] : new Date().toISOString().split('T')[0],
+              endereco: q.endereco || null,
+              status: (function mapStatus(s) {
+                if (!s) return 'pending';
+                switch (s) {
+                  case 'PENDENTE': return 'pending';
+                  case 'EM_ANDAMENTO': return 'in_progress';
+                  case 'PROPOSTA_ENVIADA': return 'proposal_sent';
+                  case 'APROVADO': return 'approved';
+                  case 'RECUSADO': return 'rejected';
+                  case 'CANCELADO': return 'cancelled';
+                  default: return 'pending';
+                }
+              })(q.status?.name ? q.status.name : q.status)
+            }));
+            setQuotes(mapped);
+          })
+          .catch(() => {
+            // Em caso de erro, mantém os mocks
+          });
+      });
     }
   }, [isAuthenticated]);
 
@@ -91,11 +126,11 @@ export function AppProvider({ children }) {
   const submitQuote = (quote) => {
     const newQuote = {
       ...quote,
-      id: String(quotes.length + 1),
-      date: new Date().toISOString().split('T')[0],
-      status: 'pending'
+      id: quote.id ? String(quote.id) : String(quotes.length + 1),
+      date: quote.date ? quote.date : new Date().toISOString().split('T')[0],
+      status: quote.status ? quote.status : 'pending'
     };
-    setQuotes([...quotes, newQuote]);
+    setQuotes((prev) => [...prev, newQuote]);
   };
 
   return (
@@ -133,4 +168,18 @@ export function useApp() {
     throw new Error('useApp deve ser usado dentro de um AppProvider');
   }
   return context;
+}
+
+// Helper function to create a product
+export async function createProduct(formData) {
+  const { name, description, preco, quantidadeEstoque, specifications, image, categoriaId } = formData;
+  await produtoService.create({
+    nome: name,
+    descricao: description,
+    preco: preco,
+    quantidadeEstoque: quantidadeEstoque,
+    especificacaoTecnica: specifications,     // map UI name -> backend
+    imagemUrl: image,
+    categoriaId: categoriaId
+  });
 }

@@ -1,11 +1,19 @@
 import axios from "axios";
 
+const DEFAULT_API_URL = 'http://localhost:8080';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL || DEFAULT_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+// Inicializa o token do localStorage na primeira carga
+const token = localStorage.getItem("token");
+if (token) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
 
 // Interceptador de requisição - injeta o token JWT em todas as chamadas
 api.interceptors.request.use(
