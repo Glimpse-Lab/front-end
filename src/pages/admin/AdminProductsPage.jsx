@@ -8,6 +8,10 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, Select, Textarea } from '../../components/FormField';
 import produtoService from '../../services/produtoService';
 
+// Mapeamento auxiliar para converter IDs do Back-end em Textos e vice-versa
+const categoriasMapToId = { 'Janelas': 1, 'Portas': 2, 'Sistemas': 3, 'Acessórios': 4 };
+const categoriasMapToText = { 1: 'Janelas', 2: 'Portas', 3: 'Sistemas', 4: 'Acessórios' };
+
 export function AdminProductsPage() {
   const { updateProduct, removeProduct } = useApp();
   const [products, setProducts] = useState([]);
@@ -42,7 +46,8 @@ export function AdminProductsPage() {
     if (!file) return;
     const url = URL.createObjectURL(file);
     setImagePreview(url);
-    setFormData((prev) => ({ ...prev, image: url }));
+    // Agora salvamos o arquivo binário real no estado, e não apenas a URL temporária
+    setFormData((prev) => ({ ...prev, image: file }));
   };
 
   const openAdd = () => {
@@ -55,8 +60,14 @@ export function AdminProductsPage() {
 
   const openEdit = (product) => {
     setEditingProduct(product);
-    setFormData({ name: product.name, category: product.category, description: product.description, specifications: product.specifications, image: product.image });
-    setImagePreview(product.image);
+    setFormData({ 
+      name: product.nome, 
+      category: categoriasMapToText[product.categoriaId] || '', 
+      description: product.descricao, 
+      specifications: product.especificacaoTecnica, 
+      image: product.imagemUrl 
+    });
+    setImagePreview(product.imagemUrl);
     setFormError('');
     setShowForm(true);
   };
@@ -65,16 +76,39 @@ export function AdminProductsPage() {
     e.preventDefault();
     setFormError('');
     try {
-      if (editingProduct) {
-        await produtoService.update(editingProduct.id, formData);
-        setProducts(products.map(p => p.id === editingProduct.id ? { ...editingProduct, ...formData } : p));
-      } else {
-        const newProduct = await produtoService.create(formData);
-        setProducts([...products, newProduct]);
+      const dataToSend = new FormData();
+      dataToSend.append('nome', formData.name);
+      dataToSend.append('descricao', formData.description);
+      dataToSend.append('especificacaoTecnica', formData.specifications);
+      
+      // Valores padrões exigidos pelo back-end mas que ainda não estão na tela
+      dataToSend.append('preco', 100.0);
+      dataToSend.append('quantidadeEstoque', 10);
+      
+      // Converte o texto da categoria para o ID esperado pelo banco
+      dataToSend.append('categoriaId', categoriasMapToId[formData.category] || 1);
+
+      // Se o usuário selecionou um arquivo novo, envia como 'file'
+      if (formData.image instanceof File) {
+          dataToSend.append('file', formData.image);
+      } else if (editingProduct && editingProduct.imagemUrl) {
+          // Se está editando e não mudou a foto, devolve a URL original
+          dataToSend.append('imagemUrl', editingProduct.imagemUrl);
       }
+
+      if (editingProduct) {
+        await produtoService.update(editingProduct.id, dataToSend);
+      } else {
+        await produtoService.create(dataToSend);
+      }
+      
+      // Recarrega os produtos atualizados para buscar as URLs corretas geradas pelo disco local
+      const novosProdutos = await produtoService.fetchAll();
+      setProducts(novosProdutos);
       setShowForm(false);
-    } catch {
-      setFormError('Não foi possível salvar o produto. Tente novamente.');
+    } catch (err) {
+      console.error(err);
+      setFormError('Não foi possível salvar o produto. Verifique se as categorias estão cadastradas no banco.');
     }
   };
 
@@ -159,7 +193,7 @@ export function AdminProductsPage() {
       {confirmDelete && (
         <ConfirmDialog
           title="Excluir produto?"
-          message={`Tem certeza que deseja excluir "${confirmDelete.name}"? Esta ação não poderá ser desfeita.`}
+          message={`Tem certeza que deseja excluir "${confirmDelete.nome}"? Esta ação não poderá ser desfeita.`}
           confirmLabel="Excluir"
           onConfirm={handleDelete}
           onCancel={() => setConfirmDelete(null)}
@@ -170,13 +204,13 @@ export function AdminProductsPage() {
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-xl overflow-hidden border border-[var(--border)] shadow-sm">
             <div className="h-48 bg-[var(--blue-light)] overflow-hidden">
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+              <img src={product.imagemUrl || "https://via.placeholder.com/300?text=Sem+Foto"} alt={product.nome} className="w-full h-full object-cover" />
             </div>
             <div className="p-6">
-              <div className="text-xs text-[var(--blue-main)] mb-2">{product.category}</div>
-              <h3 className="font-bold text-[var(--blue-dark)] mb-2">{product.name}</h3>
-              <p className="text-sm text-[var(--blue-dark)]/70 line-clamp-2 mb-3">{product.description}</p>
-              <div className="text-xs text-[var(--blue-dark)]/60 line-clamp-2 mb-4">{product.specifications}</div>
+              <div className="text-xs text-[var(--blue-main)] mb-2">{categoriasMapToText[product.categoriaId] || 'Outros'}</div>
+              <h3 className="font-bold text-[var(--blue-dark)] mb-2">{product.nome}</h3>
+              <p className="text-sm text-[var(--blue-dark)]/70 line-clamp-2 mb-3">{product.descricao}</p>
+              <div className="text-xs text-[var(--blue-dark)]/60 line-clamp-2 mb-4">{product.especificacaoTecnica}</div>
               <div className="flex gap-2 pt-3 border-t border-[var(--border)]">
                 <button
                   onClick={() => openEdit(product)}

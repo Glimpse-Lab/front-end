@@ -21,20 +21,24 @@ const produtoService = {
     }
   },
 
-  // Criar novo produto
+  // Criar novo produto (Ajustado para envio de arquivo)
   create: async (data) => {
     try {
-      const response = await api.post("/produtos", data);
+      const response = await api.post("/produtos", data, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
     }
   },
 
-  // Atualizar produto
+  // Atualizar produto (Ajustado para envio de arquivo)
   update: async (id, data) => {
     try {
-      const response = await api.put(`/produtos/${id}`, data);
+      const response = await api.put(`/produtos/${id}`, data, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
