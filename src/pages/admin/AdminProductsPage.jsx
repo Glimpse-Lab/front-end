@@ -58,16 +58,17 @@ export function AdminProductsPage() {
     setShowForm(true);
   };
 
-  const openEdit = (product) => {
+const openEdit = (product) => {
     setEditingProduct(product);
+    
     setFormData({ 
-      name: product.nome, 
+      name: product.nome || '', 
       category: categoriasMapToText[product.categoriaId] || '', 
-      description: product.descricao, 
-      specifications: product.especificacaoTecnica, 
-      image: product.imagemUrl 
+      description: product.descricao || '', 
+      specifications: product.especificacaoTecnica || '', 
+      image: product.imagemUrl || '' 
     });
-    setImagePreview(product.imagemUrl);
+    setImagePreview(product.imagemUrl || '');
     setFormError('');
     setShowForm(true);
   };
@@ -204,7 +205,7 @@ export function AdminProductsPage() {
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-xl overflow-hidden border border-[var(--border)] shadow-sm">
             <div className="h-48 bg-[var(--blue-light)] overflow-hidden">
-              <img src={product.imagemUrl || "https://via.placeholder.com/300?text=Sem+Foto"} alt={product.nome} className="w-full h-full object-cover" />
+              <img src={product.imagemUrl || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={product.nome} className="w-full h-full object-cover" />
             </div>
             <div className="p-6">
               <div className="text-xs text-[var(--blue-main)] mb-2">{categoriasMapToText[product.categoriaId] || 'Outros'}</div>

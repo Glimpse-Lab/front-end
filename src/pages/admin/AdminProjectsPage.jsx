@@ -8,6 +8,11 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, Select, Textarea } from '../../components/FormField';
 import projetoService from '../../services/projetoService';
 
+// Mapeamento auxiliar para categorias do banco.
+// IMPORTANTE: Ajuste os IDs abaixo conforme os IDs reais das categorias no seu banco PostgreSQL.
+const categoriasMapToId = { 'Residencial': 5, 'Comercial': 6, 'Corporativo': 7 }; 
+const categoriasMapToText = { 5: 'Residencial', 6: 'Comercial', 7: 'Corporativo' };
+
 export function AdminProjectsPage() {
   const { updateProject, removeProject } = useApp();
   const [projects, setProjects] = useState([]);
@@ -40,9 +45,9 @@ export function AdminProjectsPage() {
   const handleImage = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const url = URL.createObjectURL(file);
-    setImagePreview(url);
-    setFormData((prev) => ({ ...prev, image: url }));
+    setImagePreview(URL.createObjectURL(file));
+    // Salva o arquivo real (binário) no estado para enviar ao Spring Boot
+    setFormData((prev) => ({ ...prev, image: file })); 
   };
 
   const openAdd = () => {
@@ -53,10 +58,19 @@ export function AdminProjectsPage() {
     setShowForm(true);
   };
 
-  const openEdit = (project) => {
+const openEdit = (project) => {
     setEditingProject(project);
-    setFormData({ name: project.name, description: project.description, materials: project.materials, location: project.location || '', image: project.image, category: project.category });
-    setImagePreview(project.image);
+    const catId = project.categoria?.id;
+
+    setFormData({ 
+      name: project.titulo || '', 
+      description: project.descricao || '', 
+      materials: project.materiaisUtilizados || '', 
+      location: project.localizacao || '', 
+      image: project.imagensUrls || '', 
+      category: categoriasMapToText[catId] || project.categoria?.nome || '' 
+    });
+    setImagePreview(project.imagensUrls || '');
     setFormError('');
     setShowForm(true);
   };
@@ -65,16 +79,39 @@ export function AdminProjectsPage() {
     e.preventDefault();
     setFormError('');
     try {
-      if (editingProject) {
-        await projetoService.update(editingProject.id, formData);
-        setProjects(projects.map(p => p.id === editingProject.id ? { ...editingProject, ...formData } : p));
-      } else {
-        const newProject = await projetoService.create(formData);
-        setProjects([...projects, newProject]);
+      const dataToSend = new FormData();
+      dataToSend.append('titulo', formData.name);
+      dataToSend.append('descricao', formData.description);
+      dataToSend.append('materiaisUtilizados', formData.materials);
+      dataToSend.append('localizacao', formData.location);
+      
+      // O Back-end exige a Data do Projeto, geramos a data atual formatada (ex: 2026-03-15T10:30:00)
+      const dataAtualFormatada = new Date().toISOString().substring(0, 19);
+      dataToSend.append('dataProjeto', dataAtualFormatada); 
+      
+      // Mapeia o texto da categoria para o ID numérico
+      dataToSend.append('categoriaId', categoriasMapToId[formData.category] || 5);
+
+      // Lógica do Arquivo
+      if (formData.image instanceof File) {
+          dataToSend.append('file', formData.image);
+      } else if (editingProject && editingProject.imagensUrls) {
+          dataToSend.append('imagensUrls', editingProject.imagensUrls);
       }
+
+      if (editingProject) {
+        await projetoService.update(editingProject.id, dataToSend);
+      } else {
+        await projetoService.create(dataToSend);
+      }
+      
+      // Recarrega os projetos do banco para pegar a URL oficial salva no disco
+      const novosProjetos = await projetoService.fetchAll();
+      setProjects(novosProjetos);
       setShowForm(false);
-    } catch {
-      setFormError('Não foi possível salvar o projeto. Tente novamente.');
+    } catch (err) {
+      console.log(err);
+      setFormError('Não foi possível salvar o projeto. Verifique os dados e se as categorias existem no banco.');
     }
   };
 
@@ -161,7 +198,7 @@ export function AdminProjectsPage() {
       {confirmDelete && (
         <ConfirmDialog
           title="Excluir projeto?"
-          message={`Tem certeza que deseja excluir "${confirmDelete.name}"? Esta ação não poderá ser desfeita.`}
+          message={`Tem certeza que deseja excluir "${confirmDelete.titulo}"? Esta ação não poderá ser desfeita.`}
           confirmLabel="Excluir"
           onConfirm={handleDelete}
           onCancel={() => setConfirmDelete(null)}
@@ -183,13 +220,15 @@ export function AdminProjectsPage() {
                 <tr key={project.id} className="border-b border-[var(--border)] last:border-0">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <img src={project.image} alt={project.name} className="w-12 h-12 object-cover rounded-lg" />
-                      <span className="font-medium text-[var(--blue-dark)]">{project.name}</span>
+                      <img src={project.imagensUrls || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={project.titulo} className="w-12 h-12 object-cover rounded-lg" />
+                      <span className="font-medium text-[var(--blue-dark)]">{project.titulo}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.category}</td>
-                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.location || '-'}</td>
-                  <td className="px-6 py-4 text-[var(--blue-dark)]/70 text-sm max-w-xs truncate">{project.materials}</td>
+                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">
+                    {project.categoria?.nome || categoriasMapToText[project.categoria?.id] || '-'}
+                  </td>
+                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.localizacao || '-'}</td>
+                  <td className="px-6 py-4 text-[var(--blue-dark)]/70 text-sm max-w-xs truncate">{project.materiaisUtilizados}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       <button
