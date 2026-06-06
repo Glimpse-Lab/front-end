@@ -39,7 +39,14 @@ export function AdminEmployeesPage() {
   const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
   const setEdit = (key) => (e) => setEditData({ ...editData, [key]: e.target.value });
 
-  const isOwn = selected && currentUser && selected.id === currentUser.id;
+  const isOwn = selected && currentUser && String(selected.id) === String(currentUser.id);
+
+  // Garante que o próprio usuário logado sempre apareça na lista
+  const displayEmployees = currentUser
+    ? employees.some(e => String(e.id) === String(currentUser.id))
+      ? employees
+      : [{ id: currentUser.id, nome: currentUser.nome, email: currentUser.email, cpf: currentUser.cpf, role: currentUser.role }, ...employees]
+    : employees;
 
   useEffect(() => {
     if (selected) {
@@ -341,7 +348,7 @@ export function AdminEmployeesPage() {
       )}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {employees.map((employee) => {
+        {displayEmployees.map((employee) => {
           const nome = employee.nome ?? employee.name ?? '';
           const iniciais = nome.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
           return (
