@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Plus, AlertCircle, Pencil, Trash2 } from 'lucide-react';
 import { AdminPageHeader } from '../../components/AdminPageHeader';
@@ -6,48 +6,34 @@ import { Button } from '../../components/Button';
 import { Modal, ModalHeader } from '../../components/Modal';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, Select, Textarea } from '../../components/FormField';
-import produtoService from '../../services/produtoService';
 
 // Mapeamento auxiliar para converter IDs do Back-end em Textos e vice-versa
 const categoriasMapToId = { 'Janelas': 1, 'Portas': 2, 'Sistemas': 3, 'Acessórios': 4 };
 const categoriasMapToText = { 1: 'Janelas', 2: 'Portas', 3: 'Sistemas', 4: 'Acessórios' };
 
 export function AdminProductsPage() {
-  const { updateProduct, removeProduct } = useApp();
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { products, addProduct, updateProduct, removeProduct, loadingProducts } = useApp();
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
-  const empty = { name: '', category: '', description: '', specifications: '', image: '' };
+  const [categorias] = useState([
+    { id: 1, nome: 'Janelas' },
+    { id: 2, nome: 'Portas' },
+    { id: 3, nome: 'Sistemas' },
+    { id: 4, nome: 'Acessórios' },
+  ]);
+  const empty = { name: '', categoryId: '', description: '', specifications: '', image: '', imageFile: null, preco: '', quantidadeEstoque: '' };
   const [formData, setFormData] = useState(empty);
   const [formError, setFormError] = useState('');
   const [imagePreview, setImagePreview] = useState('');
-  const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
-
-  // Buscar produtos ao montar o componente
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        const data = await produtoService.fetchAll();
-        setProducts(data);
-      } catch (error) {
-        setFormError('Não foi possível carregar os produtos. Tente novamente.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
+  const set = (key) => (e) => setFormData((prev) => ({ ...prev, [key]: e.target.value }));
 
   const handleImage = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const url = URL.createObjectURL(file);
     setImagePreview(url);
-    // Agora salvamos o arquivo binário real no estado, e não apenas a URL temporária
-    setFormData((prev) => ({ ...prev, image: file }));
+    setFormData((prev) => ({ ...prev, image: url, imageFile: file }));
   };
 
   const openAdd = () => {
@@ -60,15 +46,8 @@ export function AdminProductsPage() {
 
 const openEdit = (product) => {
     setEditingProduct(product);
-    
-    setFormData({ 
-      name: product.nome || '', 
-      category: categoriasMapToText[product.categoriaId] || '', 
-      description: product.descricao || '', 
-      specifications: product.especificacaoTecnica || '', 
-      image: product.imagemUrl || '' 
-    });
-    setImagePreview(product.imagemUrl || '');
+    setFormData({ name: product.name, categoryId: product.categoryId ?? '', description: product.description, specifications: product.specifications, image: product.image, imageFile: null, preco: product.preco ?? '', quantidadeEstoque: product.quantidadeEstoque ?? '' });
+    setImagePreview(product.image);
     setFormError('');
     setShowForm(true);
   };
@@ -77,24 +56,19 @@ const openEdit = (product) => {
     e.preventDefault();
     setFormError('');
     try {
-      const dataToSend = new FormData();
-      dataToSend.append('nome', formData.name);
-      dataToSend.append('descricao', formData.description);
-      dataToSend.append('especificacaoTecnica', formData.specifications);
-      
-      // Valores padrões exigidos pelo back-end mas que ainda não estão na tela
-      dataToSend.append('preco', 100.0);
-      dataToSend.append('quantidadeEstoque', 10);
-      
-      // Converte o texto da categoria para o ID esperado pelo banco
-      dataToSend.append('categoriaId', categoriasMapToId[formData.category] || 1);
-
-      // Se o usuário selecionou um arquivo novo, envia como 'file'
-      if (formData.image instanceof File) {
-          dataToSend.append('file', formData.image);
-      } else if (editingProduct && editingProduct.imagemUrl) {
-          // Se está editando e não mudou a foto, devolve a URL original
-          dataToSend.append('imagemUrl', editingProduct.imagemUrl);
+      const payload = {
+        nome: formData.name,
+        descricao: formData.description,
+        preco: formData.preco,
+        quantidadeEstoque: formData.quantidadeEstoque,
+        especificacaoTecnica: formData.specifications,
+        categoriaId: formData.categoryId,
+        file: formData.imageFile,
+      };
+      if (editingProduct) {
+        await updateProduct(editingProduct.id, payload);
+      } else {
+        await addProduct(payload);
       }
 
       if (editingProduct) {
@@ -115,8 +89,7 @@ const openEdit = (product) => {
 
   const handleDelete = async () => {
     try {
-      await produtoService.delete(confirmDelete.id);
-      setProducts(products.filter(p => p.id !== confirmDelete.id));
+      await removeProduct(confirmDelete.id);
       setConfirmDelete(null);
     } catch {
       setFormError('Não foi possível remover o produto. Tente novamente.');
@@ -125,7 +98,7 @@ const openEdit = (product) => {
 
   const handleCloseForm = () => { setShowForm(false); setFormError(''); setImagePreview(''); };
 
-  if (loading) {
+  if (loadingProducts) {
     return (
       <div className="p-8 flex items-center justify-center">
         <p className="text-[var(--blue-dark)]/60">Carregando produtos...</p>
@@ -156,12 +129,11 @@ const openEdit = (product) => {
               <Input type="text" required value={formData.name} onChange={set('name')} placeholder="Ex: Janela Maxim-ar" />
             </FormField>
             <FormField label="Categoria *">
-              <Select required value={formData.category} onChange={set('category')}>
+              <Select required value={formData.categoryId} onChange={set('categoryId')}>
                 <option value="">Selecione uma categoria</option>
-                <option value="Janelas">Janelas</option>
-                <option value="Portas">Portas</option>
-                <option value="Sistemas">Sistemas</option>
-                <option value="Acessórios">Acessórios</option>
+                {categorias.map((c) => (
+                  <option key={c.id} value={c.id}>{c.nome}</option>
+                ))}
               </Select>
             </FormField>
             <FormField label="Descrição *">
@@ -170,6 +142,14 @@ const openEdit = (product) => {
             <FormField label="Especificações Técnicas *">
               <Textarea required value={formData.specifications} onChange={set('specifications')} rows={3} placeholder="Ex: Dimensões, material, acabamentos disponíveis..." />
             </FormField>
+            <div className="grid grid-cols-2 gap-4">
+              <FormField label="Preço (R$) *">
+                <Input type="number" step="0.01" min="0" required value={formData.preco} onChange={set('preco')} placeholder="Ex: 1250.50" />
+              </FormField>
+              <FormField label="Qtd. em Estoque *">
+                <Input type="number" min="0" required value={formData.quantidadeEstoque} onChange={set('quantidadeEstoque')} placeholder="Ex: 15" />
+              </FormField>
+            </div>
             <FormField label={editingProduct ? 'Imagem (deixe em branco para manter)' : 'Imagem *'} last>
               <label className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-[var(--border)] rounded-lg cursor-pointer hover:border-[var(--blue-main)] transition-colors bg-gray-50 overflow-hidden">
                 {imagePreview ? (
@@ -208,10 +188,16 @@ const openEdit = (product) => {
               <img src={product.imagemUrl || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={product.nome} className="w-full h-full object-cover" />
             </div>
             <div className="p-6">
-              <div className="text-xs text-[var(--blue-main)] mb-2">{categoriasMapToText[product.categoriaId] || 'Outros'}</div>
-              <h3 className="font-bold text-[var(--blue-dark)] mb-2">{product.nome}</h3>
-              <p className="text-sm text-[var(--blue-dark)]/70 line-clamp-2 mb-3">{product.descricao}</p>
-              <div className="text-xs text-[var(--blue-dark)]/60 line-clamp-2 mb-4">{product.especificacaoTecnica}</div>
+              <div className="text-xs text-[var(--blue-main)] mb-2">{product.category}</div>
+              <h3 className="font-bold text-[var(--blue-dark)] mb-2">{product.name}</h3>
+              <p className="text-sm text-[var(--blue-dark)]/70 line-clamp-2 mb-3">{product.description}</p>
+              <div className="text-xs text-[var(--blue-dark)]/60 line-clamp-2 mb-3">{product.specifications}</div>
+              {product.preco != null && (
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm font-semibold text-[var(--blue-dark)]">R$ {Number(product.preco).toFixed(2)}</span>
+                  <span className="text-xs text-[var(--blue-dark)]/60">{product.quantidadeEstoque} em estoque</span>
+                </div>
+              )}
               <div className="flex gap-2 pt-3 border-t border-[var(--border)]">
                 <button
                   onClick={() => openEdit(product)}

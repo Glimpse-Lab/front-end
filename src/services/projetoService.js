@@ -24,8 +24,17 @@ const projetoService = {
   // Criar novo projeto
   create: async (data) => {
     try {
-      const response = await api.post("/projetos", data, {
-        headers: { "Content-Type": "multipart/form-data" }
+      const formData = new FormData();
+      formData.append('titulo', data.titulo);
+      formData.append('descricao', data.descricao);
+      if (data.localizacao) formData.append('localizacao', data.localizacao);
+      if (data.materiaisUtilizados) formData.append('materiaisUtilizados', data.materiaisUtilizados);
+      if (data.categoriaId) formData.append('categoriaId', data.categoriaId);
+      if (data.dataProjeto) formData.append('dataProjeto', data.dataProjeto);
+      if (data.imagensUrls) formData.append('imagensUrls', data.imagensUrls);
+      if (data.file) formData.append('file', data.file);
+      const response = await api.post("/projetos", formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       return response.data;
     } catch (error) {
@@ -36,8 +45,17 @@ const projetoService = {
   // Atualizar projeto
   update: async (id, data) => {
     try {
-      const response = await api.put(`/projetos/${id}`, data, {
-        headers: { "Content-Type": "multipart/form-data" }
+      const formData = new FormData();
+      formData.append('titulo', data.titulo);
+      formData.append('descricao', data.descricao);
+      if (data.localizacao) formData.append('localizacao', data.localizacao);
+      if (data.materiaisUtilizados) formData.append('materiaisUtilizados', data.materiaisUtilizados);
+      if (data.categoriaId) formData.append('categoriaId', data.categoriaId);
+      if (data.dataProjeto) formData.append('dataProjeto', data.dataProjeto);
+      if (data.imagensUrls) formData.append('imagensUrls', data.imagensUrls);
+      if (data.file) formData.append('file', data.file);
+      const response = await api.put(`/projetos/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       return response.data;
     } catch (error) {

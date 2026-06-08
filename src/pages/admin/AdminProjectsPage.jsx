@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Plus, AlertCircle, Pencil, Trash2 } from 'lucide-react';
 import { AdminPageHeader } from '../../components/AdminPageHeader';
@@ -6,7 +6,6 @@ import { Button } from '../../components/Button';
 import { Modal, ModalHeader } from '../../components/Modal';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, Select, Textarea } from '../../components/FormField';
-import projetoService from '../../services/projetoService';
 
 // Mapeamento auxiliar para categorias do banco.
 // IMPORTANTE: Ajuste os IDs abaixo conforme os IDs reais das categorias no seu banco PostgreSQL.
@@ -14,40 +13,27 @@ const categoriasMapToId = { 'Residencial': 5, 'Comercial': 6, 'Corporativo': 7 }
 const categoriasMapToText = { 5: 'Residencial', 6: 'Comercial', 7: 'Corporativo' };
 
 export function AdminProjectsPage() {
-  const { updateProject, removeProject } = useApp();
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { projects, addProject, updateProject, removeProject, loadingProjects } = useApp();
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
-  const empty = { name: '', description: '', materials: '', location: '', image: '', category: '' };
+  const [categorias] = useState([
+    { id: 5, nome: 'Residencial' },
+    { id: 6, nome: 'Comercial' },
+    { id: 7, nome: 'Corporativo' },
+  ]);
+  const empty = { name: '', description: '', materials: '', location: '', image: '', imageFile: null, categoryId: '', dataProjeto: '' };
   const [formData, setFormData] = useState(empty);
   const [formError, setFormError] = useState('');
   const [imagePreview, setImagePreview] = useState('');
-  const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
-
-  // Buscar projetos ao montar o componente
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        const data = await projetoService.fetchAll();
-        setProjects(data);
-      } catch (error) {
-        setFormError('Não foi possível carregar os projetos. Tente novamente.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProjects();
-  }, []);
+  const set = (key) => (e) => setFormData((prev) => ({ ...prev, [key]: e.target.value }));
 
   const handleImage = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    setImagePreview(URL.createObjectURL(file));
-    // Salva o arquivo real (binário) no estado para enviar ao Spring Boot
-    setFormData((prev) => ({ ...prev, image: file })); 
+    const url = URL.createObjectURL(file);
+    setImagePreview(url);
+    setFormData((prev) => ({ ...prev, image: url, imageFile: file }));
   };
 
   const openAdd = () => {
@@ -60,17 +46,8 @@ export function AdminProjectsPage() {
 
   const openEdit = (project) => {
     setEditingProject(project);
-    const catId = project.categoriaId;
-
-    setFormData({ 
-      name: project.titulo || '', 
-      description: project.descricao || '', 
-      materials: project.materiaisUtilizados || '', 
-      location: project.localizacao || '', 
-      image: project.imagensUrls || '', 
-      category: categoriasMapToText[catId] || project.categoriaNome || '' 
-    });
-    setImagePreview(project.imagensUrls || '');
+    setFormData({ name: project.name, description: project.description, materials: project.materials, location: project.location || '', image: project.image, imageFile: null, categoryId: project.categoryId ?? '', dataProjeto: project.dataProjeto || '' });
+    setImagePreview(project.image);
     setFormError('');
     setShowForm(true);
   };
@@ -79,24 +56,19 @@ export function AdminProjectsPage() {
     e.preventDefault();
     setFormError('');
     try {
-      const dataToSend = new FormData();
-      dataToSend.append('titulo', formData.name);
-      dataToSend.append('descricao', formData.description);
-      dataToSend.append('materiaisUtilizados', formData.materials);
-      dataToSend.append('localizacao', formData.location);
-      
-      // O Back-end exige a Data do Projeto, geramos a data atual formatada (ex: 2026-03-15T10:30:00)
-      const dataAtualFormatada = new Date().toISOString().substring(0, 19);
-      dataToSend.append('dataProjeto', dataAtualFormatada); 
-      
-      // Mapeia o texto da categoria para o ID numérico
-      dataToSend.append('categoriaId', categoriasMapToId[formData.category] || 5);
-
-      // Lógica do Arquivo
-      if (formData.image instanceof File) {
-          dataToSend.append('file', formData.image);
-      } else if (editingProject && editingProject.imagensUrls) {
-          dataToSend.append('imagensUrls', editingProject.imagensUrls);
+      const payload = {
+        titulo: formData.name,
+        descricao: formData.description,
+        localizacao: formData.location,
+        materiaisUtilizados: formData.materials,
+        dataProjeto: formData.dataProjeto,
+        categoriaId: formData.categoryId,
+        file: formData.imageFile,
+      };
+      if (editingProject) {
+        await updateProject(editingProject.id, payload);
+      } else {
+        await addProject(payload);
       }
 
       if (editingProject) {
@@ -117,8 +89,7 @@ export function AdminProjectsPage() {
 
   const handleDelete = async () => {
     try {
-      await projetoService.delete(confirmDelete.id);
-      setProjects(projects.filter(p => p.id !== confirmDelete.id));
+      await removeProject(confirmDelete.id);
       setConfirmDelete(null);
     } catch {
       setFormError('Não foi possível remover o projeto. Tente novamente.');
@@ -127,7 +98,7 @@ export function AdminProjectsPage() {
 
   const handleCloseForm = () => { setShowForm(false); setFormError(''); setImagePreview(''); };
 
-  if (loading) {
+  if (loadingProjects) {
     return (
       <div className="p-8 flex items-center justify-center">
         <p className="text-[var(--blue-dark)]/60">Carregando projetos...</p>
@@ -158,11 +129,11 @@ export function AdminProjectsPage() {
               <Input type="text" required value={formData.name} onChange={set('name')} placeholder="Ex: Residência Alphaville" />
             </FormField>
             <FormField label="Categoria *">
-              <Select required value={formData.category} onChange={set('category')}>
+              <Select required value={formData.categoryId} onChange={set('categoryId')}>
                 <option value="">Selecione uma categoria</option>
-                <option value="Residencial">Residencial</option>
-                <option value="Comercial">Comercial</option>
-                <option value="Corporativo">Corporativo</option>
+                {categorias.map((c) => (
+                  <option key={c.id} value={c.id}>{c.nome}</option>
+                ))}
               </Select>
             </FormField>
             <FormField label="Descrição *">
@@ -171,8 +142,11 @@ export function AdminProjectsPage() {
             <FormField label="Materiais Utilizados *">
               <Input type="text" required value={formData.materials} onChange={set('materials')} placeholder="Ex: Alumínio anodizado, vidro temperado 8mm" />
             </FormField>
-            <FormField label="Localização">
-              <Input type="text" value={formData.location} onChange={set('location')} placeholder="Ex: São Paulo, SP" />
+            <FormField label="Localização *">
+              <Input type="text" required value={formData.location} onChange={set('location')} placeholder="Ex: São Paulo, SP" />
+            </FormField>
+            <FormField label="Data do Projeto *">
+              <Input type="datetime-local" required value={formData.dataProjeto} onChange={set('dataProjeto')} />
             </FormField>
             <FormField label={editingProject ? 'Imagem (deixe em branco para manter)' : 'Imagem *'} last>
               <label className="flex flex-col items-center justify-center w-full h-36 border-2 border-dashed border-[var(--border)] rounded-lg cursor-pointer hover:border-[var(--blue-main)] transition-colors bg-gray-50 overflow-hidden">

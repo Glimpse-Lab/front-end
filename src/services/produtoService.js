@@ -24,8 +24,17 @@ const produtoService = {
   // Criar novo produto (Ajustado para envio de arquivo)
   create: async (data) => {
     try {
-      const response = await api.post("/produtos", data, {
-        headers: { "Content-Type": "multipart/form-data" }
+      const formData = new FormData();
+      formData.append('nome', data.nome);
+      formData.append('descricao', data.descricao);
+      formData.append('preco', data.preco);
+      formData.append('quantidadeEstoque', data.quantidadeEstoque);
+      if (data.especificacaoTecnica) formData.append('especificacaoTecnica', data.especificacaoTecnica);
+      if (data.categoriaId) formData.append('categoriaId', data.categoriaId);
+      if (data.imagemUrl) formData.append('imagemUrl', data.imagemUrl);
+      if (data.file) formData.append('file', data.file);
+      const response = await api.post("/produtos", formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       return response.data;
     } catch (error) {
@@ -36,8 +45,17 @@ const produtoService = {
   // Atualizar produto (Ajustado para envio de arquivo)
   update: async (id, data) => {
     try {
-      const response = await api.put(`/produtos/${id}`, data, {
-        headers: { "Content-Type": "multipart/form-data" }
+      const formData = new FormData();
+      formData.append('nome', data.nome);
+      formData.append('descricao', data.descricao);
+      formData.append('preco', data.preco);
+      formData.append('quantidadeEstoque', data.quantidadeEstoque);
+      if (data.especificacaoTecnica) formData.append('especificacaoTecnica', data.especificacaoTecnica);
+      if (data.categoriaId) formData.append('categoriaId', data.categoriaId);
+      if (data.imagemUrl) formData.append('imagemUrl', data.imagemUrl);
+      if (data.file) formData.append('file', data.file);
+      const response = await api.put(`/produtos/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       return response.data;
     } catch (error) {
