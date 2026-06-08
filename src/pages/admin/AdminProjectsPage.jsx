@@ -58,9 +58,9 @@ export function AdminProjectsPage() {
     setShowForm(true);
   };
 
-const openEdit = (project) => {
+  const openEdit = (project) => {
     setEditingProject(project);
-    const catId = project.categoria?.id;
+    const catId = project.categoriaId;
 
     setFormData({ 
       name: project.titulo || '', 
@@ -68,7 +68,7 @@ const openEdit = (project) => {
       materials: project.materiaisUtilizados || '', 
       location: project.localizacao || '', 
       image: project.imagensUrls || '', 
-      category: categoriasMapToText[catId] || project.categoria?.nome || '' 
+      category: categoriasMapToText[catId] || project.categoriaNome || '' 
     });
     setImagePreview(project.imagensUrls || '');
     setFormError('');
@@ -225,10 +225,12 @@ const openEdit = (project) => {
                     </div>
                   </td>
                   <td className="px-6 py-4 text-[var(--blue-dark)]/70">
-                    {project.categoria?.nome || categoriasMapToText[project.categoria?.id] || '-'}
+                    {project.categoriaNome || categoriasMapToText[project.categoriaId] || '-'}
                   </td>
                   <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.localizacao || '-'}</td>
-                  <td className="px-6 py-4 text-[var(--blue-dark)]/70 text-sm max-w-xs truncate">{project.materiaisUtilizados}</td>
+                  <td className="px-6 py-4 text-[var(--blue-dark)]/70 text-sm max-w-xs truncate">
+                    {project.materiaisUtilizados || '-'}
+                  </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       <button
