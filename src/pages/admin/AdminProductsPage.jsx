@@ -7,6 +7,10 @@ import { Modal, ModalHeader } from '../../components/Modal';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, Select, Textarea } from '../../components/FormField';
 
+// Mapeamento auxiliar para converter IDs do Back-end em Textos e vice-versa
+const categoriasMapToId = { 'Janelas': 1, 'Portas': 2, 'Sistemas': 3, 'Acessórios': 4 };
+const categoriasMapToText = { 1: 'Janelas', 2: 'Portas', 3: 'Sistemas', 4: 'Acessórios' };
+
 export function AdminProductsPage() {
   const { products, addProduct, updateProduct, removeProduct, loadingProducts } = useApp();
   const [showForm, setShowForm] = useState(false);
@@ -40,7 +44,7 @@ export function AdminProductsPage() {
     setShowForm(true);
   };
 
-  const openEdit = (product) => {
+const openEdit = (product) => {
     setEditingProduct(product);
     setFormData({ name: product.name, categoryId: product.categoryId ?? '', description: product.description, specifications: product.specifications, image: product.image, imageFile: null, preco: product.preco ?? '', quantidadeEstoque: product.quantidadeEstoque ?? '' });
     setImagePreview(product.image);
@@ -66,9 +70,20 @@ export function AdminProductsPage() {
       } else {
         await addProduct(payload);
       }
+
+      if (editingProduct) {
+        await produtoService.update(editingProduct.id, dataToSend);
+      } else {
+        await produtoService.create(dataToSend);
+      }
+      
+      // Recarrega os produtos atualizados para buscar as URLs corretas geradas pelo disco local
+      const novosProdutos = await produtoService.fetchAll();
+      setProducts(novosProdutos);
       setShowForm(false);
-    } catch {
-      setFormError('Não foi possível salvar o produto. Tente novamente.');
+    } catch (err) {
+      console.error(err);
+      setFormError('Não foi possível salvar o produto. Verifique se as categorias estão cadastradas no banco.');
     }
   };
 
@@ -159,7 +174,7 @@ export function AdminProductsPage() {
       {confirmDelete && (
         <ConfirmDialog
           title="Excluir produto?"
-          message={`Tem certeza que deseja excluir "${confirmDelete.name}"? Esta ação não poderá ser desfeita.`}
+          message={`Tem certeza que deseja excluir "${confirmDelete.nome}"? Esta ação não poderá ser desfeita.`}
           confirmLabel="Excluir"
           onConfirm={handleDelete}
           onCancel={() => setConfirmDelete(null)}
@@ -170,7 +185,7 @@ export function AdminProductsPage() {
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-xl overflow-hidden border border-[var(--border)] shadow-sm">
             <div className="h-48 bg-[var(--blue-light)] overflow-hidden">
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+              <img src={product.imagemUrl || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={product.nome} className="w-full h-full object-cover" />
             </div>
             <div className="p-6">
               <div className="text-xs text-[var(--blue-main)] mb-2">{product.category}</div>

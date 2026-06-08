@@ -21,7 +21,7 @@ const produtoService = {
     }
   },
 
-  // Criar novo produto
+  // Criar novo produto (Ajustado para envio de arquivo)
   create: async (data) => {
     try {
       const formData = new FormData();
@@ -42,7 +42,7 @@ const produtoService = {
     }
   },
 
-  // Atualizar produto
+  // Atualizar produto (Ajustado para envio de arquivo)
   update: async (id, data) => {
     try {
       const formData = new FormData();

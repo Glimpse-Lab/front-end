@@ -7,6 +7,11 @@ import { Modal, ModalHeader } from '../../components/Modal';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, Select, Textarea } from '../../components/FormField';
 
+// Mapeamento auxiliar para categorias do banco.
+// IMPORTANTE: Ajuste os IDs abaixo conforme os IDs reais das categorias no seu banco PostgreSQL.
+const categoriasMapToId = { 'Residencial': 5, 'Comercial': 6, 'Corporativo': 7 }; 
+const categoriasMapToText = { 5: 'Residencial', 6: 'Comercial', 7: 'Corporativo' };
+
 export function AdminProjectsPage() {
   const { projects, addProject, updateProject, removeProject, loadingProjects } = useApp();
   const [showForm, setShowForm] = useState(false);
@@ -65,9 +70,20 @@ export function AdminProjectsPage() {
       } else {
         await addProject(payload);
       }
+
+      if (editingProject) {
+        await projetoService.update(editingProject.id, dataToSend);
+      } else {
+        await projetoService.create(dataToSend);
+      }
+      
+      // Recarrega os projetos do banco para pegar a URL oficial salva no disco
+      const novosProjetos = await projetoService.fetchAll();
+      setProjects(novosProjetos);
       setShowForm(false);
-    } catch {
-      setFormError('Não foi possível salvar o projeto. Tente novamente.');
+    } catch (err) {
+      console.log(err);
+      setFormError('Não foi possível salvar o projeto. Verifique os dados e se as categorias existem no banco.');
     }
   };
 
@@ -156,7 +172,7 @@ export function AdminProjectsPage() {
       {confirmDelete && (
         <ConfirmDialog
           title="Excluir projeto?"
-          message={`Tem certeza que deseja excluir "${confirmDelete.name}"? Esta ação não poderá ser desfeita.`}
+          message={`Tem certeza que deseja excluir "${confirmDelete.titulo}"? Esta ação não poderá ser desfeita.`}
           confirmLabel="Excluir"
           onConfirm={handleDelete}
           onCancel={() => setConfirmDelete(null)}
@@ -178,13 +194,17 @@ export function AdminProjectsPage() {
                 <tr key={project.id} className="border-b border-[var(--border)] last:border-0">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <img src={project.image} alt={project.name} className="w-12 h-12 object-cover rounded-lg" />
-                      <span className="font-medium text-[var(--blue-dark)]">{project.name}</span>
+                      <img src={project.imagensUrls || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={project.titulo} className="w-12 h-12 object-cover rounded-lg" />
+                      <span className="font-medium text-[var(--blue-dark)]">{project.titulo}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.category}</td>
-                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.location || '-'}</td>
-                  <td className="px-6 py-4 text-[var(--blue-dark)]/70 text-sm max-w-xs truncate">{project.materials}</td>
+                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">
+                    {project.categoriaNome || categoriasMapToText[project.categoriaId] || '-'}
+                  </td>
+                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.localizacao || '-'}</td>
+                  <td className="px-6 py-4 text-[var(--blue-dark)]/70 text-sm max-w-xs truncate">
+                    {project.materiaisUtilizados || '-'}
+                  </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       <button
