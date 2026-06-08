@@ -70,16 +70,6 @@ const openEdit = (product) => {
       } else {
         await addProduct(payload);
       }
-
-      if (editingProduct) {
-        await produtoService.update(editingProduct.id, dataToSend);
-      } else {
-        await produtoService.create(dataToSend);
-      }
-      
-      // Recarrega os produtos atualizados para buscar as URLs corretas geradas pelo disco local
-      const novosProdutos = await produtoService.fetchAll();
-      setProducts(novosProdutos);
       setShowForm(false);
     } catch (err) {
       console.error(err);
@@ -185,7 +175,7 @@ const openEdit = (product) => {
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-xl overflow-hidden border border-[var(--border)] shadow-sm">
             <div className="h-48 bg-[var(--blue-light)] overflow-hidden">
-              <img src={product.imagemUrl || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={product.nome} className="w-full h-full object-cover" />
+              <img src={product.image || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={product.name} className="w-full h-full object-cover" />
             </div>
             <div className="p-6">
               <div className="text-xs text-[var(--blue-main)] mb-2">{product.category}</div>

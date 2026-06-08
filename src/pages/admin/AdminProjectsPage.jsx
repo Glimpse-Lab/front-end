@@ -70,16 +70,6 @@ export function AdminProjectsPage() {
       } else {
         await addProject(payload);
       }
-
-      if (editingProject) {
-        await projetoService.update(editingProject.id, dataToSend);
-      } else {
-        await projetoService.create(dataToSend);
-      }
-      
-      // Recarrega os projetos do banco para pegar a URL oficial salva no disco
-      const novosProjetos = await projetoService.fetchAll();
-      setProjects(novosProjetos);
       setShowForm(false);
     } catch (err) {
       console.log(err);
@@ -172,7 +162,7 @@ export function AdminProjectsPage() {
       {confirmDelete && (
         <ConfirmDialog
           title="Excluir projeto?"
-          message={`Tem certeza que deseja excluir "${confirmDelete.titulo}"? Esta ação não poderá ser desfeita.`}
+          message={`Tem certeza que deseja excluir "${confirmDelete.name}"? Esta ação não poderá ser desfeita.`}
           confirmLabel="Excluir"
           onConfirm={handleDelete}
           onCancel={() => setConfirmDelete(null)}
@@ -194,16 +184,16 @@ export function AdminProjectsPage() {
                 <tr key={project.id} className="border-b border-[var(--border)] last:border-0">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <img src={project.imagensUrls || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={project.titulo} className="w-12 h-12 object-cover rounded-lg" />
-                      <span className="font-medium text-[var(--blue-dark)]">{project.titulo}</span>
+                      <img src={project.image || "https://placehold.co/150x150/EEEEEE/31343C?text=Sem+Foto"} alt={project.name} className="w-12 h-12 object-cover rounded-lg" />
+                      <span className="font-medium text-[var(--blue-dark)]">{project.name}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-[var(--blue-dark)]/70">
-                    {project.categoriaNome || categoriasMapToText[project.categoriaId] || '-'}
+                    {project.category || '-'}
                   </td>
-                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.localizacao || '-'}</td>
+                  <td className="px-6 py-4 text-[var(--blue-dark)]/70">{project.location || '-'}</td>
                   <td className="px-6 py-4 text-[var(--blue-dark)]/70 text-sm max-w-xs truncate">
-                    {project.materiaisUtilizados || '-'}
+                    {project.materials || '-'}
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">

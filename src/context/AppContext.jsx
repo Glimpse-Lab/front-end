@@ -1,15 +1,18 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { mockProjects, mockProducts, mockQuotes } from '../data/mockData';
 import { useAuthToken } from '../hooks/useAuthToken';
 import usuarioService from '../services/usuarioService';
 import produtoService from '../services/produtoService';
 import projetoService from '../services/projetoService';
 
-const AppContext = createContext(undefined);
+export const AppContext = createContext(undefined);
 
 // IDs fixos do DataSeeder (inseridos nessa ordem quando o banco está vazio)
 const PRODUCT_CATEGORY_IDS = { 'Janelas': 1, 'Portas': 2, 'Sistemas': 3, 'Acessórios': 4 };
 const PROJECT_CATEGORY_IDS = { 'Residencial': 5, 'Comercial': 6, 'Corporativo': 7 };
+
+const mockProductImageByName = Object.fromEntries(mockProducts.map((p) => [p.name, p.image]));
+const mockProjectImageByName = Object.fromEntries(mockProjects.map((p) => [p.name, p.image]));
 
 const mapProduct = (p) => ({
   id: String(p.id),
@@ -18,7 +21,7 @@ const mapProduct = (p) => ({
   categoryId: p.categoriaId ?? '',
   description: p.descricao || '',
   specifications: p.especificacaoTecnica || '',
-  image: p.imagemUrl || '',
+  image: p.imagemUrl || mockProductImageByName[p.nome] || '',
   preco: p.preco,
   quantidadeEstoque: p.quantidadeEstoque,
 });
@@ -27,11 +30,11 @@ const mapProject = (p) => ({
   id: String(p.id),
   name: p.titulo,
   description: p.descricao || '',
-  category: p.categoria?.nome || '',
+  category: p.categoria?.nome || p.categoriaNome || '',
   categoryId: p.categoria?.id ?? '',
   location: p.localizacao || '',
   materials: p.materiaisUtilizados || '',
-  image: Array.isArray(p.imagensUrls) ? p.imagensUrls[0] : (p.imagensUrls || ''),
+  image: Array.isArray(p.imagensUrls) ? (p.imagensUrls[0] || mockProjectImageByName[p.titulo] || '') : (p.imagensUrls || mockProjectImageByName[p.titulo] || ''),
   date: p.dataProjeto || '',
 });
 
@@ -281,10 +284,4 @@ export function AppProvider({ children }) {
   );
 }
 
-export function useApp() {
-  const context = useContext(AppContext);
-  if (context === undefined) {
-    throw new Error('useApp deve ser usado dentro de um AppProvider');
-  }
-  return context;
-}
+export { useApp } from '../hooks/useApp';
