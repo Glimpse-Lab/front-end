@@ -228,7 +228,11 @@ export function AppProvider({ children }) {
   };
 
   const addEmployee = async (employee) => {
-    const created = await usuarioService.cadastrar(employee);
+    // Se o role for ADMIN, usa o endpoint /usuarios/admin que permite definir o role
+    // Caso contrário, usa o endpoint público /usuarios que força PADRAO
+    const created = employee.role === 'ADMIN'
+      ? await usuarioService.cadastrarAdmin(employee)
+      : await usuarioService.cadastrar(employee);
     setEmployees((prev) => [...prev, created]);
   };
 

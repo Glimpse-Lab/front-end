@@ -16,6 +16,17 @@ const usuarioService = {
     return response.data;
   },
 
+  cadastrarAdmin: async ({ name, email, cpf, password, role }) => {
+    const response = await api.post("/usuarios/admin", {
+      nome: name,
+      email,
+      cpf,
+      senha: password,
+      role
+    });
+    return response.data;
+  },
+
   remover: async (id) => {
     await api.delete(`/usuarios/${id}`);
   },

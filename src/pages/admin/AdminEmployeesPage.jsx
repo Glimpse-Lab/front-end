@@ -30,10 +30,10 @@ export function AdminEmployeesPage() {
   const [deleteError, setDeleteError] = useState('');
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const empty = { name: '', email: '', cpf: '', password: '', confirmPassword: '', role: 'PADRÃO' };
+  const empty = { name: '', email: '', cpf: '', password: '', confirmPassword: '', role: 'PADRAO' };
   const [formData, setFormData] = useState(empty);
   const [formError, setFormError] = useState('');
-  const [editData, setEditData] = useState({ nome: '', email: '', password: '', confirmPassword: '', role: 'PADRÃO' });
+  const [editData, setEditData] = useState({ nome: '', email: '', password: '', confirmPassword: '', role: 'PADRAO' });
   const [editError, setEditError] = useState('');
   const [saving, setSaving] = useState(false);
   const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
@@ -55,7 +55,7 @@ export function AdminEmployeesPage() {
         email: selected.email ?? '',
         password: '',
         confirmPassword: '',
-        role: selected.role ?? 'PADRÃO'
+        role: selected.role ?? 'PADRAO'
       });
       setEditError('');
     }
@@ -184,7 +184,7 @@ export function AdminEmployeesPage() {
             </FormField>
             <FormField label="Permissão *">
               <Select required value={formData.role} onChange={set('role')}>
-                <option value="PADRÃO">PADRÃO</option>
+                <option value="PADRAO">PADRÃO</option>
                 <option value="ADMIN">ADMIN</option>
               </Select>
             </FormField>
@@ -301,7 +301,7 @@ export function AdminEmployeesPage() {
                     value={editData.role}
                     onChange={setEdit('role')}
                   >
-                    <option value="PADRÃO">PADRÃO</option>
+                    <option value="PADRAO">PADRÃO</option>
                     <option value="ADMIN">ADMIN</option>
                   </Select>
                 </FormField>
