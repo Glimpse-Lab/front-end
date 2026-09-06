@@ -30,16 +30,19 @@ export function AdminEmployeesPage() {
   const [deleteError, setDeleteError] = useState('');
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const empty = { name: '', email: '', cpf: '', password: '', confirmPassword: '', role: 'PADRÃO' };
+  const empty = { name: '', email: '', cpf: '', password: '', confirmPassword: '', role: 'PADRAO' };
   const [formData, setFormData] = useState(empty);
   const [formError, setFormError] = useState('');
-  const [editData, setEditData] = useState({ nome: '', email: '', password: '', confirmPassword: '', role: 'PADRÃO' });
+  const [editData, setEditData] = useState({ nome: '', email: '', password: '', confirmPassword: '', role: 'PADRAO' });
   const [editError, setEditError] = useState('');
   const [saving, setSaving] = useState(false);
   const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
   const setEdit = (key) => (e) => setEditData({ ...editData, [key]: e.target.value });
 
   const isOwn = selected && currentUser && String(selected.id) === String(currentUser.id);
+
+  // Verifica se o usuário logado é ADMIN (suporta tanto 'ADMIN' quanto 'ROLE_ADMIN')
+  const isAdmin = currentUser?.role === 'ADMIN' || currentUser?.role === 'ROLE_ADMIN';
 
   // Garante que o próprio usuário logado sempre apareça na lista
   const displayEmployees = currentUser
@@ -55,7 +58,7 @@ export function AdminEmployeesPage() {
         email: selected.email ?? '',
         password: '',
         confirmPassword: '',
-        role: selected.role ?? 'PADRÃO'
+        role: selected.role ?? 'PADRAO'
       });
       setEditError('');
     }
@@ -73,6 +76,13 @@ export function AdminEmployeesPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
+    
+    // Bloquear criação de ADMIN por usuários não-ADMIN
+    if (!isAdmin && formData.role === 'ADMIN') {
+      setFormError('Apenas administradores podem criar usuários com permissão ADMIN.');
+      return;
+    }
+    
     if (formData.password !== formData.confirmPassword) {
       setFormError('As senhas não coincidem. Verifique e tente novamente.');
       return;
@@ -109,6 +119,12 @@ export function AdminEmployeesPage() {
       return;
     }
     
+    // Bloquear alteração de role para ADMIN por usuários não-ADMIN
+    if (!isAdmin && editData.role === 'ADMIN') {
+      setEditError('Apenas administradores podem atribuir permissão ADMIN.');
+      return;
+    }
+    
     setSaving(true);
     setEditError('');
     try {
@@ -121,8 +137,8 @@ export function AdminEmployeesPage() {
         payload.password = editData.password;
       }
       
-      // Apenas ADMIN pode enviar role (não é "Meu Perfil")
-      if (!isOwn) {
+      // Apenas ADMIN pode enviar role
+      if (isAdmin && !isOwn) {
         payload.role = editData.role;
       }
       
@@ -184,8 +200,8 @@ export function AdminEmployeesPage() {
             </FormField>
             <FormField label="Permissão *">
               <Select required value={formData.role} onChange={set('role')}>
-                <option value="PADRÃO">PADRÃO</option>
-                <option value="ADMIN">ADMIN</option>
+                <option value="PADRAO">PADRÃO</option>
+                {isAdmin && <option value="ADMIN">ADMIN</option>}
               </Select>
             </FormField>
             <FormField label="Senha *">
@@ -246,11 +262,11 @@ export function AdminEmployeesPage() {
                 <FormField label="Permissão">
                   <Select 
                     value={editData.role}
-                    disabled
-                    className="bg-gray-100 text-gray-400 cursor-not-allowed"
+                    disabled={!isAdmin}
+                    className={!isAdmin ? "bg-gray-100 text-gray-400 cursor-not-allowed" : ""}
                   >
-                    <option value="PADRÃO">PADRÃO</option>
-                    <option value="ADMIN">ADMIN</option>
+                    <option value="PADRAO">PADRÃO</option>
+                    {isAdmin && <option value="ADMIN">ADMIN</option>}
                   </Select>
                 </FormField>
                 <FormField label="Nova Senha">
@@ -300,9 +316,11 @@ export function AdminEmployeesPage() {
                     required
                     value={editData.role}
                     onChange={setEdit('role')}
+                    disabled={!isAdmin}
+                    className={!isAdmin ? "bg-gray-100 text-gray-400 cursor-not-allowed" : ""}
                   >
-                    <option value="PADRÃO">PADRÃO</option>
-                    <option value="ADMIN">ADMIN</option>
+                    <option value="PADRAO">PADRÃO</option>
+                    {isAdmin && <option value="ADMIN">ADMIN</option>}
                   </Select>
                 </FormField>
                 <div className="flex gap-4">
