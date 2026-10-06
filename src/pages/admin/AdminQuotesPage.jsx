@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Search, Eye, Clock3, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { AdminPageHeader } from '../../components/AdminPageHeader';
 import { StatusBadge } from '../../components/StatusBadge';
 import { Modal, ModalHeader } from '../../components/Modal';
+import { Pagination } from '../../components/Pagination';
 import orcamentoService from '../../services/orcamentoService';
 
 const STATUS_LABELS = {
@@ -84,14 +85,33 @@ export function AdminQuotesPage() {
   const [savingStatusId, setSavingStatusId] = useState(null);
   const [modalStatus, setModalStatus] = useState('pending');
   const [feedback, setFeedback] = useState(null);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [pageInfo, setPageInfo] = useState(null);
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const fetchRequestIdRef = useRef(0);
+
+  // Debounce da busca: evita uma requisição a cada tecla digitada.
+  // setPage(0) junto com setDebouncedSearch garante um único fetch (updates batched).
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(0);
+    }, 350);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const backendFilterStatus = filter === 'all' ? null : mapBackendStatus(filter);
 
   useEffect(() => {
+    const requestId = ++fetchRequestIdRef.current;
     let mounted = true;
-    orcamentoService.listar()
-      .then((backend) => {
-        if (!mounted) return;
-        const mapped = backend.map(normalizeQuote);
+    orcamentoService.listar({ page, size: pageSize, search: debouncedSearch, status: backendFilterStatus })
+      .then((response) => {
+        if (!mounted || requestId !== fetchRequestIdRef.current) return;
+        const mapped = (response.content || []).map(normalizeQuote);
         setBackendQuotes(mapped);
+        setPageInfo(response);
         setQuoteHistoryById((prev) => {
           const next = { ...prev };
           mapped.forEach((quote) => {
@@ -107,22 +127,12 @@ export function AdminQuotesPage() {
           return next;
         });
       })
-      .catch(() => {
-        // mantém o estado atual caso o backend falhe
-      });
+      .catch((error) => console.error('Erro ao carregar página de orçamentos:', error));
 
     return () => {
       mounted = false;
     };
-  }, []);
-
-  const filtered = useMemo(() => backendQuotes.filter((q) => {
-    const matchFilter = filter === 'all' || q.status === filter;
-    const matchSearch = q.clientName.toLowerCase().includes(search.toLowerCase()) ||
-                        q.email.toLowerCase().includes(search.toLowerCase()) ||
-                        q.projectType.toLowerCase().includes(search.toLowerCase());
-    return matchFilter && matchSearch;
-  }), [backendQuotes, filter, search]);
+  }, [page, pageSize, debouncedSearch, backendFilterStatus]);
 
   const filterBtns = [
     { key: 'all', label: 'Todos', active: 'bg-[var(--blue-main)] text-white', inactive: 'bg-gray-100 text-[var(--blue-dark)] hover:bg-gray-200' },
@@ -187,7 +197,7 @@ export function AdminQuotesPage() {
           </div>
           <div className="flex gap-2 flex-wrap">
             {filterBtns.map(({ key, label, active, inactive }) => (
-              <button key={key} onClick={() => setFilter(key)} className={`px-4 py-3 rounded-lg transition-colors ${filter === key ? active : inactive}`}>
+              <button key={key} onClick={() => { setFilter(key); setPage(0); }} className={`px-4 py-3 rounded-lg transition-colors ${filter === key ? active : inactive}`}>
                 {label}
               </button>
             ))}
@@ -209,7 +219,7 @@ export function AdminQuotesPage() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((quote) => (
+              {backendQuotes.map((quote) => (
                 <tr key={quote.id} className="border-b border-[var(--border)] last:border-0 hover:bg-gray-50">
                   <td className="px-4 py-4">
                     <div className="font-medium text-[var(--blue-dark)] truncate">{quote.clientName}</div>
@@ -238,9 +248,14 @@ export function AdminQuotesPage() {
             </tbody>
           </table>
         </div>
-        {filtered.length === 0 && (
+        {backendQuotes.length === 0 && (
           <div className="text-center py-12 text-[var(--blue-dark)]/60">Nenhum orçamento encontrado com os filtros selecionados.</div>
         )}
+        <Pagination
+          pageInfo={pageInfo}
+          onPageChange={setPage}
+          onPageSizeChange={(size) => { setPageSize(size); setPage(0); }}
+        />
       </div>
 
       {selectedQuote && (
