@@ -6,6 +6,8 @@ import { Button } from '../../components/Button';
 import { Modal, ModalHeader } from '../../components/Modal';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { FormField, Input, PasswordInput, Select } from '../../components/FormField';
+import { Pagination } from '../../components/Pagination';
+import usuarioService from '../../services/usuarioService';
 
 // Badge de Status de Permissão
 function PermissionBadge({ role }) {
@@ -36,6 +38,10 @@ export function AdminEmployeesPage() {
   const [editData, setEditData] = useState({ nome: '', email: '', password: '', confirmPassword: '', role: 'PADRAO' });
   const [editError, setEditError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [pageInfo, setPageInfo] = useState(null);
+  const [pageEmployees, setPageEmployees] = useState(employees);
   const set = (key) => (e) => setFormData({ ...formData, [key]: e.target.value });
   const setEdit = (key) => (e) => setEditData({ ...editData, [key]: e.target.value });
 
@@ -46,10 +52,24 @@ export function AdminEmployeesPage() {
 
   // Garante que o próprio usuário logado sempre apareça na lista
   const displayEmployees = currentUser
-    ? employees.some(e => String(e.id) === String(currentUser.id))
-      ? employees
-      : [{ id: currentUser.id, nome: currentUser.nome, email: currentUser.email, cpf: currentUser.cpf, role: currentUser.role }, ...employees]
-    : employees;
+    ? pageEmployees.some(e => String(e.id) === String(currentUser.id))
+      ? pageEmployees
+      : [{ id: currentUser.id, nome: currentUser.nome, email: currentUser.email, cpf: currentUser.cpf, role: currentUser.role }, ...pageEmployees]
+    : pageEmployees;
+
+  const reloadPage = async (requestedPage = page) => {
+    const response = await usuarioService.listar({ page: requestedPage, size: pageSize });
+    const content = response.content || [];
+    setPageEmployees(content);
+    setPageInfo(response);
+    if (content.length === 0 && requestedPage > 0 && response.totalElements > 0) {
+      setPage(Math.max(response.totalPages - 1, 0));
+    }
+  };
+
+  useEffect(() => {
+    reloadPage().catch((error) => console.error('Erro ao carregar página de funcionários:', error));
+  }, [page, pageSize]);
 
   useEffect(() => {
     if (selected) {
@@ -97,6 +117,7 @@ export function AdminEmployeesPage() {
       });
       setFormData(empty);
       setShowForm(false);
+      await reloadPage();
     } catch {
       setFormError('Não foi possível cadastrar o funcionário. Tente novamente.');
     }
@@ -145,6 +166,7 @@ export function AdminEmployeesPage() {
       console.log('Enviando payload:', payload);
       await updateEmployee(selected.id, payload);
       setSelected(null);
+      await reloadPage();
     } catch (error) {
       console.error('Erro ao salvar:', error);
       const errorMsg = error?.response?.data?.message || error?.response?.data || 'Não foi possível salvar as alterações. Tente novamente.';
@@ -161,6 +183,7 @@ export function AdminEmployeesPage() {
       await removeEmployee(selected.id);
       setSelected(null);
       setConfirmDelete(false);
+      await reloadPage();
     } catch {
       setDeleteError('Não foi possível remover o funcionário. Tente novamente.');
     } finally {
@@ -391,6 +414,11 @@ export function AdminEmployeesPage() {
           );
         })}
       </div>
+      <Pagination
+        pageInfo={pageInfo}
+        onPageChange={setPage}
+        onPageSizeChange={(size) => { setPageSize(size); setPage(0); }}
+      />
     </div>
   );
 }

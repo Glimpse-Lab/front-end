@@ -1,8 +1,11 @@
 import api from "../provider/api";
 
 const usuarioService = {
-  listar: async () => {
-    const response = await api.get("/usuarios");
+  listar: async ({ page, size } = {}) => {
+    const params = {};
+    if (page !== undefined) params.page = page;
+    if (size !== undefined) params.size = size;
+    const response = await api.get("/usuarios", { params });
     return response.data;
   },
 

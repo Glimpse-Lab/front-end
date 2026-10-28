@@ -51,9 +51,15 @@ const orcamentoService = {
   },
 
   // Listar todos os orçamentos (requer autenticação)
-  listar: async () => {
+  // page/size: paginação; search: filtro por nome/e-mail do cliente ou descrição; status: filtro por status
+  listar: async ({ page, size, search, status } = {}) => {
     try {
-      const response = await api.get("/orcamentos");
+      const params = {};
+      if (page !== undefined) params.page = page;
+      if (size !== undefined) params.size = size;
+      if (search && search.trim()) params.search = search.trim();
+      if (status) params.status = status;
+      const response = await api.get("/orcamentos", { params });
       return response.data;
     } catch (error) {
       throw error.response?.data || error;
